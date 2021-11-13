@@ -49,8 +49,12 @@ class ToDoListViewController: UITableViewController {
         override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
             
-            //здесь добавили title тк теперь это ссылка на целый объект
-            cell.textLabel?.text = itemArray[indexPath.row].title
+            
+            
+            //сделали код чуть красивее
+            let item = itemArray[indexPath.row]
+            
+            cell.textLabel?.text = item.title
             
             
             // продолжение. и уже в зависимости от того что в этот дан впихнули делаеаем различное отображение ячейки
@@ -67,19 +71,14 @@ class ToDoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         //код который меняет значение в опции дан см блок выше для продоллжения
+                
         
-        //но сперва нихуя работать не будет тк чтобы пошла проверка этих условий надо чтобы при выборе ячейки серва перезапускался метод по пиханию информации в ячейку и поэтому просто релоаддата
+        //это выражение инвертирует значение автоматически при выделении ячейки
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
-        if itemArray[indexPath.row].done == false {
-            itemArray[indexPath.row].done  = true
-        } else {
-            itemArray[indexPath.row].done = false
-        }
-        
+     
         // этот метод и заствляет эти два метода дата сурса снова запуститься
         tableView.reloadData()
-        
-        // и здесь мы удалили предыдущую проверку в несколько строк
         
     
         tableView.deselectRow(at: indexPath, animated: true)
