@@ -36,6 +36,8 @@ class ToDoListViewController: UITableViewController {
         newItem3.title = "Destroy Demogorgon"
         itemArray.append(newItem3)
         
+     
+        
 //        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
 //            itemArray = items
 //        }
@@ -49,23 +51,37 @@ class ToDoListViewController: UITableViewController {
             
             //здесь добавили title тк теперь это ссылка на целый объект
             cell.textLabel?.text = itemArray[indexPath.row].title
+            
+            
+            // продолжение. и уже в зависимости от того что в этот дан впихнули делаеаем различное отображение ячейки
+            if itemArray[indexPath.row].done == true {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
+            
            return cell
        
         }
         
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print(itemArray[indexPath.row])
+
+        //код который меняет значение в опции дан см блок выше для продоллжения
         
-        if let cell = tableView.cellForRow(at: indexPath as IndexPath) {
-                    if cell.accessoryType == .checkmark {
-                        cell.accessoryType = .none
-                    } else {
-                        cell.accessoryType = .checkmark
-                    }
-                }
-       
+        //но сперва нихуя работать не будет тк чтобы пошла проверка этих условий надо чтобы при выборе ячейки серва перезапускался метод по пиханию информации в ячейку и поэтому просто релоаддата
         
+        if itemArray[indexPath.row].done == false {
+            itemArray[indexPath.row].done  = true
+        } else {
+            itemArray[indexPath.row].done = false
+        }
         
+        // этот метод и заствляет эти два метода дата сурса снова запуститься
+        tableView.reloadData()
+        
+        // и здесь мы удалили предыдущую проверку в несколько строк
+        
+    
         tableView.deselectRow(at: indexPath, animated: true)
         
         
