@@ -58,11 +58,17 @@ class ToDoListViewController: UITableViewController {
             
             
             // продолжение. и уже в зависимости от того что в этот дан впихнули делаеаем различное отображение ячейки
-            if itemArray[indexPath.row].done == true {
-                cell.accessoryType = .checkmark
-            } else {
-                cell.accessoryType = .none
-            }
+            
+            //Ternary operator ==>
+            //value = condition ? valueIfTrue : valueIfFalse
+            
+            cell.accessoryType = item.done == true ? .checkmark : .none
+            
+//            if itemArray[indexPath.row].done == true {
+//                cell.accessoryType = .checkmark
+//            } else {
+//                cell.accessoryType = .none
+//            }
             
            return cell
        
