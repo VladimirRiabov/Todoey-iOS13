@@ -38,9 +38,9 @@ class ToDoListViewController: UITableViewController {
         
      
         
-//        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
-//            itemArray = items
-//        }
+        if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
+            itemArray = items
+        }
 }
         override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return itemArray.count
