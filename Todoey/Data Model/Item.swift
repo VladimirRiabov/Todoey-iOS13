@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class Item {
+class Item: Codable {
 //    static let singleton = Singleton()
     
     var title: String = ""

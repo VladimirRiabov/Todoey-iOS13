@@ -12,11 +12,14 @@ class ToDoListViewController: UITableViewController {
     
     var itemArray = [Item]()
     
-    let defaults = UserDefaults.standard
-    
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Item.plist")
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+//        print(dataFilePath)
         
         let barAppearance = UINavigationBarAppearance()
         barAppearance.backgroundColor = #colorLiteral(red: 0.0004806999268, green: 0.6455104113, blue: 1, alpha: 1)
@@ -38,9 +41,9 @@ class ToDoListViewController: UITableViewController {
         
      
         
-        if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
-            itemArray = items
-        }
+//        if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
+//            itemArray = items
+//        }
 }
         override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return itemArray.count
@@ -82,7 +85,7 @@ class ToDoListViewController: UITableViewController {
         //это выражение инвертирует значение автоматически при выделении ячейки
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
-     
+        self.saveItems()
         // этот метод и заствляет эти два метода дата сурса снова запуститься
         tableView.reloadData()
         
@@ -114,12 +117,12 @@ class ToDoListViewController: UITableViewController {
             //закидывает новый айтом в тот наш аррэй наверху
             self.itemArray.append(newItem)
             
+          
+            self.saveItems()
             //перезагружает данные в тэйбле
             self.tableView.reloadData()
             
-            //пихает информацию в юзер дефолтс (тут ещ> старая версия с айтемаррэй)
-            self.defaults.set(self.itemArray, forKey: "TodoListArray")
-            
+           
         }
         
         alert.addAction(action)
@@ -132,5 +135,25 @@ class ToDoListViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    
+    
+    func saveItems() {
+        
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let data = try encoder.encode(itemArray)
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("Error while encoding \(error)")
+        }
+    }
+
+    
+    
+    
 }
+
+
+
 
