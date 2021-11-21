@@ -40,7 +40,6 @@
 		A4BFE52C27403A49004597F6 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				A47C06A8274A489B004A11A1 /* DataModel.xcdatamodeld */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -48,6 +47,7 @@
 		A4BFE52D27403A76004597F6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A47C06A8274A489B004A11A1 /* DataModel.xcdatamodeld */,
 				EB2BE4FD239524DB00FB933B /* ToDoListViewController.swift */,
 			);
 			path = Controllers;

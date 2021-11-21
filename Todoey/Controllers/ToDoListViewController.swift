@@ -23,7 +23,7 @@ class ToDoListViewController: UITableViewController {
         
         
         
-//        print(dataFilePath)
+
         
         let barAppearance = UINavigationBarAppearance()
         barAppearance.backgroundColor = #colorLiteral(red: 0.0004806999268, green: 0.6455104113, blue: 1, alpha: 1)
@@ -31,7 +31,7 @@ class ToDoListViewController: UITableViewController {
         navigationItem.scrollEdgeAppearance = barAppearance
         
         
-//        loadItems()
+        loadItems()
 
 }
         override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -100,6 +100,7 @@ class ToDoListViewController: UITableViewController {
             
             let newItem = Item(context: self.context)
             newItem.title = textField.text!
+            newItem.done = false
             
             //закидывает новый айтом в тот наш аррэй наверху
             self.itemArray.append(newItem)
@@ -137,17 +138,18 @@ class ToDoListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-//
-//    func loadItems() {
-//        if let data = try? Data(contentsOf: dataFilePath!) {
-//            let decoder = PropertyListDecoder()
-//            do {
-//                itemArray = try decoder.decode([Item].self, from: data)
-//            } catch {
-//                print(error)
-//            }
-//        }
-//    }
+
+    func loadItems() {
+        
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        
+        do {
+            itemArray = try context.fetch(request)
+            
+        } catch {
+            print(error)
+        }
+    }
 
     
     
