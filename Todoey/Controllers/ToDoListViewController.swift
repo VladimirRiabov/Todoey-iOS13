@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import CoreData
 
 class ToDoListViewController: UITableViewController {
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+   
     
     var itemArray = [Item]()
     
@@ -27,7 +31,7 @@ class ToDoListViewController: UITableViewController {
         navigationItem.scrollEdgeAppearance = barAppearance
         
         
-        loadItems()
+//        loadItems()
 
 }
         override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -93,10 +97,8 @@ class ToDoListViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
 
-            //создает новый айтом при нажатии на кноку аддайтем
-            let newItem = Item()
             
-            //тк он создан из класса айтем у него есть опция текст пихаем туда текст и строки
+            let newItem = Item(context: self.context)
             newItem.title = textField.text!
             
             //закидывает новый айтом в тот наш аррэй наверху
@@ -124,27 +126,28 @@ class ToDoListViewController: UITableViewController {
     
     func saveItems() {
         
-        let encoder = PropertyListEncoder()
         
         do {
-            let data = try encoder.encode(itemArray)
-            try data.write(to: dataFilePath!)
+            
+            try context.save()
         } catch {
             print("Error while encoding \(error)")
         }
+        
+        self.tableView.reloadData()
     }
     
-    
-    func loadItems() {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            do {
-                itemArray = try decoder.decode([Item].self, from: data)
-            } catch {
-                print(error) f
-            }
-        }
-    }
+//
+//    func loadItems() {
+//        if let data = try? Data(contentsOf: dataFilePath!) {
+//            let decoder = PropertyListDecoder()
+//            do {
+//                itemArray = try decoder.decode([Item].self, from: data)
+//            } catch {
+//                print(error)
+//            }
+//        }
+//    }
 
     
     
