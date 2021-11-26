@@ -11,6 +11,8 @@ import CoreData
 
 class ToDoListViewController: UITableViewController {
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
    
     
@@ -30,6 +32,7 @@ class ToDoListViewController: UITableViewController {
         navigationItem.standardAppearance = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
         
+        searchBar.delegate = self
         
         loadItems()
 
@@ -123,7 +126,7 @@ class ToDoListViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    
+    //MARK - Model Manipulation Methods
     
     func saveItems() {
         
@@ -139,9 +142,9 @@ class ToDoListViewController: UITableViewController {
     }
     
 
-    func loadItems() {
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
         
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
+//        let request: NSFetchRequest<Item> = Item.fetchRequest()
         
         do {
             itemArray = try context.fetch(request)
@@ -149,10 +152,38 @@ class ToDoListViewController: UITableViewController {
         } catch {
             print(error)
         }
+        
+        tableView.reloadData()
     }
 
     
     
+    
+}
+
+//MARK - SearchBar Methods
+
+extension ToDoListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+
+        loadItems(with: request)
+      
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+            
+            DispatchQueue.main
+            searchBar.resignFirstResponder()
+            
+        }
+    }
     
 }
 
