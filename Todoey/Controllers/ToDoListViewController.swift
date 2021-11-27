@@ -18,6 +18,13 @@ class ToDoListViewController: UITableViewController {
     
     var itemArray = [Item]()
     
+    var selectedCategory : Category? {
+        didSet {
+            loadItems()
+        }
+    }
+    
+    
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Item.plist")
 
     override func viewDidLoad() {
@@ -34,7 +41,7 @@ class ToDoListViewController: UITableViewController {
         
         searchBar.delegate = self
         
-        loadItems()
+      
 
 }
 
@@ -77,14 +84,11 @@ class ToDoListViewController: UITableViewController {
         
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        //код который меняет значение в опции дан см блок выше для продоллжения
-                
-        
-        //это выражение инвертирует значение автоматически при выделении ячейки
+    
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         self.saveItems()
-        // этот метод и заствляет эти два метода дата сурса снова запуститься
+
         tableView.reloadData()
         
     
@@ -99,7 +103,6 @@ class ToDoListViewController: UITableViewController {
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
-        //этот текстфилд ебется туда в алерт
         var textField = UITextField()
         
         let alert = UIAlertController(title: "Add New Todoey Item", message: "123", preferredStyle: .alert)
@@ -110,13 +113,13 @@ class ToDoListViewController: UITableViewController {
             let newItem = Item(context: self.context)
             newItem.title = textField.text!
             newItem.done = false
+            newItem.parentCategory = self.selectedCategory
             
-            //закидывает новый айтом в тот наш аррэй наверху
             self.itemArray.append(newItem)
             
           
             self.saveItems()
-            //перезагружает данные в тэйбле
+
             self.tableView.reloadData()
             
            
@@ -148,9 +151,19 @@ class ToDoListViewController: UITableViewController {
     }
     
 
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
         
-//        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+        
+    
+        
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+        } else {
+            request.predicate = categoryPredicate
+        }
+        
+     
         
         do {
             itemArray = try context.fetch(request)
@@ -171,12 +184,14 @@ class ToDoListViewController: UITableViewController {
 
 extension ToDoListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         let request: NSFetchRequest<Item> = Item.fetchRequest()
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+       let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
 
-        loadItems(with: request)
+        loadItems(with: request, predicate: predicate)
       
         
     }

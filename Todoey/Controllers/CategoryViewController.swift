@@ -139,21 +139,16 @@ class CategoryViewController: UITableViewController {
 //MARK: - TableView View Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        //код который меняет значение в опции дан см блок выше для продоллжения
-                
         
-        //это выражение инвертирует значение автоматически при выделении ячейки
-//        categoryArray[indexPath.row].done = !categoryArray[indexPath.row].done
-        
-        self.saveCategories()
-        // этот метод и заствляет эти два метода дата сурса снова запуститься
-        tableView.reloadData()
-        
-    
-        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: "goToItems", sender: self)
     
     }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! ToDoListViewController
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            destinationVC.selectedCategory = categoryArray[indexPath.row]
+        }
+    }
 }
