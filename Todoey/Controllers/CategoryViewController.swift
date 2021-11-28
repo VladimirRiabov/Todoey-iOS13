@@ -7,13 +7,15 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 
 
 class CategoryViewController: UITableViewController {
     
 //    @IBOutlet weak var searchBar: xUISearchBar!
+    let realm = try! Realm()
+    
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
    
@@ -67,10 +69,12 @@ class CategoryViewController: UITableViewController {
 //MARK: - Data Manipulation Methods
     
     
-    func saveCategories() {
+    func save(category: Category) {
                 
         do {
-            try context.save()
+            try realm.write {
+                realm.add(category)
+            }
         } catch {
             print("Error while encoding \(error)")
         }
@@ -109,7 +113,7 @@ class CategoryViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
 
             
-            let newCategory = Category(context: self.context)
+            let newCategory = Category()
             newCategory.name = textField.text!
 //            newCategory.done = false
             
@@ -117,7 +121,7 @@ class CategoryViewController: UITableViewController {
             self.categoryArray.append(newCategory)
             
           
-            self.saveCategories()
+            self.save(category: newCategory)
             //перезагружает данные в тэйбле
             self.tableView.reloadData()
             
