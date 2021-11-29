@@ -150,8 +150,10 @@ class ToDoListViewController: UITableViewController {
 
 //MARK - SearchBar Methods
 
-//extension ToDoListViewController: UISearchBarDelegate {
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+extension ToDoListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "title", ascending: true)
 //
 //        let request: NSFetchRequest<Item> = Item.fetchRequest()
 //
@@ -161,20 +163,20 @@ class ToDoListViewController: UITableViewController {
 //
 //        loadItems(with: request, predicate: predicate)
 //
-//
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchBar.text?.count == 0 {
-//            loadItems()
-//
-//            DispatchQueue.main
-//            searchBar.resignFirstResponder()
-//
-//        }
-//    }
-//
-//}
+
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+
+            DispatchQueue.main
+            searchBar.resignFirstResponder()
+
+        }
+    }
+
+}
 
 
 
