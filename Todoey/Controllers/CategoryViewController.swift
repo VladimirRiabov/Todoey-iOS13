@@ -16,11 +16,8 @@ class CategoryViewController: UITableViewController {
 //    @IBOutlet weak var searchBar: xUISearchBar!
     let realm = try! Realm()
     
-    
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
    
-    
-    var categoryArray = [Category]()
+    var categories: Results<Category>?
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Category.plist")
 
@@ -28,7 +25,6 @@ class CategoryViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       print(dataFilePath)
         
         let barAppearance = UINavigationBarAppearance()
         barAppearance.backgroundColor = #colorLiteral(red: 0.0004806999268, green: 0.6455104113, blue: 1, alpha: 1)
@@ -43,15 +39,15 @@ class CategoryViewController: UITableViewController {
 //MARK: - TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoryArray.count
+        return categories?.count ?? 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCategoryCell", for: indexPath)
         
-        let category = categoryArray[indexPath.row]
+       
         
-        cell.textLabel?.text = category.name
+        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added yet"
         
 //        cell.accessoryType = item.done == true ? .checkmark : .none
 //
@@ -79,28 +75,18 @@ class CategoryViewController: UITableViewController {
             print("Error while encoding \(error)")
         }
         
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
     
 
-    func loadCategories(with request: NSFetchRequest<Category> = Category.fetchRequest()) {
+    func loadCategories() {
         
-//        let request: NSFetchRequest<Item> = Item.fetchRequest()
-        print("abcfdfsdfsdfsdf")
-        do {
-            categoryArray = try context.fetch(request)
-            
-        } catch {
-            print(error)
-        }
+        
+        categories = realm.objects(Category.self)
         
         tableView.reloadData()
     }
-//
-//
-//    }
-//
-    
+
     
 //MARK: - Add New Categories
         
@@ -118,7 +104,6 @@ class CategoryViewController: UITableViewController {
 //            newCategory.done = false
             
             //закидывает новый айтом в тот наш аррэй наверху
-            self.categoryArray.append(newCategory)
             
           
             self.save(category: newCategory)
@@ -152,7 +137,7 @@ class CategoryViewController: UITableViewController {
         let destinationVC = segue.destination as! ToDoListViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedCategory = categoryArray[indexPath.row]
+            destinationVC.selectedCategory = categories?[indexPath.row]
         }
     }
 }
