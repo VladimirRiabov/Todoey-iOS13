@@ -11,6 +11,10 @@ import RealmSwift
 
 class Category : Object {
     @objc dynamic var name : String = ""
+    @objc dynamic var dateOfCreation : Date?
+    @objc dynamic var dateOfCreationString : String = ""
+    @objc dynamic var descriptionOfCategory : String = ""
+    @objc dynamic var whenItNeedsToDo : String = ""
     
     let items = List<Item>()
     

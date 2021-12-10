@@ -22,6 +22,7 @@ class NewCategoryViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "Reusable cell")
+        tableView.rowHeight = 80.0
         loadCategories()
     }
     //MARK: - Loading and Saving Categories funcs
@@ -47,6 +48,14 @@ class NewCategoryViewController: UIViewController {
         let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
             let newCategory = Category()
             newCategory.name = textField.text!
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "YY/MM/dd"
+            dateFormatter.string(from: date)
+            
+            newCategory.dateOfCreation = Date()
+            newCategory.dateOfCreationString =  dateFormatter.string(from: date)
+            
             self.save(category: newCategory)
             self.tableView.reloadData()
         }
@@ -69,9 +78,39 @@ extension NewCategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! CategoryTableViewCell
         cell.categoryTitleLabel.text = categories?[indexPath.row].name ?? "No Categories Added yet"
+        cell.dateOfCreationLAbel.text = categories?[indexPath.row].dateOfCreationString
+        
         return cell
     }
+    
+    
+    
+    
+    //MARK: - MODALVIEW
+    
+    
+    @objc func showMiracle() {
+        let slideVC = OverlayView()
+        slideVC.modalPresentationStyle = .custom
+        slideVC.transitioningDelegate = self
+        self.present(slideVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func onButton(_ sender: Any) {
+        showMiracle()
+    }
+    
 }
+
+
+
+    
+extension NewCategoryViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        PresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
 //MARK: - TableViewDelegateMethods
 extension NewCategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -83,4 +122,7 @@ extension NewCategoryViewController: UITableViewDelegate {
             destinationVC.selectedCategory = categories?[indexPath.row]
         }
     }
+    
 }
+
+

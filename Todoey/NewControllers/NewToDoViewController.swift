@@ -62,6 +62,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
             alertTextField.placeholder = "Create new item"
             textField = alertTextField
         }
+        
         present(alert, animated: true, completion: nil)
     }
 
