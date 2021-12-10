@@ -46,17 +46,18 @@ class ToDoListViewController: UITableViewController {
 
 //MARK: - TableView Datasource Methods
     
+    
         override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return todoItems?.count ?? 1
         }
 
         override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath) as! ToDoCell
             
             
         
             if let item = todoItems?[indexPath.row] {
-                cell.textLabel?.text = item.title
+                cell.titleLabel.text = item.title
                 cell.accessoryType = item.done == true ? .checkmark : .none
             } else {
                 cell.textLabel?.text = "No Items Added"
@@ -65,6 +66,33 @@ class ToDoListViewController: UITableViewController {
            return cell
        
         }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, sourceView, completionHandler) in
+            if let item = self.todoItems?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(item)
+                }
+            } catch {
+                print("Error while encoding \(error)")
+                }
+            }
+//            print("index path of delete: \(indexPath)")
+            completionHandler(true)
+           
+                tableView.reloadData()
+            
+        }
+
+        let rename = UIContextualAction(style: .normal, title: "Edit") { (action, sourceView, completionHandler) in
+            print("index path of edit: \(indexPath)")
+            completionHandler(true)
+        }
+        let swipeActionConfig = UISwipeActionsConfiguration(actions: [rename, delete])
+        swipeActionConfig.performsFirstActionWithFullSwipe = false
+        return swipeActionConfig
+    }
     
     //MARK: - TableView Delegate Methods
         
