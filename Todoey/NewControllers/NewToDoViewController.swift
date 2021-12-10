@@ -9,7 +9,9 @@
 import UIKit
 import RealmSwift
 
-class NewToDoViewController: UIViewController {
+class NewToDoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    
     
     @IBOutlet weak var tableView: UITableView!
     var todoItems: Results<Item>?
@@ -21,7 +23,7 @@ class NewToDoViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
+        
 //        tableView.delegate = self
         tableView.register(UINib(nibName: "ToDoTableViewCell", bundle: nil), forCellReuseIdentifier: "Reusable cell")
 
@@ -32,6 +34,10 @@ class NewToDoViewController: UIViewController {
         print(todoItems)
 //        tableView.reloadData()
     }
+//    func updateModel(at indexPath: IndexPath) {
+//
+//    }
+    
     //MARK: - IBActions
     @IBAction func addNewItemButtonPressed(_ sender: UIButton) {
         var textField = UITextField()
@@ -58,25 +64,49 @@ class NewToDoViewController: UIViewController {
         }
         present(alert, animated: true, completion: nil)
     }
-}
-//MARK: - DataSourceMethods
-extension NewToDoViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return todoItems?.count ?? 1
-    }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! ToDoTableViewCell
-        if let item = todoItems?[indexPath.row] {
-            cell.titleLable.text = item.title
-            cell.accessoryType = item.done == true ? .checkmark : .none
-        } else {
-            cell.textLabel?.text = "No Items Added"
-        }
-        return cell
-        
-    }
-    
+//MARK: - DataSourceMethods
+func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return todoItems?.count ?? 1
 }
+
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! ToDoTableViewCell
+            if let item = todoItems?[indexPath.row] {
+                cell.titleLable.text = item.title
+                cell.accessoryType = item.done == true ? .checkmark : .none
+                print("arbeitet")
+            } else {
+                cell.textLabel?.text = "No Items Added"
+            }
+            return cell
+        }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handelr) in
+            print("delete")
+            if let item = self.todoItems?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(item)
+                }
+            } catch {
+                print("Error while encoding \(error)")
+                }
+            }
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+//            let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+//                self.tableView.reloadData()
+//            }
+            
+            handelr(true)
+        }
+        let swipeaction = UISwipeActionsConfiguration(actions: [action])
+        return swipeaction
+    }
+}
+
+
+
+
 
 
