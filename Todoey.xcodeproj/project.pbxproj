@@ -10,6 +10,12 @@
 		94129D5B9A783071DE45DCD7 /* Pods_Todoey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A36F700920F3F04CD86F87E2 /* Pods_Todoey.framework */; };
 		A40797B22750EF5A002AD375 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40797B12750EF5A002AD375 /* CategoryViewController.swift */; };
 		A464B76F27634AC7004DEFCC /* ToDoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464B76E27634AC7004DEFCC /* ToDoCell.swift */; };
+		A464B77427637002004DEFCC /* NewCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464B77327637002004DEFCC /* NewCategoryViewController.swift */; };
+		A464B777276375D5004DEFCC /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464B775276375D5004DEFCC /* CategoryTableViewCell.swift */; };
+		A464B778276375D5004DEFCC /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A464B776276375D5004DEFCC /* CategoryTableViewCell.xib */; };
+		A464B77A27639ECE004DEFCC /* NewToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464B77927639ECE004DEFCC /* NewToDoViewController.swift */; };
+		A464B77F2763A0BB004DEFCC /* ToDoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464B77D2763A0BB004DEFCC /* ToDoTableViewCell.swift */; };
+		A464B7802763A0BB004DEFCC /* ToDoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A464B77E2763A0BB004DEFCC /* ToDoTableViewCell.xib */; };
 		A4943FDE2752D874001A047B /* IItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4943FDD2752D874001A047B /* IItem.swift */; };
 		A4943FE02752D883001A047B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4943FDF2752D883001A047B /* Category.swift */; };
 		EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2BE4F9239524DB00FB933B /* AppDelegate.swift */; };
@@ -24,6 +30,12 @@
 		A36F700920F3F04CD86F87E2 /* Pods_Todoey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Todoey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A40797B12750EF5A002AD375 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryViewController.swift; path = Todoey/Controllers/CategoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		A464B76E27634AC7004DEFCC /* ToDoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCell.swift; sourceTree = "<group>"; };
+		A464B77327637002004DEFCC /* NewCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCategoryViewController.swift; sourceTree = "<group>"; };
+		A464B775276375D5004DEFCC /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
+		A464B776276375D5004DEFCC /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryTableViewCell.xib; sourceTree = "<group>"; };
+		A464B77927639ECE004DEFCC /* NewToDoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewToDoViewController.swift; sourceTree = "<group>"; };
+		A464B77D2763A0BB004DEFCC /* ToDoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewCell.swift; sourceTree = "<group>"; };
+		A464B77E2763A0BB004DEFCC /* ToDoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToDoTableViewCell.xib; sourceTree = "<group>"; };
 		A4943FDD2752D874001A047B /* IItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IItem.swift; sourceTree = "<group>"; };
 		A4943FDF2752D883001A047B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		BABB6BE166C4C74C2673845C /* Pods-Todoey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todoey.release.xcconfig"; path = "Target Support Files/Pods-Todoey/Pods-Todoey.release.xcconfig"; sourceTree = "<group>"; };
@@ -63,6 +75,19 @@
 				BABB6BE166C4C74C2673845C /* Pods-Todoey.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		A464B77227636FB0004DEFCC /* NewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A464B77327637002004DEFCC /* NewCategoryViewController.swift */,
+				A464B77927639ECE004DEFCC /* NewToDoViewController.swift */,
+				A464B775276375D5004DEFCC /* CategoryTableViewCell.swift */,
+				A464B77D2763A0BB004DEFCC /* ToDoTableViewCell.swift */,
+				A464B776276375D5004DEFCC /* CategoryTableViewCell.xib */,
+				A464B77E2763A0BB004DEFCC /* ToDoTableViewCell.xib */,
+			);
+			path = NewControllers;
 			sourceTree = "<group>";
 		};
 		A4BFE52C27403A49004597F6 /* Data Model */ = {
@@ -115,6 +140,7 @@
 			children = (
 				EB2BE4F9239524DB00FB933B /* AppDelegate.swift */,
 				A4BFE52C27403A49004597F6 /* Data Model */,
+				A464B77227636FB0004DEFCC /* NewControllers */,
 				A4BFE52E27403A83004597F6 /* View */,
 				A4BFE52D27403A76004597F6 /* Controllers */,
 				EB2BE502239524DC00FB933B /* Assets.xcassets */,
@@ -185,8 +211,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB2BE506239524DC00FB933B /* LaunchScreen.storyboard in Resources */,
+				A464B7802763A0BB004DEFCC /* ToDoTableViewCell.xib in Resources */,
 				EB2BE503239524DC00FB933B /* Assets.xcassets in Resources */,
 				EB2BE501239524DB00FB933B /* Main.storyboard in Resources */,
+				A464B778276375D5004DEFCC /* CategoryTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,8 +271,12 @@
 				A464B76F27634AC7004DEFCC /* ToDoCell.swift in Sources */,
 				EB2BE4FE239524DB00FB933B /* ToDoListViewController.swift in Sources */,
 				A4943FDE2752D874001A047B /* IItem.swift in Sources */,
+				A464B77427637002004DEFCC /* NewCategoryViewController.swift in Sources */,
 				EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */,
 				A4943FE02752D883001A047B /* Category.swift in Sources */,
+				A464B777276375D5004DEFCC /* CategoryTableViewCell.swift in Sources */,
+				A464B77A27639ECE004DEFCC /* NewToDoViewController.swift in Sources */,
+				A464B77F2763A0BB004DEFCC /* ToDoTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

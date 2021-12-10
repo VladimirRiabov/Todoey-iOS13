@@ -28,19 +28,11 @@ class ToDoListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
 
-        
         let barAppearance = UINavigationBarAppearance()
         barAppearance.backgroundColor = #colorLiteral(red: 0.0004806999268, green: 0.6455104113, blue: 1, alpha: 1)
         navigationItem.standardAppearance = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
-        
-//        searchBar.delegate = self
-        
-      
 
 }
 
@@ -54,8 +46,6 @@ class ToDoListViewController: UITableViewController {
         override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath) as! ToDoCell
             
-            
-        
             if let item = todoItems?[indexPath.row] {
                 cell.titleLabel.text = item.title
                 cell.accessoryType = item.done == true ? .checkmark : .none

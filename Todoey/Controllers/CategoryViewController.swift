@@ -67,7 +67,6 @@ class CategoryViewController: UITableViewController {
     
     
     func save(category: Category) {
-                
         do {
             try realm.write {
                 realm.add(category)
@@ -75,7 +74,6 @@ class CategoryViewController: UITableViewController {
         } catch {
             print("Error while encoding \(error)")
         }
-        
         tableView.reloadData()
     }
     
@@ -96,26 +94,13 @@ class CategoryViewController: UITableViewController {
         var textField = UITextField()
         
         let alert = UIAlertController(title: "Add New Todoey Category", message: "123", preferredStyle: .alert)
-        
         let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
-
-            
             let newCategory = Category()
             newCategory.name = textField.text!
-//            newCategory.done = false
-            
-            //закидывает новый айтом в тот наш аррэй наверху
-            
-          
             self.save(category: newCategory)
-            //перезагружает данные в тэйбле
             self.tableView.reloadData()
-            
-           
         }
-        
         alert.addAction(action)
-        
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create new item"
             
