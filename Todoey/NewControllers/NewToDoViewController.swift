@@ -48,7 +48,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
                     try self.realm.write {
                         let newItem = Item()
                         newItem.title = textField.text!
-                        newItem.dateCreated = NSDate()
+                        newItem.dateCreated = Date()
                         currentCategory.items.append(newItem)
                     }
                 } catch {
@@ -104,7 +104,25 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         let swipeaction = UISwipeActionsConfiguration(actions: [action])
         return swipeaction
     }
+    
+    @objc func showMiracle() {
+        let slideVC = OverVIewToDo()
+        slideVC.modalPresentationStyle = .custom
+        slideVC.transitioningDelegate = self
+        self.present(slideVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func onButton(_ sender: Any) {
+        showMiracle()
+    }
 }
+
+extension NewToDoViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        PresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
 
 
 

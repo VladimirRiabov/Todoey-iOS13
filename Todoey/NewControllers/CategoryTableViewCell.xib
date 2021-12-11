@@ -18,46 +18,20 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="categoryTitleLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Yw-bf-Qzt">
-                        <rect key="frame" x="16" y="30" width="141" height="21"/>
+                        <rect key="frame" x="12" y="53.5" width="141" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nlY-4Y-iq4">
-                        <rect key="frame" x="279" y="10" width="25" height="15"/>
-                        <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="12"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="descriptionLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QXO-tm-jlQ">
-                        <rect key="frame" x="16" y="59" width="124" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="whenNeedToDoLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="491-j2-ac2">
-                        <rect key="frame" x="16" y="10" width="118" height="15"/>
-                        <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="491-j2-ac2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="B6J-I9-haV"/>
-                    <constraint firstAttribute="trailing" secondItem="nlY-4Y-iq4" secondAttribute="trailing" constant="16" id="HhI-B4-zTw"/>
-                    <constraint firstItem="nlY-4Y-iq4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="SNg-iT-brS"/>
-                    <constraint firstItem="8Yw-bf-Qzt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="hkd-YQ-US1"/>
-                    <constraint firstItem="8Yw-bf-Qzt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ihw-2m-BD5"/>
-                    <constraint firstItem="491-j2-ac2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="jtA-oe-SRY"/>
+                    <constraint firstItem="8Yw-bf-Qzt" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PbV-ft-Dde"/>
+                    <constraint firstItem="8Yw-bf-Qzt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="fWP-LV-f5R"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="categoryTitleLabel" destination="8Yw-bf-Qzt" id="bUW-eV-rAJ"/>
-                <outlet property="dateOfCreationLAbel" destination="nlY-4Y-iq4" id="rSz-oF-QHs"/>
-                <outlet property="descriptionLabel" destination="QXO-tm-jlQ" id="Fz8-0X-MFt"/>
-                <outlet property="whenNeedToDoLabel" destination="491-j2-ac2" id="P5K-QA-hZP"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="103.125"/>
         </tableViewCell>

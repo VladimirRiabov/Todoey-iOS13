@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		94129D5B9A783071DE45DCD7 /* Pods_Todoey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A36F700920F3F04CD86F87E2 /* Pods_Todoey.framework */; };
 		A40797B22750EF5A002AD375 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40797B12750EF5A002AD375 /* CategoryViewController.swift */; };
+		A44E46FF276492A700D56AD3 /* OverVIewToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44E46FD276492A700D56AD3 /* OverVIewToDo.swift */; };
+		A44E4700276492A700D56AD3 /* OverVIewToDo.xib in Resources */ = {isa = PBXBuildFile; fileRef = A44E46FE276492A700D56AD3 /* OverVIewToDo.xib */; };
 		A464B76F27634AC7004DEFCC /* ToDoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464B76E27634AC7004DEFCC /* ToDoCell.swift */; };
 		A464B77427637002004DEFCC /* NewCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464B77327637002004DEFCC /* NewCategoryViewController.swift */; };
 		A464B777276375D5004DEFCC /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464B775276375D5004DEFCC /* CategoryTableViewCell.swift */; };
@@ -32,6 +34,8 @@
 		67127DB3137DF8AEBEB5E95C /* Pods-Todoey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todoey.debug.xcconfig"; path = "Target Support Files/Pods-Todoey/Pods-Todoey.debug.xcconfig"; sourceTree = "<group>"; };
 		A36F700920F3F04CD86F87E2 /* Pods_Todoey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Todoey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A40797B12750EF5A002AD375 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryViewController.swift; path = Todoey/Controllers/CategoryViewController.swift; sourceTree = SOURCE_ROOT; };
+		A44E46FD276492A700D56AD3 /* OverVIewToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverVIewToDo.swift; sourceTree = "<group>"; };
+		A44E46FE276492A700D56AD3 /* OverVIewToDo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverVIewToDo.xib; sourceTree = "<group>"; };
 		A464B76E27634AC7004DEFCC /* ToDoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCell.swift; sourceTree = "<group>"; };
 		A464B77327637002004DEFCC /* NewCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCategoryViewController.swift; sourceTree = "<group>"; };
 		A464B775276375D5004DEFCC /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -93,7 +97,9 @@
 				A464B776276375D5004DEFCC /* CategoryTableViewCell.xib */,
 				A464B77E2763A0BB004DEFCC /* ToDoTableViewCell.xib */,
 				A464B7822764019E004DEFCC /* OverlayView.xib */,
+				A44E46FE276492A700D56AD3 /* OverVIewToDo.xib */,
 				A464B78727640980004DEFCC /* OverlayView.swift */,
+				A44E46FD276492A700D56AD3 /* OverVIewToDo.swift */,
 				A464B785276406D2004DEFCC /* PresentationController.swift */,
 			);
 			path = NewControllers;
@@ -224,6 +230,7 @@
 				A464B7802763A0BB004DEFCC /* ToDoTableViewCell.xib in Resources */,
 				EB2BE503239524DC00FB933B /* Assets.xcassets in Resources */,
 				EB2BE501239524DB00FB933B /* Main.storyboard in Resources */,
+				A44E4700276492A700D56AD3 /* OverVIewToDo.xib in Resources */,
 				A464B778276375D5004DEFCC /* CategoryTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A44E46FF276492A700D56AD3 /* OverVIewToDo.swift in Sources */,
 				A40797B22750EF5A002AD375 /* CategoryViewController.swift in Sources */,
 				A464B76F27634AC7004DEFCC /* ToDoCell.swift in Sources */,
 				EB2BE4FE239524DB00FB933B /* ToDoListViewController.swift in Sources */,

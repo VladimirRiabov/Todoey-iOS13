@@ -24,9 +24,16 @@ class NewCategoryViewController: UIViewController {
         tableView.register(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "Reusable cell")
         tableView.rowHeight = 80.0
         loadCategories()
+        //MARK: - Observer from OverlayView
+        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
+    }
+    
+    @objc func loadList(notification: NSNotification){
+        //see up
+        self.tableView.reloadData()
     }
     //MARK: - Loading and Saving Categories funcs
-    func loadCategories() {
+   public func loadCategories() {
         categories = realm.objects(Category.self)
         tableView.reloadData()
     }
@@ -43,6 +50,7 @@ class NewCategoryViewController: UIViewController {
     //MARK: - IBActions
     @IBAction func addCategoryButton(_ sender: UIButton) {
         var textField = UITextField()
+
         
         let alert = UIAlertController(title: "Add New Todoey Category", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
@@ -78,11 +86,33 @@ extension NewCategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! CategoryTableViewCell
         cell.categoryTitleLabel.text = categories?[indexPath.row].name ?? "No Categories Added yet"
-        cell.dateOfCreationLAbel.text = categories?[indexPath.row].dateOfCreationString
+
         
         return cell
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handelr) in
+            print("delete")
+            if let category = self.categories?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(category)
+                }
+            } catch {
+                print("Error while encoding \(error)")
+                }
+            }
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+//            let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+//                self.tableView.reloadData()
+//            }
+            
+            handelr(true)
+        }
+        let swipeaction = UISwipeActionsConfiguration(actions: [action])
+        return swipeaction
+    }
     
     
     

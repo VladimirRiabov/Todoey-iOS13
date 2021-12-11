@@ -12,8 +12,14 @@ import RealmSwift
 class Item: Object {
     @objc dynamic var title: String = ""
     @objc dynamic var done: Bool = false
+    @objc dynamic var descriptionLable: String = ""
+    @objc dynamic var dateCreated: Date?
     
-    @objc dynamic var dateCreated = NSDate()
+    @objc dynamic var deletedTag: String = ""
+    @objc dynamic var inProcessTag: String = ""
+    @objc dynamic var doneTag: String = ""
+    
+    
     
     var parentCategory = LinkingObjects(fromType: Category.self, property: "items")
 }

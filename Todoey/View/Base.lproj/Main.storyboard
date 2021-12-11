@@ -242,6 +242,15 @@
                                     <segue destination="PMc-bG-9h9" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="Wne-oe-vbo"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2W7-4J-JJB">
+                                <rect key="frame" x="61" y="148" width="64" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Modal"/>
+                                <connections>
+                                    <action selector="onButton:" destination="sy6-1K-45v" eventType="touchUpInside" id="wpH-kS-9Ku"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="LaK-mE-9FC"/>
                         <color key="backgroundColor" systemColor="systemTealColor"/>

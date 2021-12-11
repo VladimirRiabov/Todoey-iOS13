@@ -127,7 +127,7 @@ class ToDoListViewController: UITableViewController {
                     let newItem = Item()
                     newItem.title = textField.text!
                         
-                    newItem.dateCreated = NSDate()
+                    newItem.dateCreated = Date()
                    
                     currentCategory.items.append(newItem)
                 }

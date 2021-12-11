@@ -1,5 +1,5 @@
 //
-//  OverlayView.swift
+//  OverVIewToDo.swift
 //  Todoey
 //
 //  Created by Владимир Рябов on 11.12.2021.
@@ -10,7 +10,9 @@ import Foundation
 import UIKit
 import RealmSwift
 
-class OverlayView: UIViewController {
+
+
+class OverVIewToDo: UIViewController {
     
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
@@ -18,10 +20,9 @@ class OverlayView: UIViewController {
     let realm = try! Realm()
     var categories: Results<Category>?
     
-    @IBOutlet weak var slideIdicator: UIView!
-//    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleCategoryTextField: UITextField!
-    @IBOutlet weak var descriptionCategoryTextField: UITextField!
+
+    @IBOutlet weak var titileOfTaskTextField: UITextField!
+    
     
     
 
@@ -31,7 +32,7 @@ class OverlayView: UIViewController {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
         view.addGestureRecognizer(panGesture)
 
-        slideIdicator.roundCorners(.allCorners, radius: 10)
+//        slideIdicator.roundCorners(.allCorners, radius: 10)
         
     }
     
@@ -80,24 +81,23 @@ class OverlayView: UIViewController {
     
     
     
-    @IBAction func addCategoryButton(_ sender: UIButton) {
-        
-            let newCategory = Category()
-        newCategory.name = titleCategoryTextField.text ?? ""
-        newCategory.descriptionOfCategory = descriptionCategoryTextField.text ?? ""
-            let date = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "YY/MM/dd"
-            dateFormatter.string(from: date)
-            newCategory.dateOfCreation = Date()
-            newCategory.dateOfCreationString =  dateFormatter.string(from: date)
-            
-            self.save(category: newCategory)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
-        self.dismiss(animated: true, completion: nil)
-//            dismissController()
-//            NewCategoryViewController.tableView.reloadData()
-       
-    }
+//    @IBAction func addCategoryButton(_ sender: UIButton) {
+//        
+//            let newCategory = Category()
+////        newCategory.name = titleCategoryTextField.text ?? ""
+////        newCategory.descriptionOfCategory = descriptionCategoryTextField.text ?? ""
+//            let date = Date()
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateFormat = "YY/MM/dd"
+//            dateFormatter.string(from: date)
+//            newCategory.dateOfCreation = Date()
+//            newCategory.dateOfCreationString =  dateFormatter.string(from: date)
+//            
+//            self.save(category: newCategory)
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+//        self.dismiss(animated: true, completion: nil)
+////            dismissController()
+////            NewCategoryViewController.tableView.reloadData()
+//       
+//    }
 }
-

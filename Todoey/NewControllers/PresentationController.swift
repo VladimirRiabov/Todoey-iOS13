@@ -13,21 +13,26 @@ class PresentationController: UIPresentationController {
 
   let blurEffectView: UIVisualEffectView!
   var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
+    
   
   override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
       let blurEffect = UIBlurEffect(style: .dark)
       blurEffectView = UIVisualEffectView(effect: blurEffect)
       super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
+      
       tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissController))
       blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
       self.blurEffectView.isUserInteractionEnabled = true
       self.blurEffectView.addGestureRecognizer(tapGestureRecognizer)
   }
   
-  override var frameOfPresentedViewInContainerView: CGRect {
-      CGRect(origin: CGPoint(x: 0, y: self.containerView!.frame.height * 0.4),
-             size: CGSize(width: self.containerView!.frame.width, height: self.containerView!.frame.height *
-              0.6))
+    override var frameOfPresentedViewInContainerView: CGRect {
+//      CGRect(origin: CGPoint(x: 0, y: self.containerView!.frame.height * 0.4),
+//             size: CGSize(width: self.containerView!.frame.width, height: self.containerView!.frame.height *
+//              0.6))
+        CGRect(origin: CGPoint(x: 0, y: self.containerView!.frame.height * 0.2),
+                    size: CGSize(width: self.containerView!.frame.width, height: self.containerView!.frame.height *
+                     0.3))
   }
 
   override func presentationTransitionWillBegin() {
@@ -48,7 +53,7 @@ class PresentationController: UIPresentationController {
   
   override func containerViewWillLayoutSubviews() {
       super.containerViewWillLayoutSubviews()
-    presentedView!.roundCorners([.topLeft, .topRight], radius: 22)
+      presentedView!.roundCorners([.topLeft, .topRight, .bottomLeft, .bottomRight], radius: 22)
   }
 
   override func containerViewDidLayoutSubviews() {
