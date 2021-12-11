@@ -96,10 +96,10 @@
 				A464B77D2763A0BB004DEFCC /* ToDoTableViewCell.swift */,
 				A464B776276375D5004DEFCC /* CategoryTableViewCell.xib */,
 				A464B77E2763A0BB004DEFCC /* ToDoTableViewCell.xib */,
-				A464B7822764019E004DEFCC /* OverlayView.xib */,
-				A44E46FE276492A700D56AD3 /* OverVIewToDo.xib */,
 				A464B78727640980004DEFCC /* OverlayView.swift */,
+				A464B7822764019E004DEFCC /* OverlayView.xib */,
 				A44E46FD276492A700D56AD3 /* OverVIewToDo.swift */,
+				A44E46FE276492A700D56AD3 /* OverVIewToDo.xib */,
 				A464B785276406D2004DEFCC /* PresentationController.swift */,
 			);
 			path = NewControllers;

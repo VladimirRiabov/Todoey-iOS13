@@ -19,9 +19,10 @@ class OverlayView: UIViewController {
     var categories: Results<Category>?
     
     @IBOutlet weak var slideIdicator: UIView!
-//    @IBOutlet weak var imageView: UIImageView!
+
     @IBOutlet weak var titleCategoryTextField: UITextField!
-    @IBOutlet weak var descriptionCategoryTextField: UITextField!
+    
+
     
     
 
@@ -31,7 +32,7 @@ class OverlayView: UIViewController {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
         view.addGestureRecognizer(panGesture)
 
-        slideIdicator.roundCorners(.allCorners, radius: 10)
+//        slideIdicator.roundCorners(.allCorners, radius: 10)
         
     }
     
@@ -84,7 +85,7 @@ class OverlayView: UIViewController {
         
             let newCategory = Category()
         newCategory.name = titleCategoryTextField.text ?? ""
-        newCategory.descriptionOfCategory = descriptionCategoryTextField.text ?? ""
+        
             let date = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "YY/MM/dd"

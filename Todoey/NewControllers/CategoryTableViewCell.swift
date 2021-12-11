@@ -11,8 +11,9 @@ import UIKit
 class CategoryTableViewCell: UITableViewCell {
     @IBOutlet weak var categoryTitleLabel: UILabel!
     @IBOutlet weak var dateOfCreationLAbel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var whenNeedToDoLabel: UILabel!
+    @IBOutlet weak var CountOfItems: UILabel!
+    @IBOutlet weak var numberOfItemsLabel: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

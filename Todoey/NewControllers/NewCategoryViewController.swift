@@ -48,33 +48,7 @@ class NewCategoryViewController: UIViewController {
         tableView.reloadData()
     }
     //MARK: - IBActions
-    @IBAction func addCategoryButton(_ sender: UIButton) {
-        var textField = UITextField()
 
-        
-        let alert = UIAlertController(title: "Add New Todoey Category", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
-            let newCategory = Category()
-            newCategory.name = textField.text!
-            let date = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "YY/MM/dd"
-            dateFormatter.string(from: date)
-            
-            newCategory.dateOfCreation = Date()
-            newCategory.dateOfCreationString =  dateFormatter.string(from: date)
-            
-            self.save(category: newCategory)
-            self.tableView.reloadData()
-        }
-        alert.addAction(action)
-        alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Create new item"
-            
-            textField = alertTextField
-        }
-        present(alert, animated: true, completion: nil)
-    }
 }
 
 //MARK: - DataSourceMethods
@@ -86,6 +60,11 @@ extension NewCategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! CategoryTableViewCell
         cell.categoryTitleLabel.text = categories?[indexPath.row].name ?? "No Categories Added yet"
+        if let countItems = categories?[indexPath.row].items.count {
+            cell.numberOfItemsLabel.text = String(countItems)
+        }
+        
+        
 
         
         return cell
@@ -117,24 +96,17 @@ extension NewCategoryViewController: UITableViewDataSource {
     
     
     //MARK: - MODALVIEW
-    
-    
     @objc func showMiracle() {
         let slideVC = OverlayView()
         slideVC.modalPresentationStyle = .custom
         slideVC.transitioningDelegate = self
         self.present(slideVC, animated: true, completion: nil)
     }
-    
     @IBAction func onButton(_ sender: Any) {
         showMiracle()
     }
     
 }
-
-
-
-    
 extension NewCategoryViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         PresentationController(presentedViewController: presented, presenting: presenting)
