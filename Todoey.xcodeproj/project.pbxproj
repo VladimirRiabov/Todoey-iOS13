@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,6 +23,8 @@
 		A464B78827640980004DEFCC /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464B78727640980004DEFCC /* OverlayView.swift */; };
 		A4943FDE2752D874001A047B /* IItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4943FDD2752D874001A047B /* IItem.swift */; };
 		A4943FE02752D883001A047B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4943FDF2752D883001A047B /* Category.swift */; };
+		A4EB578B276569CF007830B4 /* CurrentCategoryStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EB578A276569CF007830B4 /* CurrentCategoryStruct.swift */; };
+		A4EB578E27661986007830B4 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A4EB578D27661986007830B4 /* IQKeyboardManagerSwift */; };
 		EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2BE4F9239524DB00FB933B /* AppDelegate.swift */; };
 		EB2BE4FE239524DB00FB933B /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2BE4FD239524DB00FB933B /* ToDoListViewController.swift */; };
 		EB2BE501239524DB00FB933B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB2BE4FF239524DB00FB933B /* Main.storyboard */; };
@@ -48,6 +50,7 @@
 		A464B78727640980004DEFCC /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		A4943FDD2752D874001A047B /* IItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IItem.swift; sourceTree = "<group>"; };
 		A4943FDF2752D883001A047B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		A4EB578A276569CF007830B4 /* CurrentCategoryStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentCategoryStruct.swift; sourceTree = "<group>"; };
 		BABB6BE166C4C74C2673845C /* Pods-Todoey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todoey.release.xcconfig"; path = "Target Support Files/Pods-Todoey/Pods-Todoey.release.xcconfig"; sourceTree = "<group>"; };
 		EB2BE4F6239524DB00FB933B /* Todoey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todoey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB2BE4F9239524DB00FB933B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +67,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94129D5B9A783071DE45DCD7 /* Pods_Todoey.framework in Frameworks */,
+				A4EB578E27661986007830B4 /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +96,7 @@
 			children = (
 				A464B77327637002004DEFCC /* NewCategoryViewController.swift */,
 				A464B77927639ECE004DEFCC /* NewToDoViewController.swift */,
+				A4EB578A276569CF007830B4 /* CurrentCategoryStruct.swift */,
 				A464B775276375D5004DEFCC /* CategoryTableViewCell.swift */,
 				A464B77D2763A0BB004DEFCC /* ToDoTableViewCell.swift */,
 				A464B776276375D5004DEFCC /* CategoryTableViewCell.xib */,
@@ -183,6 +188,9 @@
 			dependencies = (
 			);
 			name = Todoey;
+			packageProductDependencies = (
+				A4EB578D27661986007830B4 /* IQKeyboardManagerSwift */,
+			);
 			productName = Todoey;
 			productReference = EB2BE4F6239524DB00FB933B /* Todoey.app */;
 			productType = "com.apple.product-type.application";
@@ -211,6 +219,9 @@
 				Base,
 			);
 			mainGroup = EB2BE4ED239524DB00FB933B;
+			packageReferences = (
+				A4EB578C27661986007830B4 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+			);
 			productRefGroup = EB2BE4F7239524DB00FB933B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -296,6 +307,7 @@
 				A464B77A27639ECE004DEFCC /* NewToDoViewController.swift in Sources */,
 				A464B78827640980004DEFCC /* OverlayView.swift in Sources */,
 				A464B77F2763A0BB004DEFCC /* ToDoTableViewCell.swift in Sources */,
+				A4EB578B276569CF007830B4 /* CurrentCategoryStruct.swift in Sources */,
 				A464B786276406D2004DEFCC /* PresentationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,6 +512,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A4EB578C27661986007830B4 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A4EB578D27661986007830B4 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A4EB578C27661986007830B4 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EB2BE4EE239524DB00FB933B /* Project object */;
 }

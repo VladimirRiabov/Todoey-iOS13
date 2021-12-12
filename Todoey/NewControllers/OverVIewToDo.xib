@@ -9,8 +9,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OverViewToDo" customModule="Todoey" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OverVIewToDo" customModule="Todoey" customModuleProvider="target">
             <connections>
+                <outlet property="descriptionTaskTextField" destination="giF-ej-IHF" id="cuc-vS-ZiT"/>
+                <outlet property="needToBeDoneSegmentedControl" destination="7iz-9k-aEu" id="wCb-p2-Fmj"/>
+                <outlet property="timePicker" destination="pxE-Yf-u42" id="5H4-Sg-hSp"/>
                 <outlet property="titileOfTaskTextField" destination="aRY-1c-FFs" id="Zu6-xo-la1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="HW5-jz-eOv"/>
             </connections>
@@ -42,7 +45,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gh0-mc-k5v">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gh0-mc-k5v">
                     <rect key="frame" x="184" y="33" width="46" height="3"/>
                     <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
@@ -56,13 +59,22 @@
                         <segment title="Year"/>
                     </segments>
                 </segmentedControl>
-                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="10" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="pxE-Yf-u42">
-                    <rect key="frame" x="47" y="218" width="320" height="47"/>
+                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="10" style="wheels" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxE-Yf-u42">
+                    <rect key="frame" x="47" y="218" width="320" height="162"/>
+                    <date key="date" timeIntervalSinceReferenceDate="660917348.09762299">
+                        <!--2021-12-11 12:09:08 +0000-->
+                    </date>
+                    <connections>
+                        <action selector="timeActionSent:" destination="-1" eventType="valueChanged" id="kbd-BB-0Kv"/>
+                    </connections>
                 </datePicker>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcY-sy-zHB">
-                    <rect key="frame" x="151" y="273" width="112" height="31"/>
+                    <rect key="frame" x="151" y="388" width="112" height="31"/>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" title="Add new task"/>
+                    <connections>
+                        <action selector="AddNewTask:" destination="-1" eventType="touchUpInside" id="TVq-o9-prx"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
@@ -71,6 +83,7 @@
                 <constraint firstItem="uag-z2-T7j" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="0l3-ZB-3RF"/>
                 <constraint firstItem="pxE-Yf-u42" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="47" id="7cr-mr-a9D"/>
                 <constraint firstItem="xcY-sy-zHB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="GLA-PS-Jwh"/>
+                <constraint firstItem="gh0-mc-k5v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="184" id="GkZ-Fa-hgy"/>
                 <constraint firstItem="pxE-Yf-u42" firstAttribute="centerX" secondItem="gh0-mc-k5v" secondAttribute="centerX" id="Jd2-gS-KSC"/>
                 <constraint firstItem="giF-ej-IHF" firstAttribute="top" secondItem="Eix-kT-24h" secondAttribute="bottom" constant="8" symbolic="YES" id="NhH-Yu-AU0"/>
                 <constraint firstItem="7iz-9k-aEu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="T06-dv-8gz"/>
@@ -80,8 +93,10 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="giF-ej-IHF" secondAttribute="trailing" constant="20" id="beO-NL-6g0"/>
                 <constraint firstItem="Eix-kT-24h" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="doH-28-vid"/>
                 <constraint firstItem="7iz-9k-aEu" firstAttribute="top" secondItem="giF-ej-IHF" secondAttribute="bottom" constant="8" symbolic="YES" id="euz-Ip-ZKp"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="gh0-mc-k5v" secondAttribute="bottom" constant="8" symbolic="YES" id="h4G-UY-PIN"/>
                 <constraint firstItem="pxE-Yf-u42" firstAttribute="top" secondItem="7iz-9k-aEu" secondAttribute="bottom" constant="8" symbolic="YES" id="hYb-of-3cg"/>
                 <constraint firstItem="aRY-1c-FFs" firstAttribute="top" secondItem="uag-z2-T7j" secondAttribute="bottom" constant="8" symbolic="YES" id="i3r-9v-nJh"/>
+                <constraint firstItem="gh0-mc-k5v" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="33" id="rQE-fW-kwA"/>
                 <constraint firstItem="uag-z2-T7j" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="vPo-CT-R2W"/>
                 <constraint firstItem="Eix-kT-24h" firstAttribute="top" secondItem="aRY-1c-FFs" secondAttribute="bottom" constant="1" id="w1x-OL-UB6"/>
                 <constraint firstItem="giF-ej-IHF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="xiu-z5-r6R"/>

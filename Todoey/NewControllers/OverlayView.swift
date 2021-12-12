@@ -88,7 +88,7 @@ class OverlayView: UIViewController {
         
             let date = Date()
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "YY/MM/dd"
+            dateFormatter.dateFormat =  "dd/MM/YY"
             dateFormatter.string(from: date)
             newCategory.dateOfCreation = Date()
             newCategory.dateOfCreationString =  dateFormatter.string(from: date)

@@ -14,6 +14,8 @@ import RealmSwift
 
 class OverVIewToDo: UIViewController {
     
+    let currentCategoryTransition = CurrentCategoryStruct()
+    var strDate = "--:--"
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
     
@@ -22,7 +24,9 @@ class OverVIewToDo: UIViewController {
     
 
     @IBOutlet weak var titileOfTaskTextField: UITextField!
-    
+    @IBOutlet weak var descriptionTaskTextField: UITextField!
+    @IBOutlet weak var needToBeDoneSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var timePicker: UIDatePicker!
     
     
 
@@ -31,7 +35,7 @@ class OverVIewToDo: UIViewController {
         super.viewDidLoad()
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
         view.addGestureRecognizer(panGesture)
-
+        
 //        slideIdicator.roundCorners(.allCorners, radius: 10)
         
     }
@@ -76,28 +80,106 @@ class OverVIewToDo: UIViewController {
         } catch {
             print("Error while encoding \(error)")
         }
-//        tableView.reloadData()
     }
     
+
     
     
-//    @IBAction func addCategoryButton(_ sender: UIButton) {
-//        
+    @IBAction func timeActionSent(_ sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+
+            dateFormatter.dateStyle = DateFormatter.Style.short
+            dateFormatter.timeStyle = DateFormatter.Style.short
+            dateFormatter.dateFormat = "HH:mm"
+
+            strDate = dateFormatter.string(from: timePicker.date)
+          print(strDate)
+    }
+    
+    @IBAction func AddNewTask(_ sender: UIButton) {
+        if let currentCategory = CurrentCategoryStruct.selectedClassCategory {
+                       do {
+                           try self.realm.write {
+                               let newItem = Item()
+                               newItem.title = titileOfTaskTextField.text!
+                               newItem.descriptionLable = descriptionTaskTextField.text!
+                               
+                               let needToBeDoneIndex = self.needToBeDoneSegmentedControl.selectedSegmentIndex
+                               if needToBeDoneIndex != -1 {
+                                   if let needToBeDoneText = self.needToBeDoneSegmentedControl.titleForSegment(at: needToBeDoneIndex) {
+                                       newItem.needToBeDoneLable = needToBeDoneText
+                                   }
+                               } else {
+                                   newItem.needToBeDoneLable = ""
+                               }
+
+                               newItem.dateOfItemCreation = Date()
+                               newItem.timeOfADay = strDate
+                               
+                               
+                               
+                               
+                               
+                               
+                               currentCategory.items.append(newItem)
+                              
+                           }
+                       } catch {
+                           print("Error saving")
+                       }
+                   }
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+        self.dismiss(animated: true, completion: nil)
+       
+    }
+    @IBAction func addCategoryButton(_ sender: UIButton) {
+        
+        
+//            if let currentCategory = self.selectedCategory {
+//                do {
+//                    try self.realm.write {
+//                        let newItem = Item()
+//                        newItem.title = textField.text!
+//                        newItem.dateCreated = Date()
+//                        currentCategory.items.append(newItem)
+//                        self.currentClassCategory.selectedClassCategory = currentCategory
+//                    }
+//                } catch {
+//                    print("Error saving")
+//                }
+//            }
+//            self.tableView.reloadData()
+//        }
+//        alert.addAction(action)
+//        alert.addTextField { (alertTextField) in
+//            alertTextField.placeholder = "Create new item"
+//            textField = alertTextField
+//        }
+//
+//        present(alert, animated: true, completion: nil)
+        
+
+    
+    
+    
+    
+    
+    
+    
+    
 //            let newCategory = Category()
-////        newCategory.name = titleCategoryTextField.text ?? ""
-////        newCategory.descriptionOfCategory = descriptionCategoryTextField.text ?? ""
 //            let date = Date()
 //            let dateFormatter = DateFormatter()
 //            dateFormatter.dateFormat = "YY/MM/dd"
 //            dateFormatter.string(from: date)
 //            newCategory.dateOfCreation = Date()
 //            newCategory.dateOfCreationString =  dateFormatter.string(from: date)
-//            
+//
 //            self.save(category: newCategory)
 //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
 //        self.dismiss(animated: true, completion: nil)
 ////            dismissController()
 ////            NewCategoryViewController.tableView.reloadData()
-//       
-//    }
+       
+    }
 }

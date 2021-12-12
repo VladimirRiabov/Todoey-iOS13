@@ -13,6 +13,7 @@ class NewCategoryViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+   
     let realm = try! Realm()
     var categories: Results<Category>?
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Category.plist")
@@ -63,6 +64,7 @@ extension NewCategoryViewController: UITableViewDataSource {
         if let countItems = categories?[indexPath.row].items.count {
             cell.numberOfItemsLabel.text = String(countItems)
         }
+        cell.dateOfCreationLAbel.text = categories?[indexPath.row].dateOfCreationString
         
         
 

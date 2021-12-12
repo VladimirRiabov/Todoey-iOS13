@@ -21,17 +21,27 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
             loadItems()
         }
     }
+    var currentCategoryTransition = CurrentCategoryStruct()
     override func viewDidLoad() {
         super.viewDidLoad()
+        CurrentCategoryStruct.selectedClassCategory = selectedCategory
         
+
 //        tableView.delegate = self
         tableView.register(UINib(nibName: "ToDoTableViewCell", bundle: nil), forCellReuseIdentifier: "Reusable cell")
-
+        tableView.rowHeight = 80.0
+        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
+    }
+    
+    @objc func loadList(notification: NSNotification){
+        //see up
+        self.tableView.reloadData()
     }
     //MARK: - Loading ToDo func
     func loadItems() {
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
-        print(todoItems)
+        
+        
 //        tableView.reloadData()
     }
 //    func updateModel(at indexPath: IndexPath) {
@@ -48,8 +58,9 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
                     try self.realm.write {
                         let newItem = Item()
                         newItem.title = textField.text!
-                        newItem.dateCreated = Date()
+                        newItem.dateOfItemCreation = Date()
                         currentCategory.items.append(newItem)
+                        
                     }
                 } catch {
                     print("Error saving")
@@ -75,6 +86,11 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! ToDoTableViewCell
             if let item = todoItems?[indexPath.row] {
                 cell.titleLable.text = item.title
+                cell.subtitleLabel.text = item.descriptionLable
+                cell.needToBeDoneLabel.text = item.needToBeDoneLable
+                cell.timeOfADatLabel.text = item.timeOfADay
+//                cell.dataOfCreation.text =
+                
                 cell.accessoryType = item.done == true ? .checkmark : .none
                 print("arbeitet")
             } else {

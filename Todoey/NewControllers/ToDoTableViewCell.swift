@@ -11,7 +11,10 @@ import UIKit
 class ToDoTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLable: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var needToBeDoneLabel: UILabel!
+    @IBOutlet weak var dataOfCreation: UILabel!
     
+    @IBOutlet weak var timeOfADatLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
