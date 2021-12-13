@@ -94,8 +94,7 @@
 		A464B77227636FB0004DEFCC /* NewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				A464B77327637002004DEFCC /* NewCategoryViewController.swift */,
-				A464B77927639ECE004DEFCC /* NewToDoViewController.swift */,
+				A4A1DBA4276776D4006210F9 /* Main Controllers */,
 				A4EB578A276569CF007830B4 /* CurrentCategoryStruct.swift */,
 				A464B775276375D5004DEFCC /* CategoryTableViewCell.swift */,
 				A464B77D2763A0BB004DEFCC /* ToDoTableViewCell.swift */,
@@ -108,6 +107,15 @@
 				A464B785276406D2004DEFCC /* PresentationController.swift */,
 			);
 			path = NewControllers;
+			sourceTree = "<group>";
+		};
+		A4A1DBA4276776D4006210F9 /* Main Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A464B77327637002004DEFCC /* NewCategoryViewController.swift */,
+				A464B77927639ECE004DEFCC /* NewToDoViewController.swift */,
+			);
+			path = "Main Controllers";
 			sourceTree = "<group>";
 		};
 		A4BFE52C27403A49004597F6 /* Data Model */ = {
