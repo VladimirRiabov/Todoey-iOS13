@@ -97,11 +97,7 @@
 				A4A1DBA4276776D4006210F9 /* Main Controllers */,
 				A4EB578A276569CF007830B4 /* CurrentCategoryStruct.swift */,
 				A4A1DBA5276776F9006210F9 /* Cells */,
-				A464B78727640980004DEFCC /* OverlayView.swift */,
-				A464B7822764019E004DEFCC /* OverlayView.xib */,
-				A44E46FD276492A700D56AD3 /* OverVIewToDo.swift */,
-				A44E46FE276492A700D56AD3 /* OverVIewToDo.xib */,
-				A464B785276406D2004DEFCC /* PresentationController.swift */,
+				A4A1DBA627677715006210F9 /* OverlayViewGroup */,
 			);
 			path = NewControllers;
 			sourceTree = "<group>";
@@ -124,6 +120,18 @@
 				A464B77E2763A0BB004DEFCC /* ToDoTableViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		A4A1DBA627677715006210F9 /* OverlayViewGroup */ = {
+			isa = PBXGroup;
+			children = (
+				A464B78727640980004DEFCC /* OverlayView.swift */,
+				A464B7822764019E004DEFCC /* OverlayView.xib */,
+				A44E46FD276492A700D56AD3 /* OverVIewToDo.swift */,
+				A44E46FE276492A700D56AD3 /* OverVIewToDo.xib */,
+				A464B785276406D2004DEFCC /* PresentationController.swift */,
+			);
+			path = OverlayViewGroup;
 			sourceTree = "<group>";
 		};
 		A4BFE52C27403A49004597F6 /* Data Model */ = {
