@@ -25,7 +25,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         CurrentCategoryStruct.selectedClassCategory = selectedCategory
-        
+        dfgdfg
 
 //        tableView.delegate = self
         tableView.register(UINib(nibName: "ToDoTableViewCell", bundle: nil), forCellReuseIdentifier: "Reusable cell")
