@@ -39,7 +39,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     //MARK: - Loading ToDo func
     func loadItems() {
-        todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
+        todoItems = selectedCategory?.items.sorted(byKeyPath: "timeOfADaySort", ascending: true)
         
         
 //        tableView.reloadData()

@@ -114,6 +114,7 @@ class OverVIewToDo: UIViewController {
                                }
 
                                newItem.dateOfItemCreation = Date()
+                               newItem.timeOfADaySort = timePicker.date
                                newItem.timeOfADay = strDate
                                
                                

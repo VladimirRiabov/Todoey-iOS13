@@ -16,6 +16,7 @@ class Item: Object {
     @objc dynamic var needToBeDoneLable: String = ""
     @objc dynamic var dateOfItemCreation: Date?
     @objc dynamic var timeOfADay: String = ""
+    @objc dynamic var timeOfADaySort: Date?
     
     
     @objc dynamic var deletedTag: String = ""
