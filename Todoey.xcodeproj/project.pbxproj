@@ -95,7 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				A4A1DBA4276776D4006210F9 /* Main Controllers */,
-				A4EB578A276569CF007830B4 /* CurrentCategoryStruct.swift */,
+				A4A1DBA727677731006210F9 /* Singletons */,
 				A4A1DBA5276776F9006210F9 /* Cells */,
 				A4A1DBA627677715006210F9 /* OverlayViewGroup */,
 			);
@@ -132,6 +132,14 @@
 				A464B785276406D2004DEFCC /* PresentationController.swift */,
 			);
 			path = OverlayViewGroup;
+			sourceTree = "<group>";
+		};
+		A4A1DBA727677731006210F9 /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				A4EB578A276569CF007830B4 /* CurrentCategoryStruct.swift */,
+			);
+			path = Singletons;
 			sourceTree = "<group>";
 		};
 		A4BFE52C27403A49004597F6 /* Data Model */ = {
