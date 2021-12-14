@@ -8,7 +8,10 @@
 
 import Foundation
 
-struct CurrentCategoryStruct {
+struct GlobalKonstantSingleton {
    static var selectedClassCategory : Category?
     static var allItemsCategory : Category?
+    static var currentDateStr: String?
+    
+    
 }

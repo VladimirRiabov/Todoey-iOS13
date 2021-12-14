@@ -11,6 +11,7 @@
 		A40797B22750EF5A002AD375 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40797B12750EF5A002AD375 /* CategoryViewController.swift */; };
 		A44E46FF276492A700D56AD3 /* OverVIewToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44E46FD276492A700D56AD3 /* OverVIewToDo.swift */; };
 		A44E4700276492A700D56AD3 /* OverVIewToDo.xib in Resources */ = {isa = PBXBuildFile; fileRef = A44E46FE276492A700D56AD3 /* OverVIewToDo.xib */; };
+		A454C9852769375000C482B6 /* TrashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A454C9842769375000C482B6 /* TrashViewController.swift */; };
 		A464B76F27634AC7004DEFCC /* ToDoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464B76E27634AC7004DEFCC /* ToDoCell.swift */; };
 		A464B77427637002004DEFCC /* NewCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464B77327637002004DEFCC /* NewCategoryViewController.swift */; };
 		A464B777276375D5004DEFCC /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464B775276375D5004DEFCC /* CategoryTableViewCell.swift */; };
@@ -24,7 +25,7 @@
 		A4943FDE2752D874001A047B /* IItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4943FDD2752D874001A047B /* IItem.swift */; };
 		A4943FE02752D883001A047B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4943FDF2752D883001A047B /* Category.swift */; };
 		A4A1DBAA27677FDF006210F9 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A1DBA927677FDF006210F9 /* CalendarViewController.swift */; };
-		A4EB578B276569CF007830B4 /* CurrentCategoryStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EB578A276569CF007830B4 /* CurrentCategoryStruct.swift */; };
+		A4EB578B276569CF007830B4 /* GlobalKonstantSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EB578A276569CF007830B4 /* GlobalKonstantSingleton.swift */; };
 		A4EB578E27661986007830B4 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A4EB578D27661986007830B4 /* IQKeyboardManagerSwift */; };
 		EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2BE4F9239524DB00FB933B /* AppDelegate.swift */; };
 		EB2BE4FE239524DB00FB933B /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2BE4FD239524DB00FB933B /* ToDoListViewController.swift */; };
@@ -39,6 +40,7 @@
 		A40797B12750EF5A002AD375 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryViewController.swift; path = Todoey/Controllers/CategoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		A44E46FD276492A700D56AD3 /* OverVIewToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverVIewToDo.swift; sourceTree = "<group>"; };
 		A44E46FE276492A700D56AD3 /* OverVIewToDo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverVIewToDo.xib; sourceTree = "<group>"; };
+		A454C9842769375000C482B6 /* TrashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashViewController.swift; sourceTree = "<group>"; };
 		A464B76E27634AC7004DEFCC /* ToDoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCell.swift; sourceTree = "<group>"; };
 		A464B77327637002004DEFCC /* NewCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCategoryViewController.swift; sourceTree = "<group>"; };
 		A464B775276375D5004DEFCC /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -52,7 +54,7 @@
 		A4943FDD2752D874001A047B /* IItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IItem.swift; sourceTree = "<group>"; };
 		A4943FDF2752D883001A047B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		A4A1DBA927677FDF006210F9 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
-		A4EB578A276569CF007830B4 /* CurrentCategoryStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentCategoryStruct.swift; sourceTree = "<group>"; };
+		A4EB578A276569CF007830B4 /* GlobalKonstantSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKonstantSingleton.swift; sourceTree = "<group>"; };
 		BABB6BE166C4C74C2673845C /* Pods-Todoey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todoey.release.xcconfig"; path = "Target Support Files/Pods-Todoey/Pods-Todoey.release.xcconfig"; sourceTree = "<group>"; };
 		EB2BE4F6239524DB00FB933B /* Todoey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todoey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB2BE4F9239524DB00FB933B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -140,7 +142,7 @@
 		A4A1DBA727677731006210F9 /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
-				A4EB578A276569CF007830B4 /* CurrentCategoryStruct.swift */,
+				A4EB578A276569CF007830B4 /* GlobalKonstantSingleton.swift */,
 			);
 			path = Singletons;
 			sourceTree = "<group>";
@@ -149,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				A4A1DBA927677FDF006210F9 /* CalendarViewController.swift */,
+				A454C9842769375000C482B6 /* TrashViewController.swift */,
 			);
 			path = "Trash and Done VC";
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				A464B76F27634AC7004DEFCC /* ToDoCell.swift in Sources */,
 				EB2BE4FE239524DB00FB933B /* ToDoListViewController.swift in Sources */,
 				A4943FDE2752D874001A047B /* IItem.swift in Sources */,
+				A454C9852769375000C482B6 /* TrashViewController.swift in Sources */,
 				A464B77427637002004DEFCC /* NewCategoryViewController.swift in Sources */,
 				A4A1DBAA27677FDF006210F9 /* CalendarViewController.swift in Sources */,
 				EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */,
@@ -351,7 +355,7 @@
 				A464B77A27639ECE004DEFCC /* NewToDoViewController.swift in Sources */,
 				A464B78827640980004DEFCC /* OverlayView.swift in Sources */,
 				A464B77F2763A0BB004DEFCC /* ToDoTableViewCell.swift in Sources */,
-				A4EB578B276569CF007830B4 /* CurrentCategoryStruct.swift in Sources */,
+				A4EB578B276569CF007830B4 /* GlobalKonstantSingleton.swift in Sources */,
 				A464B786276406D2004DEFCC /* PresentationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

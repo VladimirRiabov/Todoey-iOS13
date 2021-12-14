@@ -20,16 +20,16 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="288"/>
+            <rect key="frame" x="0.0" y="0.0" width="409" height="619"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title of task" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aRY-1c-FFs">
-                    <rect key="frame" x="20" y="72.5" width="374" height="34"/>
+                    <rect key="frame" x="20" y="72.5" width="369" height="34"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                 </textField>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description of task" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="giF-ej-IHF">
-                    <rect key="frame" x="20" y="143" width="374" height="34"/>
+                    <rect key="frame" x="20" y="143" width="369" height="34"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                 </textField>
@@ -46,7 +46,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gh0-mc-k5v">
-                    <rect key="frame" x="192" y="33" width="30" height="3"/>
+                    <rect key="frame" x="189.5" y="33" width="30" height="3"/>
                     <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="Gu2-Ge-j6E"/>
@@ -54,7 +54,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcY-sy-zHB">
-                    <rect key="frame" x="148" y="243" width="112" height="31"/>
+                    <rect key="frame" x="174" y="316" width="67" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" title="Add new task"/>
@@ -62,30 +62,23 @@
                         <action selector="AddNewTask:" destination="-1" eventType="touchUpInside" id="TVq-o9-prx"/>
                     </connections>
                 </button>
-                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="YYg-Mk-fUD">
-                    <rect key="frame" x="20" y="187" width="374" height="50"/>
-                    <subviews>
-                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Ac2-KF-Gcn">
-                            <rect key="frame" x="0.0" y="0.0" width="273" height="50"/>
-                            <connections>
-                                <action selector="datePickerPressed:" destination="-1" eventType="valueChanged" id="Dn4-ZT-yXQ"/>
-                            </connections>
-                        </datePicker>
-                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="10" style="compact" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxE-Yf-u42">
-                            <rect key="frame" x="288" y="0.0" width="86" height="50"/>
-                            <date key="date" timeIntervalSinceReferenceDate="660917348.09762299">
-                                <!--2021-12-11 12:09:08 +0000-->
-                            </date>
-                            <connections>
-                                <action selector="timeActionSent:" destination="-1" eventType="valueChanged" id="kbd-BB-0Kv"/>
-                            </connections>
-                        </datePicker>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="Ac2-KF-Gcn" firstAttribute="centerY" secondItem="YYg-Mk-fUD" secondAttribute="centerY" id="aiO-UQ-eW3"/>
-                        <constraint firstItem="pxE-Yf-u42" firstAttribute="centerY" secondItem="YYg-Mk-fUD" secondAttribute="centerY" id="aya-vX-Lxj"/>
-                    </constraints>
-                </stackView>
+                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Ac2-KF-Gcn">
+                    <rect key="frame" x="20" y="187" width="208" height="54"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="datePickerPressed:" destination="-1" eventType="valueChanged" id="Dn4-ZT-yXQ"/>
+                    </connections>
+                </datePicker>
+                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="10" style="compact" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxE-Yf-u42">
+                    <rect key="frame" x="302" y="316" width="80" height="53"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <date key="date" timeIntervalSinceReferenceDate="660917348.09762299">
+                        <!--2021-12-11 12:09:08 +0000-->
+                    </date>
+                    <connections>
+                        <action selector="timeActionSent:" destination="-1" eventType="valueChanged" id="kbd-BB-0Kv"/>
+                    </connections>
+                </datePicker>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -96,19 +89,15 @@
                 <constraint firstItem="Eix-kT-24h" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Sut-vr-jvw"/>
                 <constraint firstItem="giF-ej-IHF" firstAttribute="top" secondItem="Eix-kT-24h" secondAttribute="bottom" constant="8" id="UUl-o5-a07"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="aRY-1c-FFs" secondAttribute="trailing" constant="20" id="V8R-hZ-Sc1"/>
-                <constraint firstItem="YYg-Mk-fUD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Wte-qq-OTE"/>
                 <constraint firstItem="Eix-kT-24h" firstAttribute="top" secondItem="aRY-1c-FFs" secondAttribute="bottom" constant="8" id="Xj0-R3-0SL"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="YYg-Mk-fUD" secondAttribute="trailing" constant="20" id="cMg-hp-mVY"/>
                 <constraint firstItem="aRY-1c-FFs" firstAttribute="top" secondItem="uag-z2-T7j" secondAttribute="bottom" constant="8" id="dGQ-N7-nVA"/>
                 <constraint firstItem="aRY-1c-FFs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="gfs-Zh-yR1"/>
                 <constraint firstItem="uag-z2-T7j" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="gih-TW-jBb"/>
                 <constraint firstItem="giF-ej-IHF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="lT4-QR-6Aj"/>
-                <constraint firstItem="YYg-Mk-fUD" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="mvk-0a-RFK"/>
-                <constraint firstItem="YYg-Mk-fUD" firstAttribute="top" secondItem="giF-ej-IHF" secondAttribute="bottom" constant="10" id="ouU-tj-Wxi"/>
                 <constraint firstItem="gh0-mc-k5v" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="33" id="zVT-WP-azM"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="137.68115942028987" y="-123.88392857142857"/>
+            <point key="canvasLocation" x="134.05797101449275" y="-228.01339285714283"/>
         </view>
     </objects>
     <resources>

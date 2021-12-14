@@ -21,10 +21,10 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
             loadItems()
         }
     }
-    var currentCategoryTransition = CurrentCategoryStruct()
+    var currentCategoryTransition = GlobalKonstantSingleton()
     override func viewDidLoad() {
         super.viewDidLoad()
-        CurrentCategoryStruct.selectedClassCategory = selectedCategory
+        GlobalKonstantSingleton.selectedClassCategory = selectedCategory
         
 
 //        tableView.delegate = self

@@ -14,7 +14,7 @@ import RealmSwift
 
 class OverVIewToDo: UIViewController {
     
-    let currentCategoryTransition = CurrentCategoryStruct()
+    let currentCategoryTransition = GlobalKonstantSingleton()
     var timeOfADay = "--:--"
     var dateToBeDone = ""
     var hasSetPointOrigin = false
@@ -36,7 +36,7 @@ class OverVIewToDo: UIViewController {
         super.viewDidLoad()
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
         view.addGestureRecognizer(panGesture)
-        
+        datePicker.minimumDate = Date()
 //        slideIdicator.roundCorners(.allCorners, radius: 10)
         
     }
@@ -99,18 +99,18 @@ class OverVIewToDo: UIViewController {
     
     @IBAction func datePickerPressed(_ sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
-
+             
             dateFormatter.dateStyle = DateFormatter.Style.short
             dateFormatter.timeStyle = DateFormatter.Style.short
             dateFormatter.dateFormat = "yyyy-MM-dd"
-
+        
             dateToBeDone =  dateFormatter.string(from: datePicker.date)
-          print(timeOfADay)
+        print(dateToBeDone)
     }
     
     
     @IBAction func AddNewTask(_ sender: UIButton) {
-        if let currentCategory = CurrentCategoryStruct.selectedClassCategory {
+        if let currentCategory = GlobalKonstantSingleton.selectedClassCategory {
                        do {
                            try self.realm.write {
                                let newItem = Item()
@@ -127,7 +127,7 @@ class OverVIewToDo: UIViewController {
                                
                                
                                
-                               CurrentCategoryStruct.allItemsCategory?.items.append(newItem)
+                               GlobalKonstantSingleton.allItemsCategory?.items.append(newItem)
                                currentCategory.items.append(newItem)
                               
                            }

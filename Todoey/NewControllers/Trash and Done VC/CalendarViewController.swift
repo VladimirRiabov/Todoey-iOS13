@@ -18,6 +18,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     
     var todoItems: Results<Item>?
     let realm = try! Realm()
+    var dates = Set<String>()
     
   
     
@@ -30,13 +31,43 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         tableView.rowHeight = 80.0
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
      loadItems()
+        tableView.reloadData()
     }
     
 
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print(date)
-            
+        let dateFormatter = DateFormatter()
+             
+            dateFormatter.dateStyle = DateFormatter.Style.short
+            dateFormatter.timeStyle = DateFormatter.Style.short
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+           let dateCalendarSelectStr =  dateFormatter.string(from: date)
+        
+        todoItems = realm.objects(Item.self).filter("dateToBeDone CONTAINS[cd] %@", dateCalendarSelectStr)
+        tableView.reloadData()
+        
+    }
+    func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
+     
+        todoItems = realm.objects(Item.self).filter("dateToBeDone CONTAINS[cd] %@", GlobalKonstantSingleton.currentDateStr!)
+        tableView.reloadData()
+    }
+    
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = DateFormatter.Style.short
+            dateFormatter.timeStyle = DateFormatter.Style.short
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+
+        for dateStr in dates {
+            if(dateFormatter.string(from: date) == dateStr)
+            {
+                return 1
+            }
+        }
+        return 0
     }
    
    
@@ -47,6 +78,8 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     //MARK: - Loading ToDo func
     func loadItems() {
         todoItems = realm.objects(Item.self)
+//            .filter("dateToBeDone CONTAINS[cd] %@", GlobalKonstantSingleton.currentDateStr!)
+        
         
     }
     
@@ -68,6 +101,9 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
             cell.subtitleLabel.text = item.descriptionLable
             cell.needToBeDoneLabel.text = item.dateToBeDone
             cell.timeOfADatLabel.text = item.timeOfADay
+            dates.insert(item.dateToBeDone)
+            print(dates)
+            
 
             cell.accessoryType = item.done == true ? .checkmark : .none
             print("arbeitet")
@@ -76,6 +112,10 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         }
         return cell
     }
+    
+    func minimumDate(for calendar: FSCalendar) -> Date {
+           return Date()
+    } 
     
     
     
