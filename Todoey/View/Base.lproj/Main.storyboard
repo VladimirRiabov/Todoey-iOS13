@@ -291,10 +291,10 @@
             </objects>
             <point key="canvasLocation" x="3038" y="-1247"/>
         </scene>
-        <!--Trash View Controller-->
+        <!--View Controller-->
         <scene sceneID="zlP-3U-JtK">
             <objects>
-                <viewController id="p5E-sM-rzL" customClass="TrashViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="p5E-sM-rzL" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="q4u-SC-XjY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -314,28 +314,21 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="p5E-sM-rzL" id="a9S-b4-HSH"/>
-                                    <outlet property="delegate" destination="p5E-sM-rzL" id="B0f-86-sPR"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="TjB-6g-wcP"/>
                         <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="pMZ-jA-iPP"/>
-                    <connections>
-                        <outlet property="tableView" destination="NEq-i7-DZA" id="6YV-ix-H1m"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7O5-PF-JKC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3039" y="-534"/>
         </scene>
-        <!--Trash View Controller-->
+        <!--Calendar View Controller-->
         <scene sceneID="fbt-JK-s6g">
             <objects>
-                <viewController id="Y2f-rB-gQg" customClass="TrashViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Y2f-rB-gQg" customClass="CalendarViewController" customModule="Todoey" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h5D-BK-Qj3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -382,6 +375,7 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
                                         <color key="value" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsMultipleSelection" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="Y2f-rB-gQg" id="aXp-NL-aze"/>
@@ -414,6 +408,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="pVY-dD-vei"/>
                     <connections>
+                        <outlet property="ffCalendar" destination="8bU-Ka-bz3" id="WtP-Jf-R1N"/>
                         <outlet property="tableView" destination="bPn-N9-yy7" id="4eg-4v-le2"/>
                     </connections>
                 </viewController>

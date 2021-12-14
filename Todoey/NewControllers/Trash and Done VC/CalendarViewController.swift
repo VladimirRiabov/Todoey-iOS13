@@ -10,12 +10,15 @@ import UIKit
 import RealmSwift
 import FSCalendar
 
-class TrashViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, UITableViewDataSource, UITableViewDelegate {
+class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var ffCalendar: FSCalendar!
+    
     
     var todoItems: Results<Item>?
     let realm = try! Realm()
+    
   
     
     override func viewDidLoad() {
@@ -27,9 +30,16 @@ class TrashViewController: UIViewController, FSCalendarDataSource, FSCalendarDel
         tableView.rowHeight = 80.0
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
      loadItems()
-        print(todoItems)
     }
     
+
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        print(date)
+            
+    }
+   
+   
     @objc func loadList(notification: NSNotification){
         //see up
         self.tableView.reloadData()
@@ -45,6 +55,7 @@ class TrashViewController: UIViewController, FSCalendarDataSource, FSCalendarDel
     
     
     
+    
     //MARK: - DataSourceMethods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todoItems?.count ?? 1
@@ -55,7 +66,7 @@ class TrashViewController: UIViewController, FSCalendarDataSource, FSCalendarDel
         if let item = todoItems?[indexPath.row] {
             cell.titleLable.text = item.title
             cell.subtitleLabel.text = item.descriptionLable
-            cell.needToBeDoneLabel.text = item.needToBeDoneLable
+            cell.needToBeDoneLabel.text = item.dateToBeDone
             cell.timeOfADatLabel.text = item.timeOfADay
 
             cell.accessoryType = item.done == true ? .checkmark : .none
@@ -65,6 +76,10 @@ class TrashViewController: UIViewController, FSCalendarDataSource, FSCalendarDel
         }
         return cell
     }
+    
+    
+    
+    
 //    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 //        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handelr) in
 //            print("delete")

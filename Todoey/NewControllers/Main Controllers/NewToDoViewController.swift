@@ -85,11 +85,13 @@ func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> 
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! ToDoTableViewCell
             if let item = todoItems?[indexPath.row] {
+                
                 cell.titleLable.text = item.title
                 cell.subtitleLabel.text = item.descriptionLable
-                cell.needToBeDoneLabel.text = item.needToBeDoneLable
+                
+                cell.needToBeDoneLabel.text = item.dateToBeDone
                 cell.timeOfADatLabel.text = item.timeOfADay
-//                cell.dataOfCreation.text =
+
                 
                 cell.accessoryType = item.done == true ? .checkmark : .none
                 print("arbeitet")

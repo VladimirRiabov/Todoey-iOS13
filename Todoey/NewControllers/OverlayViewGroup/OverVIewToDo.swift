@@ -15,7 +15,8 @@ import RealmSwift
 class OverVIewToDo: UIViewController {
     
     let currentCategoryTransition = CurrentCategoryStruct()
-    var strDate = "--:--"
+    var timeOfADay = "--:--"
+    var dateToBeDone = ""
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
     
@@ -25,8 +26,8 @@ class OverVIewToDo: UIViewController {
 
     @IBOutlet weak var titileOfTaskTextField: UITextField!
     @IBOutlet weak var descriptionTaskTextField: UITextField!
-    @IBOutlet weak var needToBeDoneSegmentedControl: UISegmentedControl!
     @IBOutlet weak var timePicker: UIDatePicker!
+    @IBOutlet weak var datePicker: UIDatePicker!
     
     
 
@@ -92,9 +93,21 @@ class OverVIewToDo: UIViewController {
             dateFormatter.timeStyle = DateFormatter.Style.short
             dateFormatter.dateFormat = "HH:mm"
 
-            strDate = dateFormatter.string(from: timePicker.date)
-          print(strDate)
+            timeOfADay = dateFormatter.string(from: timePicker.date)
+          print(timeOfADay)
     }
+    
+    @IBAction func datePickerPressed(_ sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+
+            dateFormatter.dateStyle = DateFormatter.Style.short
+            dateFormatter.timeStyle = DateFormatter.Style.short
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+
+            dateToBeDone =  dateFormatter.string(from: datePicker.date)
+          print(timeOfADay)
+    }
+    
     
     @IBAction func AddNewTask(_ sender: UIButton) {
         if let currentCategory = CurrentCategoryStruct.selectedClassCategory {
@@ -103,21 +116,14 @@ class OverVIewToDo: UIViewController {
                                let newItem = Item()
                                newItem.title = titileOfTaskTextField.text!
                                newItem.descriptionLable = descriptionTaskTextField.text!
-                               
-                               let needToBeDoneIndex = self.needToBeDoneSegmentedControl.selectedSegmentIndex
-                               if needToBeDoneIndex != -1 {
-                                   if let needToBeDoneText = self.needToBeDoneSegmentedControl.titleForSegment(at: needToBeDoneIndex) {
-                                       newItem.needToBeDoneLable = needToBeDoneText
-                                   }
-                               } else {
-                                   newItem.needToBeDoneLable = ""
-                               }
 
                                newItem.dateOfItemCreation = Date()
+                               
                                newItem.timeOfADaySort = timePicker.date
-                               newItem.timeOfADay = strDate
+                               newItem.timeOfADay = timeOfADay
                                
-                               
+                               newItem.dateToBeDoneSort = datePicker.date
+                               newItem.dateToBeDone = dateToBeDone
                                
                                
                                

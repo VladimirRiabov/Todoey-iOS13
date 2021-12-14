@@ -13,7 +13,8 @@ class Item: Object {
     @objc dynamic var title: String = ""
     @objc dynamic var done: Bool = false
     @objc dynamic var descriptionLable: String = ""
-    @objc dynamic var needToBeDoneLable: String = ""
+    @objc dynamic var dateToBeDone: String = ""
+    @objc dynamic var dateToBeDoneSort: Date?
     @objc dynamic var dateOfItemCreation: Date?
     @objc dynamic var timeOfADay: String = ""
     @objc dynamic var timeOfADaySort: Date?
