@@ -23,6 +23,7 @@
 		A464B78827640980004DEFCC /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464B78727640980004DEFCC /* OverlayView.swift */; };
 		A4943FDE2752D874001A047B /* IItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4943FDD2752D874001A047B /* IItem.swift */; };
 		A4943FE02752D883001A047B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4943FDF2752D883001A047B /* Category.swift */; };
+		A4A1DBAA27677FDF006210F9 /* TrashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A1DBA927677FDF006210F9 /* TrashViewController.swift */; };
 		A4EB578B276569CF007830B4 /* CurrentCategoryStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EB578A276569CF007830B4 /* CurrentCategoryStruct.swift */; };
 		A4EB578E27661986007830B4 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A4EB578D27661986007830B4 /* IQKeyboardManagerSwift */; };
 		EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2BE4F9239524DB00FB933B /* AppDelegate.swift */; };
@@ -50,6 +51,7 @@
 		A464B78727640980004DEFCC /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		A4943FDD2752D874001A047B /* IItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IItem.swift; sourceTree = "<group>"; };
 		A4943FDF2752D883001A047B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		A4A1DBA927677FDF006210F9 /* TrashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashViewController.swift; sourceTree = "<group>"; };
 		A4EB578A276569CF007830B4 /* CurrentCategoryStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentCategoryStruct.swift; sourceTree = "<group>"; };
 		BABB6BE166C4C74C2673845C /* Pods-Todoey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todoey.release.xcconfig"; path = "Target Support Files/Pods-Todoey/Pods-Todoey.release.xcconfig"; sourceTree = "<group>"; };
 		EB2BE4F6239524DB00FB933B /* Todoey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todoey.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +96,7 @@
 		A464B77227636FB0004DEFCC /* NewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				A4A1DBA827677FBF006210F9 /* Trash and Done VC */,
 				A4A1DBA4276776D4006210F9 /* Main Controllers */,
 				A4A1DBA727677731006210F9 /* Singletons */,
 				A4A1DBA5276776F9006210F9 /* Cells */,
@@ -140,6 +143,14 @@
 				A4EB578A276569CF007830B4 /* CurrentCategoryStruct.swift */,
 			);
 			path = Singletons;
+			sourceTree = "<group>";
+		};
+		A4A1DBA827677FBF006210F9 /* Trash and Done VC */ = {
+			isa = PBXGroup;
+			children = (
+				A4A1DBA927677FDF006210F9 /* TrashViewController.swift */,
+			);
+			path = "Trash and Done VC";
 			sourceTree = "<group>";
 		};
 		A4BFE52C27403A49004597F6 /* Data Model */ = {
@@ -333,6 +344,7 @@
 				EB2BE4FE239524DB00FB933B /* ToDoListViewController.swift in Sources */,
 				A4943FDE2752D874001A047B /* IItem.swift in Sources */,
 				A464B77427637002004DEFCC /* NewCategoryViewController.swift in Sources */,
+				A4A1DBAA27677FDF006210F9 /* TrashViewController.swift in Sources */,
 				EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */,
 				A4943FE02752D883001A047B /* Category.swift in Sources */,
 				A464B777276375D5004DEFCC /* CategoryTableViewCell.swift in Sources */,

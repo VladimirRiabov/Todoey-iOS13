@@ -92,6 +92,7 @@ class OverlayView: UIViewController {
             dateFormatter.string(from: date)
             newCategory.dateOfCreation = Date()
             newCategory.dateOfCreationString =  dateFormatter.string(from: date)
+            newCategory.statusCategory = "inProcess"
             
             self.save(category: newCategory)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)

@@ -15,6 +15,7 @@ class Category : Object {
     @objc dynamic var dateOfCreationString : String = ""
     @objc dynamic var descriptionOfCategory : String = ""
     @objc dynamic var whenItNeedsToDo : String = ""
+    @objc dynamic var statusCategory : String = ""
     
     let items = List<Item>()
     

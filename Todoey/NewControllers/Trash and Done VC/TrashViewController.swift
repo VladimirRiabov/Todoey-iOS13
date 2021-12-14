@@ -1,16 +1,17 @@
 //
-//  NewCategoryViewController.swift
+//  TrashViewController.swift
 //  Todoey
 //
-//  Created by Владимир Рябов on 10.12.2021.
+//  Created by Владимир Рябов on 13.12.2021.
 //  Copyright © 2021 App Brewery. All rights reserved.
 //
 
 import UIKit
 import RealmSwift
 
-class NewCategoryViewController: UIViewController {
+class TrashViewController: UIViewController {
     
+
     @IBOutlet weak var tableView: UITableView!
     
    
@@ -35,7 +36,8 @@ class NewCategoryViewController: UIViewController {
     }
     //MARK: - Loading and Saving Categories funcs
    public func loadCategories() {
-       categories = realm.objects(Category.self).filter("statusCategory CONTAINS[cd] %@", "inProcess")
+//       todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+       categories = realm.objects(Category.self).filter("statusCategory CONTAINS[cd] %@", "deleted")
         tableView.reloadData()
     }
     func save(category: Category) {
@@ -57,7 +59,7 @@ class NewCategoryViewController: UIViewController {
 }
 
 //MARK: - DataSourceMethods
-extension NewCategoryViewController: UITableViewDataSource {
+extension TrashViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories?.count ?? 1
     }
@@ -77,14 +79,12 @@ extension NewCategoryViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: "To trash") { (action, view, handelr) in
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handelr) in
             print("delete")
             if let category = self.categories?[indexPath.row] {
             do {
-                
                 try self.realm.write {
-                    category.statusCategory = "deleted"
-//                    self.realm.delete(category)
+                    self.realm.delete(category)
                 }
             } catch {
                 print("Error while encoding \(error)")
@@ -100,49 +100,15 @@ extension NewCategoryViewController: UITableViewDataSource {
         let swipeaction = UISwipeActionsConfiguration(actions: [action])
         return swipeaction
     }
-    
-    
-    
-    //MARK: - MODALVIEW
-    @objc func showMiracle() {
-        let slideVC = OverlayView()
-        slideVC.modalPresentationStyle = .custom
-        slideVC.transitioningDelegate = self
-        self.present(slideVC, animated: true, completion: nil)
-    }
-    @IBAction func onButton(_ sender: Any) {
-        showMiracle()
-    }
-    
-}
-extension NewCategoryViewController: UIViewControllerTransitioningDelegate {
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        PresentationController(presentedViewController: presented, presenting: presenting)
-    }
 }
 
-//MARK: - TableViewDelegateMethods
-extension NewCategoryViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "toTheItems", sender: self)
-    }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toTheItems" {
-            let destinationVC = segue.destination as! NewToDoViewController
-            if let indexPath = tableView.indexPathForSelectedRow {
-                destinationVC.selectedCategory = categories?[indexPath.row]
-//            } else if segue.identifier == "toTrashCategories" {
-//
-//                let destinationVC = segue.destination as! TrashViewController
+extension TrashViewController: UITableViewDelegate {
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        performSegue(withIdentifier: "toTheItems", sender: self)
+//    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "toTheItems" {
+//            let destinationVC = segue.destination as! NewToDoViewController
+//            if let indexPath = tableView.indexPathForSelectedRow {
+//                destinationVC.selectedCategory = categories?[indexPath.row]
             }
-        
-        
-//        let destinationVC = segue.destination as! NewToDoViewController
-//        if let indexPath = tableView.indexPathForSelectedRow {
-//            destinationVC.selectedCategory = categories?[indexPath.row]
-        }
-    }
-    
-}
-
-
