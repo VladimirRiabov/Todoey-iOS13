@@ -8,107 +8,81 @@
 
 import UIKit
 import RealmSwift
+import FSCalendar
 
-class TrashViewController: UIViewController {
+class TrashViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, UITableViewDataSource, UITableViewDelegate {
     
-
     @IBOutlet weak var tableView: UITableView!
     
-   
+    var todoItems: Results<Item>?
     let realm = try! Realm()
-    var categories: Results<Category>?
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Category.plist")
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "Reusable cell")
+//        tableView.dataSource = self
+//        tableView.delegate = self
+
+        tableView.register(UINib(nibName: "ToDoTableViewCell", bundle: nil), forCellReuseIdentifier: "Reusable cell")
         tableView.rowHeight = 80.0
-        loadCategories()
-        //MARK: - Observer from OverlayView
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
+     loadItems()
+        print(todoItems)
     }
     
     @objc func loadList(notification: NSNotification){
         //see up
         self.tableView.reloadData()
     }
-    //MARK: - Loading and Saving Categories funcs
-   public func loadCategories() {
-//       todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
-       categories = realm.objects(Category.self).filter("statusCategory CONTAINS[cd] %@", "deleted")
-        tableView.reloadData()
-    }
-    func save(category: Category) {
-        do {
-            try realm.write {
-                realm.add(category)
-            }
-        } catch {
-            print("Error while encoding \(error)")
-        }
-        tableView.reloadData()
-    }
-    //MARK: - IBActions
-
-    @IBAction func Butt(_ sender: UIButton) {
-        performSegue(withIdentifier: "toTrash", sender: self)
+    //MARK: - Loading ToDo func
+    func loadItems() {
+        todoItems = realm.objects(Item.self)
+        
     }
     
-}
-
-//MARK: - DataSourceMethods
-extension TrashViewController: UITableViewDataSource {
+    
+    //MARK: - IBActions
+    
+    
+    
+    //MARK: - DataSourceMethods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories?.count ?? 1
+        return todoItems?.count ?? 1
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! CategoryTableViewCell
-        cell.categoryTitleLabel.text = categories?[indexPath.row].name ?? "No Categories Added yet"
-        if let countItems = categories?[indexPath.row].items.count {
-            cell.numberOfItemsLabel.text = String(countItems)
-        }
-        cell.dateOfCreationLAbel.text = categories?[indexPath.row].dateOfCreationString
-        
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! ToDoTableViewCell
+        if let item = todoItems?[indexPath.row] {
+            cell.titleLable.text = item.title
+            cell.subtitleLabel.text = item.descriptionLable
+            cell.needToBeDoneLabel.text = item.needToBeDoneLable
+            cell.timeOfADatLabel.text = item.timeOfADay
 
-        
+            cell.accessoryType = item.done == true ? .checkmark : .none
+            print("arbeitet")
+        } else {
+            cell.textLabel?.text = "No Items Added"
+        }
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handelr) in
-            print("delete")
-            if let category = self.categories?[indexPath.row] {
-            do {
-                try self.realm.write {
-                    self.realm.delete(category)
-                }
-            } catch {
-                print("Error while encoding \(error)")
-                }
-            }
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
-//            let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
-//                self.tableView.reloadData()
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handelr) in
+//            print("delete")
+////            if let item = self.todoItems?[indexPath.row] {
+//                do {
+//                    try self.realm.write {
+//                        self.realm.delete(item)
+//                    }
+//                } catch {
+//                    print("Error while encoding \(error)")
+//                }
 //            }
-            
-            handelr(true)
-        }
-        let swipeaction = UISwipeActionsConfiguration(actions: [action])
-        return swipeaction
-    }
-}
-
-extension TrashViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        performSegue(withIdentifier: "toTheItems", sender: self)
+//            self.tableView.deleteRows(at: [indexPath], with: .fade)
+//
+//            handelr(true)
+//        }
+//        let swipeaction = UISwipeActionsConfiguration(actions: [action])
+//        return swipeaction
 //    }
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "toTheItems" {
-//            let destinationVC = segue.destination as! NewToDoViewController
-//            if let indexPath = tableView.indexPathForSelectedRow {
-//                destinationVC.selectedCategory = categories?[indexPath.row]
-            }
+    
+}

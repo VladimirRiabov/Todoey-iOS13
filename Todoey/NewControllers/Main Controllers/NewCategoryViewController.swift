@@ -25,6 +25,10 @@ class NewCategoryViewController: UIViewController {
         tableView.register(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "Reusable cell")
         tableView.rowHeight = 80.0
         loadCategories()
+//        print(Realm.Configuration.defaultConfiguration.fileURL)
+//        print(categories)
+        
+        
         //MARK: - Observer from OverlayView
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
     }

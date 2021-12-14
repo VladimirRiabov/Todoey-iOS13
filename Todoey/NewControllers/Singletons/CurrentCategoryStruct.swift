@@ -10,4 +10,5 @@ import Foundation
 
 struct CurrentCategoryStruct {
    static var selectedClassCategory : Category?
+    static var allItemsCategory : Category?
 }

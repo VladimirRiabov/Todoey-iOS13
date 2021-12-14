@@ -121,7 +121,7 @@ class OverVIewToDo: UIViewController {
                                
                                
                                
-                               
+                               CurrentCategoryStruct.allItemsCategory?.items.append(newItem)
                                currentCategory.items.append(newItem)
                               
                            }
