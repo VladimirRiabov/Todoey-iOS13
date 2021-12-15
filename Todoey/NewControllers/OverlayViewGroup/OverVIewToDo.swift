@@ -104,7 +104,7 @@ class OverVIewToDo: UIViewController {
             dateFormatter.timeStyle = DateFormatter.Style.short
             dateFormatter.dateFormat = "yyyy-MM-dd"
         
-            dateToBeDone =  dateFormatter.string(from: datePicker.date)
+        dateToBeDone =  dateFormatter.string(from: datePicker.date)
         print(dateToBeDone)
     }
     

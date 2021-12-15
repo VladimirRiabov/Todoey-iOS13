@@ -12,6 +12,7 @@ import RealmSwift
 class NewToDoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
+    @IBOutlet weak var labelOfCategory: UILabel!
     
     @IBOutlet weak var tableView: UITableView!
     var todoItems: Results<Item>?
@@ -25,6 +26,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         GlobalKonstantSingleton.selectedClassCategory = selectedCategory
+        labelOfCategory.text = selectedCategory?.name
         
 
 //        tableView.delegate = self

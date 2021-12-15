@@ -20,6 +20,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     let realm = try! Realm()
     var dates = Set<String>()
     
+    
   
     
     override func viewDidLoad() {
@@ -45,7 +46,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         
            let dateCalendarSelectStr =  dateFormatter.string(from: date)
         
-        todoItems = realm.objects(Item.self).filter("dateToBeDone CONTAINS[cd] %@", dateCalendarSelectStr)
+        todoItems = realm.objects(Item.self).filter("dateToBeDone CONTAINS[cd] %@", dateCalendarSelectStr).sorted(byKeyPath: "timeOfADaySort", ascending: true)
         tableView.reloadData()
         
     }
@@ -77,11 +78,16 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     }
     //MARK: - Loading ToDo func
     func loadItems() {
-        todoItems = realm.objects(Item.self)
+//        let sortProperties = [SortDescriptor(keyPath: "dateToBeDoneSort", ascending: true), SortDescriptor(keyPath: "timeOfADaySort", ascending: true)]
+//        allShowsByDate = Realm().objects(MyObjectType).sorted(sortProperties)
+        
+        todoItems = realm.objects(Item.self).sorted(by: [SortDescriptor(keyPath: "dateToBeDone", ascending: true), SortDescriptor(keyPath: "timeOfADay", ascending: true)])
+            
+        }
 //            .filter("dateToBeDone CONTAINS[cd] %@", GlobalKonstantSingleton.currentDateStr!)
         
         
-    }
+//    }
     
     
     //MARK: - IBActions
@@ -102,7 +108,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
             cell.needToBeDoneLabel.text = item.dateToBeDone
             cell.timeOfADatLabel.text = item.timeOfADay
             dates.insert(item.dateToBeDone)
-            print(dates)
+            print(item.timeOfADaySort)
             
 
             cell.accessoryType = item.done == true ? .checkmark : .none
