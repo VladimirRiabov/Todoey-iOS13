@@ -12,9 +12,13 @@ import RealmSwift
 class NewToDoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
+    @IBOutlet weak var subcategoryLabel: UILabel!
     @IBOutlet weak var labelOfCategory: UILabel!
-    
+    @IBOutlet weak var subcategoryOutlet: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    
+    var sortingVar = "dateOfItemCreation"
+    var subcutegoryItemVar = "note"
     var todoItems: Results<Item>?
     let realm = try! Realm()
     var selectedCategory : Category? {
@@ -41,7 +45,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     //MARK: - Loading ToDo func
     func loadItems() {
-        todoItems = selectedCategory?.items.sorted(byKeyPath: "dateToBeDoneSort", ascending: true)
+        todoItems = selectedCategory?.items.filter("subcutegoryItem CONTAINS[cd] %@", subcutegoryItemVar).sorted(byKeyPath: sortingVar, ascending: true)
         
         
 //        tableView.reloadData()
@@ -51,33 +55,29 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
 //    }
     
     //MARK: - IBActions
-    @IBAction func addNewItemButtonPressed(_ sender: UIButton) {
-        var textField = UITextField()
-        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-            if let currentCategory = self.selectedCategory {
-                do {
-                    try self.realm.write {
-                        let newItem = Item()
-                        newItem.title = textField.text!
-                        newItem.dateOfItemCreation = Date()
-                        currentCategory.items.append(newItem)
-                        
-                    }
-                } catch {
-                    print("Error saving")
-                }
+    @IBAction func subcategorySegmentedControlIndexChanged(_ sender: UISegmentedControl) {
+        switch subcategoryOutlet.selectedSegmentIndex
+            {
+            case 0:
+            subcategoryLabel.text = "Notes"
+            subcutegoryItemVar = "note"
+            sortingVar = "dateOfItemCreation"
+            loadItems()
+            tableView.reloadData()
+
+            case 1:
+            subcategoryLabel.text = "Events"
+            subcutegoryItemVar = "event"
+            sortingVar = "dateToBeDoneSort"
+            loadItems()
+            tableView.reloadData()
+            
+            default:
+                break
             }
-            self.tableView.reloadData()
-        }
-        alert.addAction(action)
-        alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Create new item"
-            textField = alertTextField
-        }
-        
-        present(alert, animated: true, completion: nil)
+        print(subcategoryOutlet.selectedSegmentIndex)
     }
+    
 
 //MARK: - DataSourceMethods
 func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -93,6 +93,8 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 
                 cell.needToBeDoneLabel.text = item.dateToBeDone
                 cell.timeOfADatLabel.text = item.timeOfADay
+                
+                cell.dataOfCreation.text = item.dateOfCreationString
 
                 
                 cell.accessoryType = item.done == true ? .checkmark : .none

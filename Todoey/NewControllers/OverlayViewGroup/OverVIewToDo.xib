@@ -57,7 +57,7 @@
                     <rect key="frame" x="20" y="185" width="369" height="50"/>
                     <subviews>
                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="TgX-VL-KvQ">
-                            <rect key="frame" x="0.0" y="0.0" width="109.5" height="51"/>
+                            <rect key="frame" x="0.0" y="0.0" width="107" height="51"/>
                             <segments>
                                 <segment title="Note"/>
                                 <segment title="Event"/>
@@ -67,7 +67,7 @@
                             </connections>
                         </segmentedControl>
                         <datePicker contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="10" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Ac2-KF-Gcn">
-                            <rect key="frame" x="117.5" y="0.0" width="251.5" height="50"/>
+                            <rect key="frame" x="115" y="0.0" width="254" height="50"/>
                             <connections>
                                 <action selector="datePickerPressed:" destination="-1" eventType="valueChanged" id="Dn4-ZT-yXQ"/>
                             </connections>

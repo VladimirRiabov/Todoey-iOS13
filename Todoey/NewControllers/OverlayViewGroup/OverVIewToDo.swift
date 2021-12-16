@@ -17,6 +17,7 @@ class OverVIewToDo: UIViewController {
     let currentCategoryTransition = GlobalKonstantSingleton()
     var timeOfADay = ""
     var dateToBeDone = ""
+    var dateOfCreationString: String?
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
     var userForgotToChooseAdate: Date?
@@ -95,11 +96,10 @@ class OverVIewToDo: UIViewController {
             {
             case 0:
             datePicker.isEnabled = false
-            var subcutegoryItemVar : String = "note"
-//                .isUserInteractionEnabled = false
+
             case 1:
             datePicker.isEnabled = true
-            var subcutegoryItemVar : String = "event"
+            
             userForgotToChooseAdate = Date()
             default:
                 break
@@ -132,7 +132,16 @@ class OverVIewToDo: UIViewController {
                                    newItem.timeOfADay = timeOfADay
                                    newItem.dateToBeDone = dateToBeDone
                                    subcutegoryItemVar = "event"
+                                   newItem.subcutegoryItem = subcutegoryItemVar
                                }
+                               
+                               let dateFormatter = DateFormatter()
+                                   dateFormatter.dateStyle = DateFormatter.Style.short
+                                   dateFormatter.timeStyle = DateFormatter.Style.short
+                                   dateFormatter.dateFormat = "yyyy-MM-dd"
+                               newItem.dateOfCreationString = dateFormatter.string(from: Date())
+                               
+                               newItem.subcutegoryItem = subcutegoryItemVar
                                newItem.dateToBeDoneSort = datePicker.date
                                
                               
@@ -154,6 +163,7 @@ class OverVIewToDo: UIViewController {
             dateFormatter.timeStyle = DateFormatter.Style.short
             dateFormatter.dateFormat = "yyyy-MM-dd"
         dateToBeDone =  dateFormatter.string(from: datePicker.date)
+        
         let dateFormatter2 = DateFormatter()
             dateFormatter2.dateStyle = DateFormatter.Style.short
             dateFormatter2.timeStyle = DateFormatter.Style.short

@@ -299,8 +299,8 @@
                                     <action selector="onButton:" destination="sy6-1K-45v" eventType="touchUpInside" id="wpH-kS-9Ku"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tasks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qgh-Y1-yiT">
-                                <rect key="frame" x="10" y="164" width="106" height="48"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qgh-Y1-yiT">
+                                <rect key="frame" x="10" y="164" width="227" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -320,6 +320,9 @@
                                     <segment title="Notes"/>
                                     <segment title="Events"/>
                                 </segments>
+                                <connections>
+                                    <action selector="subcategorySegmentedControlIndexChanged:" destination="sy6-1K-45v" eventType="valueChanged" id="FDd-eB-cJC"/>
+                                </connections>
                             </segmentedControl>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q3v-1P-pLO">
                                 <rect key="frame" x="96" y="89" width="222" height="76"/>
@@ -332,6 +335,8 @@
                     <navigationItem key="navigationItem" id="hJL-DX-cUV"/>
                     <connections>
                         <outlet property="labelOfCategory" destination="tdm-MH-ejX" id="wB3-Y9-OVt"/>
+                        <outlet property="subcategoryLabel" destination="Qgh-Y1-yiT" id="nTi-El-ll7"/>
+                        <outlet property="subcategoryOutlet" destination="xIL-ZC-Ehu" id="siY-fr-DfX"/>
                         <outlet property="tableView" destination="l2V-7F-UFI" id="jOx-qY-UD1"/>
                     </connections>
                 </viewController>
