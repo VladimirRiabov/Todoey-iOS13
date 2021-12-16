@@ -38,8 +38,10 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         picker.setValue(UIColor.white, forKeyPath: "textColor")
+        
         GlobalKonstantSingleton.selectedClassCategory = selectedCategory
         labelOfCategory.text = selectedCategory?.name
+        picker.alpha = 0
         
         
 //        tableView.delegate = self
@@ -91,6 +93,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
         switch subcategoryOutlet.selectedSegmentIndex
             {
             case 0:
+            picker.alpha = 0
             subcategoryLabel.text = "Notes"
             subcutegoryItemVar = "note"
             sortingVar = "dateOfItemCreation"
@@ -98,6 +101,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
             tableView.reloadData()
 
             case 1:
+            picker.alpha = 1
             subcategoryLabel.text = "Events"
             subcutegoryItemVar = "event"
             sortingVar = "dateToBeDoneSort"
