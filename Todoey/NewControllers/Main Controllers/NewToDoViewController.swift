@@ -9,14 +9,19 @@
 import UIKit
 import RealmSwift
 
-class NewToDoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class NewToDoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    
     
     
     @IBOutlet weak var subcategoryLabel: UILabel!
     @IBOutlet weak var labelOfCategory: UILabel!
     @IBOutlet weak var subcategoryOutlet: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var picker: UIPickerView!
     
+    var pickerDataArray: Array = Array<String>()
+    var pickerDataSet: Set = Set<String>()
     var sortingVar = "dateOfItemCreation"
     var subcutegoryItemVar = "note"
     var todoItems: Results<Item>?
@@ -27,12 +32,16 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     var currentCategoryTransition = GlobalKonstantSingleton()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        picker.setValue(UIColor.white, forKeyPath: "textColor")
         GlobalKonstantSingleton.selectedClassCategory = selectedCategory
         labelOfCategory.text = selectedCategory?.name
         
-
+        
 //        tableView.delegate = self
         tableView.register(UINib(nibName: "ToDoTableViewCell", bundle: nil), forCellReuseIdentifier: "Reusable cell")
         tableView.rowHeight = 80.0
@@ -41,11 +50,19 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @objc func loadList(notification: NSNotification){
         //see up
+        picker.delegate = self
         self.tableView.reloadData()
+        loadItems()
+        
     }
     //MARK: - Loading ToDo func
     func loadItems() {
         todoItems = selectedCategory?.items.filter("subcutegoryItem CONTAINS[cd] %@", subcutegoryItemVar).sorted(byKeyPath: sortingVar, ascending: true)
+        pickerDataArray = selectedCategory?.items.filter("subcutegoryItem CONTAINS[cd] %@", "event").value(forKey: "dateToBeDone") as! [String]
+        
+        
+        pickerDataSet = Set(pickerDataArray)
+        
         
         
 //        tableView.reloadData()
@@ -53,6 +70,21 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
 //    func updateModel(at indexPath: IndexPath) {
 //
 //    }
+    
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerDataSet.count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerDataSet.sorted(by: <)[row]
+    }
+    
+    
+    
+    
     
     //MARK: - IBActions
     @IBAction func subcategorySegmentedControlIndexChanged(_ sender: UISegmentedControl) {
@@ -95,7 +127,8 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 cell.timeOfADatLabel.text = item.timeOfADay
                 
                 cell.dataOfCreation.text = item.dateOfCreationString
-
+//                pickerData.insert(item.dateToBeDone ?? "")
+print(pickerDataArray)
                 
                 cell.accessoryType = item.done == true ? .checkmark : .none
                 
