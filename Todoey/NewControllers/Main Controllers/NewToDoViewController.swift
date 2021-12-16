@@ -25,6 +25,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     var sortingVar = "dateOfItemCreation"
     var subcutegoryItemVar = "note"
     var todoItems: Results<Item>?
+    var abcde: String?
     let realm = try! Realm()
     var selectedCategory : Category? {
         didSet {
@@ -60,10 +61,10 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     //MARK: - Loading ToDo func
     func loadItems() {
         todoItems = selectedCategory?.items.filter("subcutegoryItem CONTAINS[cd] %@", subcutegoryItemVar).sorted(byKeyPath: sortingVar, ascending: true)
+        
         pickerDataArray = selectedCategory?.items.filter("subcutegoryItem CONTAINS[cd] %@", "event").value(forKey: "dateToBeDone") as! [String]
-        
-        
         pickerDataSet = Set(pickerDataArray)
+        
         
         
         
@@ -82,6 +83,14 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerDataSet.sorted(by: <)[row]
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        loadItems()
+        abcde = pickerDataSet.sorted(by: <)[row]
+        todoItems = todoItems!.filter("dateToBeDone CONTAINS[cd] %@", abcde)
+        self.tableView.reloadData()
+        
+        
     }
     
     
@@ -132,7 +141,8 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 
                 cell.dataOfCreation.text = item.dateOfCreationString
 //                pickerData.insert(item.dateToBeDone ?? "")
-print(pickerDataArray)
+                print(abcde)
+                
                 
                 cell.accessoryType = item.done == true ? .checkmark : .none
                 
@@ -174,6 +184,8 @@ print(pickerDataArray)
     @IBAction func onButton(_ sender: Any) {
         showMiracle()
     }
+    
+    
 }
 
 extension NewToDoViewController: UIViewControllerTransitioningDelegate {

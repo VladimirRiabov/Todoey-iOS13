@@ -32,7 +32,7 @@ class PresentationController: UIPresentationController {
 //              0.6))
         CGRect(origin: CGPoint(x: 0, y: self.containerView!.frame.height * 0.2),
                     size: CGSize(width: self.containerView!.frame.width, height: self.containerView!.frame.height *
-                     0.5))
+                     0.3))
   }
 
   override func presentationTransitionWillBegin() {
