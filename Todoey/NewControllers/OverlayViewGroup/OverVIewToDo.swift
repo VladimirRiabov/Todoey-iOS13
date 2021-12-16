@@ -20,7 +20,8 @@ class OverVIewToDo: UIViewController {
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
     var userForgotToChooseAdate: Date?
-    var subcutegoryItemVar : String = ""
+    var subcutegoryItemVar : String = "note"
+    var indexSegmentedControl = 0
     
     let realm = try! Realm()
     var categories: Results<Category>?
@@ -94,13 +95,18 @@ class OverVIewToDo: UIViewController {
             {
             case 0:
             datePicker.isEnabled = false
+            var subcutegoryItemVar : String = "note"
 //                .isUserInteractionEnabled = false
             case 1:
             datePicker.isEnabled = true
+            var subcutegoryItemVar : String = "event"
             userForgotToChooseAdate = Date()
             default:
                 break
             }
+        indexSegmentedControl = segmentedControlOutlet.selectedSegmentIndex
+        print(indexSegmentedControl)
+        
     }
     
     
@@ -115,39 +121,24 @@ class OverVIewToDo: UIViewController {
                        do {
                            try self.realm.write {
                                let newItem = Item()
+                               dateFormatters()
+                               
                                newItem.title = titileOfTaskTextField.text!
                                newItem.descriptionLable = descriptionTaskTextField.text!
 
                                newItem.dateOfItemCreation = Date()
-                         
-                               
-                               let dateFormatter = DateFormatter()
-                                    
-                                   dateFormatter.dateStyle = DateFormatter.Style.short
-                                   dateFormatter.timeStyle = DateFormatter.Style.short
-                                   dateFormatter.dateFormat = "yyyy-MM-dd"
-                               
-                               dateToBeDone =  dateFormatter.string(from: datePicker.date)
-                               
-                               let dateFormatter2 = DateFormatter()
-
-                                   dateFormatter2.dateStyle = DateFormatter.Style.short
-                                   dateFormatter2.timeStyle = DateFormatter.Style.short
-                                   dateFormatter2.dateFormat = "HH:mm"
-
-                                   timeOfADay = dateFormatter2.string(from: datePicker.date)
-                               
-                            
-                               newItem.timeOfADay = timeOfADay
-                               
+                               if indexSegmentedControl == 1 {
+                                   dateFormatters()
+                                   newItem.timeOfADay = timeOfADay
+                                   newItem.dateToBeDone = dateToBeDone
+                                   subcutegoryItemVar = "event"
+                               }
                                newItem.dateToBeDoneSort = datePicker.date
-                               newItem.dateToBeDone = dateToBeDone
-                               print(datePicker.date)
                                
-                               
+                              
+                             
                                GlobalKonstantSingleton.allItemsCategory?.items.append(newItem)
                                currentCategory.items.append(newItem)
-                              
                            }
                        } catch {
                            print("Error saving")
@@ -157,54 +148,16 @@ class OverVIewToDo: UIViewController {
         self.dismiss(animated: true, completion: nil)
        
     }
-    @IBAction func addCategoryButton(_ sender: UIButton) {
-        
-        
-//            if let currentCategory = self.selectedCategory {
-//                do {
-//                    try self.realm.write {
-//                        let newItem = Item()
-//                        newItem.title = textField.text!
-//                        newItem.dateCreated = Date()
-//                        currentCategory.items.append(newItem)
-//                        self.currentClassCategory.selectedClassCategory = currentCategory
-//                    }
-//                } catch {
-//                    print("Error saving")
-//                }
-//            }
-//            self.tableView.reloadData()
-//        }
-//        alert.addAction(action)
-//        alert.addTextField { (alertTextField) in
-//            alertTextField.placeholder = "Create new item"
-//            textField = alertTextField
-//        }
-//
-//        present(alert, animated: true, completion: nil)
-        
-
-    
-    
-    
-    
-    
-    
-    
-    
-//            let newCategory = Category()
-//            let date = Date()
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "YY/MM/dd"
-//            dateFormatter.string(from: date)
-//            newCategory.dateOfCreation = Date()
-//            newCategory.dateOfCreationString =  dateFormatter.string(from: date)
-//
-//            self.save(category: newCategory)
-//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
-//        self.dismiss(animated: true, completion: nil)
-////            dismissController()
-////            NewCategoryViewController.tableView.reloadData()
-       
+    func dateFormatters() {
+        let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = DateFormatter.Style.short
+            dateFormatter.timeStyle = DateFormatter.Style.short
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateToBeDone =  dateFormatter.string(from: datePicker.date)
+        let dateFormatter2 = DateFormatter()
+            dateFormatter2.dateStyle = DateFormatter.Style.short
+            dateFormatter2.timeStyle = DateFormatter.Style.short
+            dateFormatter2.dateFormat = "HH:mm"
+            timeOfADay = dateFormatter2.string(from: datePicker.date)
     }
 }
