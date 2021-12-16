@@ -26,7 +26,7 @@ class NewCategoryViewController: UIViewController {
         tableView.register(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: "Reusable cell")
         tableView.rowHeight = 80.0
         loadCategories()
-//        print(Realm.Configuration.defaultConfiguration.fileURL)
+        print(Realm.Configuration.defaultConfiguration.fileURL)
 
         
         

@@ -41,7 +41,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     //MARK: - Loading ToDo func
     func loadItems() {
-        todoItems = selectedCategory?.items.sorted(byKeyPath: "timeOfADaySort", ascending: true)
+        todoItems = selectedCategory?.items.sorted(byKeyPath: "dateToBeDoneSort", ascending: true)
         
         
 //        tableView.reloadData()
@@ -96,7 +96,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 
                 
                 cell.accessoryType = item.done == true ? .checkmark : .none
-                print("arbeitet")
+                
             } else {
                 cell.textLabel?.text = "No Items Added"
             }

@@ -13,7 +13,7 @@
             <connections>
                 <outlet property="datePicker" destination="Ac2-KF-Gcn" id="Ux7-gX-WNh"/>
                 <outlet property="descriptionTaskTextField" destination="giF-ej-IHF" id="cuc-vS-ZiT"/>
-                <outlet property="timePicker" destination="pxE-Yf-u42" id="5H4-Sg-hSp"/>
+                <outlet property="segmentedControlOutlet" destination="TgX-VL-KvQ" id="CRB-8s-IEg"/>
                 <outlet property="titileOfTaskTextField" destination="aRY-1c-FFs" id="Zu6-xo-la1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="HW5-jz-eOv"/>
             </connections>
@@ -53,47 +53,66 @@
                         <constraint firstAttribute="height" constant="3" id="Xsn-3f-zWH"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcY-sy-zHB">
-                    <rect key="frame" x="174" y="316" width="67" height="31"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9GU-Ch-TJu">
+                    <rect key="frame" x="20" y="185" width="369" height="50"/>
+                    <subviews>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="TgX-VL-KvQ">
+                            <rect key="frame" x="0.0" y="0.0" width="109.5" height="51"/>
+                            <segments>
+                                <segment title="Note"/>
+                                <segment title="Event"/>
+                            </segments>
+                            <connections>
+                                <action selector="segmentedControlIndexChanged:" destination="-1" eventType="valueChanged" id="m20-4S-zA2"/>
+                            </connections>
+                        </segmentedControl>
+                        <datePicker contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="10" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Ac2-KF-Gcn">
+                            <rect key="frame" x="117.5" y="0.0" width="251.5" height="50"/>
+                            <connections>
+                                <action selector="datePickerPressed:" destination="-1" eventType="valueChanged" id="Dn4-ZT-yXQ"/>
+                            </connections>
+                        </datePicker>
+                    </subviews>
+                </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcY-sy-zHB">
+                    <rect key="frame" x="135" y="243" width="139" height="31"/>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" title="Add new task"/>
                     <connections>
                         <action selector="AddNewTask:" destination="-1" eventType="touchUpInside" id="TVq-o9-prx"/>
                     </connections>
                 </button>
-                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Ac2-KF-Gcn">
-                    <rect key="frame" x="20" y="187" width="208" height="54"/>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tA8-Az-Un3">
+                    <rect key="frame" x="20" y="318" width="67" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
                     <connections>
-                        <action selector="datePickerPressed:" destination="-1" eventType="valueChanged" id="Dn4-ZT-yXQ"/>
+                        <action selector="datepickerbycode:" destination="-1" eventType="touchUpInside" id="umu-QU-7Zg"/>
                     </connections>
-                </datePicker>
-                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="10" style="compact" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxE-Yf-u42">
-                    <rect key="frame" x="302" y="316" width="80" height="53"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <date key="date" timeIntervalSinceReferenceDate="660917348.09762299">
-                        <!--2021-12-11 12:09:08 +0000-->
-                    </date>
-                    <connections>
-                        <action selector="timeActionSent:" destination="-1" eventType="valueChanged" id="kbd-BB-0Kv"/>
-                    </connections>
-                </datePicker>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="uag-z2-T7j" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="7Xi-i7-UxQ"/>
+                <constraint firstItem="9GU-Ch-TJu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="BJc-so-2Rg"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xcY-sy-zHB" secondAttribute="trailing" constant="135" id="BSC-hW-2SL"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="9GU-Ch-TJu" secondAttribute="trailing" constant="20" id="BxB-V4-W5i"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="giF-ej-IHF" secondAttribute="trailing" constant="20" id="E5X-Rx-PdE"/>
+                <constraint firstItem="xcY-sy-zHB" firstAttribute="top" secondItem="9GU-Ch-TJu" secondAttribute="bottom" constant="8" symbolic="YES" id="HE0-FF-tDi"/>
                 <constraint firstItem="gh0-mc-k5v" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="HlR-mY-6gX"/>
+                <constraint firstItem="9GU-Ch-TJu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="JxL-S1-Xru"/>
                 <constraint firstItem="Eix-kT-24h" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Sut-vr-jvw"/>
                 <constraint firstItem="giF-ej-IHF" firstAttribute="top" secondItem="Eix-kT-24h" secondAttribute="bottom" constant="8" id="UUl-o5-a07"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="aRY-1c-FFs" secondAttribute="trailing" constant="20" id="V8R-hZ-Sc1"/>
+                <constraint firstItem="xcY-sy-zHB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="135" id="WeN-Hb-iWZ"/>
                 <constraint firstItem="Eix-kT-24h" firstAttribute="top" secondItem="aRY-1c-FFs" secondAttribute="bottom" constant="8" id="Xj0-R3-0SL"/>
                 <constraint firstItem="aRY-1c-FFs" firstAttribute="top" secondItem="uag-z2-T7j" secondAttribute="bottom" constant="8" id="dGQ-N7-nVA"/>
                 <constraint firstItem="aRY-1c-FFs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="gfs-Zh-yR1"/>
                 <constraint firstItem="uag-z2-T7j" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="gih-TW-jBb"/>
                 <constraint firstItem="giF-ej-IHF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="lT4-QR-6Aj"/>
+                <constraint firstItem="9GU-Ch-TJu" firstAttribute="top" secondItem="giF-ej-IHF" secondAttribute="bottom" constant="8" symbolic="YES" id="svY-W3-dLs"/>
                 <constraint firstItem="gh0-mc-k5v" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="33" id="zVT-WP-azM"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

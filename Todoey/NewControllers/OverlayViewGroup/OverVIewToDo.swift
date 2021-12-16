@@ -15,18 +15,20 @@ import RealmSwift
 class OverVIewToDo: UIViewController {
     
     let currentCategoryTransition = GlobalKonstantSingleton()
-    var timeOfADay = "--:--"
+    var timeOfADay = ""
     var dateToBeDone = ""
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
+    var userForgotToChooseAdate: Date?
+    var subcutegoryItemVar : String = ""
     
     let realm = try! Realm()
     var categories: Results<Category>?
     
 
+    @IBOutlet weak var segmentedControlOutlet: UISegmentedControl!
     @IBOutlet weak var titileOfTaskTextField: UITextField!
     @IBOutlet weak var descriptionTaskTextField: UITextField!
-    @IBOutlet weak var timePicker: UIDatePicker!
     @IBOutlet weak var datePicker: UIDatePicker!
     
     
@@ -34,6 +36,7 @@ class OverVIewToDo: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        datePicker.isEnabled = false
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
         view.addGestureRecognizer(panGesture)
         datePicker.minimumDate = Date()
@@ -83,29 +86,27 @@ class OverVIewToDo: UIViewController {
         }
     }
     
-
     
     
-    @IBAction func timeActionSent(_ sender: UIDatePicker) {
-        let dateFormatter = DateFormatter()
-
-            dateFormatter.dateStyle = DateFormatter.Style.short
-            dateFormatter.timeStyle = DateFormatter.Style.short
-            dateFormatter.dateFormat = "HH:mm"
-
-            timeOfADay = dateFormatter.string(from: timePicker.date)
-          print(timeOfADay)
+    
+    @IBAction func segmentedControlIndexChanged(_ sender: UISegmentedControl) {
+        switch segmentedControlOutlet.selectedSegmentIndex
+            {
+            case 0:
+            datePicker.isEnabled = false
+//                .isUserInteractionEnabled = false
+            case 1:
+            datePicker.isEnabled = true
+            userForgotToChooseAdate = Date()
+            default:
+                break
+            }
     }
     
+    
+
     @IBAction func datePickerPressed(_ sender: UIDatePicker) {
-        let dateFormatter = DateFormatter()
-             
-            dateFormatter.dateStyle = DateFormatter.Style.short
-            dateFormatter.timeStyle = DateFormatter.Style.short
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        dateToBeDone =  dateFormatter.string(from: datePicker.date)
-        print(dateToBeDone)
+       
     }
     
     
@@ -118,13 +119,30 @@ class OverVIewToDo: UIViewController {
                                newItem.descriptionLable = descriptionTaskTextField.text!
 
                                newItem.dateOfItemCreation = Date()
+                         
                                
-                               newItem.timeOfADaySort = timePicker.date
+                               let dateFormatter = DateFormatter()
+                                    
+                                   dateFormatter.dateStyle = DateFormatter.Style.short
+                                   dateFormatter.timeStyle = DateFormatter.Style.short
+                                   dateFormatter.dateFormat = "yyyy-MM-dd"
+                               
+                               dateToBeDone =  dateFormatter.string(from: datePicker.date)
+                               
+                               let dateFormatter2 = DateFormatter()
+
+                                   dateFormatter2.dateStyle = DateFormatter.Style.short
+                                   dateFormatter2.timeStyle = DateFormatter.Style.short
+                                   dateFormatter2.dateFormat = "HH:mm"
+
+                                   timeOfADay = dateFormatter2.string(from: datePicker.date)
+                               
+                            
                                newItem.timeOfADay = timeOfADay
                                
                                newItem.dateToBeDoneSort = datePicker.date
                                newItem.dateToBeDone = dateToBeDone
-                               
+                               print(datePicker.date)
                                
                                
                                GlobalKonstantSingleton.allItemsCategory?.items.append(newItem)

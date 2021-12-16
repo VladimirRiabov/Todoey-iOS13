@@ -20,9 +20,8 @@ class Item: Object {
     @objc dynamic var timeOfADaySort: Date?
     
     
-    @objc dynamic var deletedTag: String = ""
-    @objc dynamic var inProcessTag: String = ""
-    @objc dynamic var doneTag: String = ""
+    @objc dynamic var statusItem : String = ""
+    @objc dynamic var subcutegoryItem : String = ""
     
     
     

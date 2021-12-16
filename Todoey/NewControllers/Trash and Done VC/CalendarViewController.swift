@@ -81,7 +81,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
 //        let sortProperties = [SortDescriptor(keyPath: "dateToBeDoneSort", ascending: true), SortDescriptor(keyPath: "timeOfADaySort", ascending: true)]
 //        allShowsByDate = Realm().objects(MyObjectType).sorted(sortProperties)
         
-        todoItems = realm.objects(Item.self).sorted(by: [SortDescriptor(keyPath: "dateToBeDone", ascending: true), SortDescriptor(keyPath: "timeOfADay", ascending: true)])
+        todoItems = realm.objects(Item.self).sorted(byKeyPath: "dateToBeDoneSort", ascending: true)
             
         }
 //            .filter("dateToBeDone CONTAINS[cd] %@", GlobalKonstantSingleton.currentDateStr!)
