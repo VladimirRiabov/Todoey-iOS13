@@ -140,8 +140,8 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 cell.timeOfADatLabel.text = item.timeOfADay
                 
                 cell.dataOfCreation.text = item.dateOfCreationString
-//                pickerData.insert(item.dateToBeDone ?? "")
-                print(abcde)
+
+                ааа
                 
                 
                 cell.accessoryType = item.done == true ? .checkmark : .none
