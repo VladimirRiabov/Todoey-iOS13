@@ -133,6 +133,22 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! ToDoTableViewCell
             if let item = todoItems?[indexPath.row] {
                 
+                if item.dateToBeDoneSort != nil {
+                    if item.dateToBeDoneSort! < Date() {
+                        
+                        do {
+                            try self.realm.write {
+                                item.statusItem = "isGone"
+                            }
+                        } catch {
+                            print("Error while encoding \(error)")
+                            }
+                        }
+               
+                    }
+                
+                
+                
                 cell.titleLable.text = item.title
                 cell.subtitleLabel.text = item.descriptionLable
                 
@@ -140,8 +156,9 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 cell.timeOfADatLabel.text = item.timeOfADay
                 
                 cell.dataOfCreation.text = item.dateOfCreationString
-
-                ааа
+                
+                print(item.statusItem)
+                
                 
                 
                 cell.accessoryType = item.done == true ? .checkmark : .none

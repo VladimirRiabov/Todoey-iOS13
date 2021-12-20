@@ -79,7 +79,7 @@ extension TrashViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handelr) in
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handelr) in
             print("delete")
             if let category = self.categories?[indexPath.row] {
             do {
@@ -91,13 +91,12 @@ extension TrashViewController: UITableViewDataSource {
                 }
             }
             self.tableView.deleteRows(at: [indexPath], with: .fade)
-//            let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
-//                self.tableView.reloadData()
-//            }
+
+        
             
             handelr(true)
         }
-        let swipeaction = UISwipeActionsConfiguration(actions: [action])
+        let swipeaction = UISwipeActionsConfiguration(actions: [deleteAction])
         return swipeaction
     }
 }

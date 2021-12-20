@@ -133,6 +133,8 @@ class OverVIewToDo: UIViewController {
                                    newItem.dateToBeDone = dateToBeDone
                                    subcutegoryItemVar = "event"
                                    newItem.subcutegoryItem = subcutegoryItemVar
+                                   newItem.dateToBeDoneSort = datePicker.date
+                                   newItem.statusItem = "timeIsNotGone"
                                }
                                
                                let dateFormatter = DateFormatter()
@@ -142,7 +144,8 @@ class OverVIewToDo: UIViewController {
                                newItem.dateOfCreationString = dateFormatter.string(from: Date())
                                
                                newItem.subcutegoryItem = subcutegoryItemVar
-                               newItem.dateToBeDoneSort = datePicker.date
+                               
+                               
                                
                               
                              
