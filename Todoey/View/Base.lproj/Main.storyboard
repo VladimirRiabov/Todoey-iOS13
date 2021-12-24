@@ -316,7 +316,7 @@
                                     <action selector="subcategorySegmentedControlIndexChanged:" destination="sy6-1K-45v" eventType="valueChanged" id="FDd-eB-cJC"/>
                                 </connections>
                             </segmentedControl>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2W7-4J-JJB">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IyA-UD-PsN">
                                 <rect key="frame" x="350" y="44" width="44" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -331,23 +331,116 @@
                                     </imageReference>
                                 </state>
                                 <connections>
-                                    <action selector="onButton:" destination="sy6-1K-45v" eventType="touchUpInside" id="wpH-kS-9Ku"/>
+                                    <action selector="toAddViewButtonPressed:" destination="sy6-1K-45v" eventType="touchUpInside" id="aWn-p1-ZEP"/>
                                 </connections>
                             </button>
+                            <visualEffectView opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="arl-nq-qdS">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="K2C-Kq-Wfs">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="systemUltraThinMaterialDark"/>
+                            </visualEffectView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="LaK-mE-9FC"/>
                         <color key="backgroundColor" systemColor="systemTealColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="hJL-DX-cUV"/>
                     <connections>
+                        <outlet property="addViewOutlet" destination="1QX-XF-6ZW" id="sqD-rJ-nxU"/>
+                        <outlet property="blurEffect" destination="arl-nq-qdS" id="Ghi-3s-EYA"/>
+                        <outlet property="datePickerAdd" destination="H56-GQ-cux" id="rVe-f3-9Z8"/>
+                        <outlet property="descriptionTextFieldAdd" destination="TEk-bJ-5c8" id="K9i-tn-KVN"/>
                         <outlet property="labelOfCategory" destination="tdm-MH-ejX" id="wB3-Y9-OVt"/>
                         <outlet property="picker" destination="Q3v-1P-pLO" id="31g-rN-wAU"/>
+                        <outlet property="segmentedControllerAddOutlet" destination="MNu-of-W8Y" id="EgS-Gm-lYx"/>
                         <outlet property="subcategoryLabel" destination="Qgh-Y1-yiT" id="nTi-El-ll7"/>
                         <outlet property="subcategoryOutlet" destination="xIL-ZC-Ehu" id="siY-fr-DfX"/>
                         <outlet property="tableView" destination="l2V-7F-UFI" id="jOx-qY-UD1"/>
+                        <outlet property="titleTextFieldAdd" destination="grT-Vy-Df1" id="a4A-fL-bTS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uBu-wf-m6U" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="1QX-XF-6ZW">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="350"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oiG-NX-hwS">
+                            <rect key="frame" x="23" y="55" width="33" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="grT-Vy-Df1">
+                            <rect key="frame" x="23" y="84" width="208" height="34"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bl9-iu-Jbs">
+                            <rect key="frame" x="23" y="126" width="88" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TEk-bJ-5c8">
+                            <rect key="frame" x="23" y="155" width="208" height="34"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="H56-GQ-cux">
+                            <rect key="frame" x="16" y="239" width="268" height="42"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="datePickerAdd:" destination="sy6-1K-45v" eventType="valueChanged" id="MNz-ml-nJP"/>
+                                <action selector="datePickerAddPressed:" destination="sy6-1K-45v" eventType="valueChanged" id="yxu-vQ-d7G"/>
+                            </connections>
+                        </datePicker>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aVW-Wa-LxV">
+                            <rect key="frame" x="181" y="289" width="50" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Add"/>
+                            <connections>
+                                <action selector="addNewItemAddButton:" destination="sy6-1K-45v" eventType="touchUpInside" id="9HT-BT-LDW"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="czz-TG-Jpx">
+                            <rect key="frame" x="23" y="289" width="69" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Cancel"/>
+                            <connections>
+                                <action selector="cancelAddViewButton:" destination="sy6-1K-45v" eventType="touchUpInside" id="uHg-hu-hfb"/>
+                            </connections>
+                        </button>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="MNu-of-W8Y">
+                            <rect key="frame" x="67" y="197" width="107" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Note"/>
+                                <segment title="Event"/>
+                            </segments>
+                            <connections>
+                                <action selector="segmentedControllAddIndexChanged:" destination="sy6-1K-45v" eventType="valueChanged" id="ORF-xa-HrG"/>
+                            </connections>
+                        </segmentedControl>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Creation of a new note" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nc2-he-1rI">
+                            <rect key="frame" x="64" y="15" width="172" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="5J8-JI-ZNn"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="3037.68115942029" y="-1247.5446428571429"/>
         </scene>

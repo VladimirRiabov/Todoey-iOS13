@@ -13,19 +13,32 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     
     
     
-    
+    //MARK: - OUTLETS TODO VIEW
     @IBOutlet weak var subcategoryLabel: UILabel!
     @IBOutlet weak var labelOfCategory: UILabel!
     @IBOutlet weak var subcategoryOutlet: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var picker: UIPickerView!
     
+    //MARK: - OUTLETS ADD ITEM VIEW
+    
+    @IBOutlet var addViewOutlet: UIView!
+    @IBOutlet weak var blurEffect: UIVisualEffectView!
+    
+    @IBOutlet weak var titleTextFieldAdd: UITextField!
+    @IBOutlet weak var descriptionTextFieldAdd: UITextField!
+    @IBOutlet weak var datePickerAdd: UIDatePicker!
+    @IBOutlet weak var segmentedControllerAddOutlet: UISegmentedControl!
+    
+ 
+    
+    //MARK: - VARS
     var pickerDataArray: Array = Array<String>()
     var pickerDataSet: Set = Set<String>()
     var sortingVar = "dateOfItemCreation"
     var subcutegoryItemVar = "note"
     var todoItems: Results<Item>?
-    var abcde: String?
+    var dateChoosenInTheWeel: String?
     let realm = try! Realm()
     var selectedCategory : Category? {
         didSet {
@@ -33,22 +46,33 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     var currentCategoryTransition = GlobalKonstantSingleton()
+    var screenEffect: UIVisualEffect?
     
     
-    
+    //MARK: - VIEWDIDLOAD
     override func viewDidLoad() {
         super.viewDidLoad()
-        picker.setValue(UIColor.white, forKeyPath: "textColor")
-        
         GlobalKonstantSingleton.selectedClassCategory = selectedCategory
+        
         labelOfCategory.text = selectedCategory?.name
+        
+        picker.setValue(UIColor.white, forKeyPath: "textColor")
         picker.alpha = 0
         
-        
-//        tableView.delegate = self
         tableView.register(UINib(nibName: "ToDoTableViewCell", bundle: nil), forCellReuseIdentifier: "Reusable cell")
+        
         tableView.rowHeight = 80.0
+        
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
+        
+        addViewOutlet.layer.cornerRadius = addViewOutlet.frame.height / 15
+        if let effect = blurEffect.effect {
+            screenEffect = effect
+        } else {
+            screenEffect = UIVisualEffect()
+        }
+//        blurEffect.effect = nil
+        
     }
     
     @objc func loadList(notification: NSNotification){
@@ -64,17 +88,9 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
         
         pickerDataArray = selectedCategory?.items.filter("subcutegoryItem CONTAINS[cd] %@", "event").value(forKey: "dateToBeDone") as! [String]
         pickerDataSet = Set(pickerDataArray)
-        
-        
-        
-        
-//        tableView.reloadData()
+
     }
-//    func updateModel(at indexPath: IndexPath) {
-//
-//    }
-    
-    
+    //MARK: - WEEL FILTER
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
     }
@@ -86,18 +102,15 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         loadItems()
-        abcde = pickerDataSet.sorted(by: <)[row]
-        todoItems = todoItems!.filter("dateToBeDone CONTAINS[cd] %@", abcde)
+        dateChoosenInTheWeel = pickerDataSet.sorted(by: <)[row]
+        todoItems = todoItems!.filter("dateToBeDone CONTAINS[cd] %@", dateChoosenInTheWeel)
         self.tableView.reloadData()
-        
-        
+  
     }
     
     
     
-    
-    
-    //MARK: - IBActions
+    //MARK: - SEGMENTED CONTROLLER NOTE/EVENT
     @IBAction func subcategorySegmentedControlIndexChanged(_ sender: UISegmentedControl) {
         switch subcategoryOutlet.selectedSegmentIndex
             {
@@ -144,23 +157,14 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                             print("Error while encoding \(error)")
                             }
                         }
-               
                     }
-                
-                
-                
+ 
                 cell.titleLable.text = item.title
                 cell.subtitleLabel.text = item.descriptionLable
-                
                 cell.needToBeDoneLabel.text = item.dateToBeDone
                 cell.timeOfADatLabel.text = item.timeOfADay
-                
                 cell.dataOfCreation.text = item.dateOfCreationString
-                
-                print(item.statusItem)
-                
-                
-                
+  
                 cell.accessoryType = item.done == true ? .checkmark : .none
                 
             } else {
@@ -168,6 +172,8 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             }
             return cell
         }
+    
+    //MARK: - SWIPE CELL
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handelr) in
             print("delete")
@@ -192,25 +198,62 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         return swipeaction
     }
     
-    @objc func showMiracle() {
-        let slideVC = OverVIewToDo()
-        slideVC.modalPresentationStyle = .custom
-        slideVC.transitioningDelegate = self
-        self.present(slideVC, animated: true, completion: nil)
+    //MARK: - NEW TODO ADDVIEW ITEM BLOCK
+    
+    @IBAction func toAddViewButtonPressed(_ sender: UIButton) {
+//        self.view.addSubview(blurEffect)
+        self.view.addSubview(addViewOutlet)
+        self.addViewOutlet.center.x = self.view.center.x
+        self.addViewOutlet.center.y = self.view.center.y - (self.view.frame.height / 4.0)
+        addViewOutlet.alpha = 0
+        addViewOutlet.transform = CGAffineTransform(translationX: 0.2, y: 0.2)
+        UIView.animate(withDuration: 0.4) {
+            self.addViewOutlet.alpha = 1
+            self.addViewOutlet.transform = CGAffineTransform.identity
+            self.blurEffect.alpha = 1
+            self.blurEffect.effect = self.screenEffect
+        }
     }
     
-    @IBAction func onButton(_ sender: Any) {
-        showMiracle()
+    @IBAction func segmentedControllAddIndexChanged(_ sender: UISegmentedControl) {
     }
-    
-    
-}
+    @IBAction func datePickerAddPressed(_ sender: UIDatePicker) {
+    }
+    @IBAction func addNewItemAddButton(_ sender: UIButton) {
+    }
+    @IBAction func cancelAddViewButton(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.4) {
+            self.addViewOutlet.alpha = 0
+        } completion: { status in
+//            self.blurEffect.effect = nil
+//            self.blurEffect.removeFromSuperview()
+            self.blurEffect.alpha = 0
+            self.addViewOutlet.alpha = 0
+            self.addViewOutlet.removeFromSuperview()
+           
+        }
 
-extension NewToDoViewController: UIViewControllerTransitioningDelegate {
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        PresentationController(presentedViewController: presented, presenting: presenting)
     }
+    
+    
+    
+    //MARK: - OLD ADD VIEW
+    
+//    @objc func showMiracle() {
+//        let slideVC = OverVIewToDo()
+//        slideVC.modalPresentationStyle = .custom
+//        slideVC.transitioningDelegate = self
+//        self.present(slideVC, animated: true, completion: nil)
+//    }
+//    @IBAction func onButton(_ sender: Any) {
+//        showMiracle()
+//    }
 }
+//extension NewToDoViewController: UIViewControllerTransitioningDelegate {
+//    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+//        PresentationController(presentedViewController: presented, presenting: presenting)
+//    }
+//}
 
 
 
