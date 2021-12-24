@@ -169,7 +169,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             return cell
         }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handelr) in
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handelr) in
             print("delete")
             if let item = self.todoItems?[indexPath.row] {
             do {
@@ -181,13 +181,14 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 }
             }
             self.tableView.deleteRows(at: [indexPath], with: .fade)
-//            let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
-//                self.tableView.reloadData()
-//            }
-            
             handelr(true)
         }
-        let swipeaction = UISwipeActionsConfiguration(actions: [action])
+        let editorAction = UIContextualAction(style: .normal, title: "edit") { action, view, handler in
+
+            handler (true)
+        }
+        editorAction.backgroundColor = UIColor.systemBlue
+        let swipeaction = UISwipeActionsConfiguration(actions: [deleteAction, editorAction])
         return swipeaction
     }
     

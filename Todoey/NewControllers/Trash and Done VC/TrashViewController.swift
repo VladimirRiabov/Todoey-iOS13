@@ -91,12 +91,14 @@ extension TrashViewController: UITableViewDataSource {
                 }
             }
             self.tableView.deleteRows(at: [indexPath], with: .fade)
-
-        
             
             handelr(true)
+
         }
-        let swipeaction = UISwipeActionsConfiguration(actions: [deleteAction])
+        let editorAction = UIContextualAction(style: .normal, title: "edit") { action, view, handler in
+            handler (true)
+        }
+        let swipeaction = UISwipeActionsConfiguration(actions: [deleteAction, editorAction])
         return swipeaction
     }
 }
