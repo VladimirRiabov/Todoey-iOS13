@@ -38,7 +38,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     var sortingVar = "dateOfItemCreation"
     var subcutegoryItemVar = "note"
     var todoItems: Results<Item>?
-    var dateChoosenInTheWeel: String?
+    var abcde: String?
     let realm = try! Realm()
     var selectedCategory : Category? {
         didSet {
@@ -46,7 +46,11 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     var currentCategoryTransition = GlobalKonstantSingleton()
+    
     var screenEffect: UIVisualEffect?
+    var indexSegmentedControlAdd = 0
+    var timeOfADay = ""
+    var dateToBeDone = ""
     
     
     //MARK: - VIEWDIDLOAD
@@ -88,6 +92,8 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
         
         pickerDataArray = selectedCategory?.items.filter("subcutegoryItem CONTAINS[cd] %@", "event").value(forKey: "dateToBeDone") as! [String]
         pickerDataSet = Set(pickerDataArray)
+//        picker.delegate = self
+//        tableView.reloadData()
 
     }
     //MARK: - WEEL FILTER
@@ -102,8 +108,8 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         loadItems()
-        dateChoosenInTheWeel = pickerDataSet.sorted(by: <)[row]
-        todoItems = todoItems!.filter("dateToBeDone CONTAINS[cd] %@", dateChoosenInTheWeel)
+        abcde = pickerDataSet.sorted(by: <)[row]
+        todoItems = todoItems?.filter("dateToBeDone CONTAINS[cd] %@", abcde)
         self.tableView.reloadData()
   
     }
@@ -186,8 +192,25 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 print("Error while encoding \(error)")
                 }
             }
+            
             self.tableView.deleteRows(at: [indexPath], with: .fade)
+            
+//            self.todoItems = self.todoItems!.filter("dateToBeDone CONTAINS[cd] %@", self.abcde)
+            
+            
+            
+            
+            
             handelr(true)
+            
+//            self.tableView.reloadData()
+            self.loadItems()
+            self.abcde = self.pickerDataSet.sorted(by: <).last
+            self.picker.delegate = self
+//            self.todoItems = self.todoItems?.filter("dateToBeDone CONTAINS[cd] %@", self.abcde)
+            self.tableView.reloadData()
+            
+            print(self.abcde)
         }
         let editorAction = UIContextualAction(style: .normal, title: "edit") { action, view, handler in
 
@@ -199,9 +222,12 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     }
     
     //MARK: - NEW TODO ADDVIEW ITEM BLOCK
-    
+    //работает
     @IBAction func toAddViewButtonPressed(_ sender: UIButton) {
-//        self.view.addSubview(blurEffect)
+        segmentedControllerAddOutlet.selectedSegmentIndex = 0
+        datePickerAdd.isEnabled = false
+        titleTextFieldAdd.text = ""
+        descriptionTextFieldAdd.text = ""
         self.view.addSubview(addViewOutlet)
         self.addViewOutlet.center.x = self.view.center.x
         self.addViewOutlet.center.y = self.view.center.y - (self.view.frame.height / 4.0)
@@ -214,19 +240,101 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             self.blurEffect.effect = self.screenEffect
         }
     }
-    
+    //работает
     @IBAction func segmentedControllAddIndexChanged(_ sender: UISegmentedControl) {
+        switch segmentedControllerAddOutlet.selectedSegmentIndex
+            {
+            case 0:
+            datePickerAdd.isEnabled = false
+
+            case 1:
+            datePickerAdd.isEnabled = true
+            
+            default:
+                break
+            }
+        indexSegmentedControlAdd = segmentedControllerAddOutlet.selectedSegmentIndex
     }
+    
     @IBAction func datePickerAddPressed(_ sender: UIDatePicker) {
+        
     }
     @IBAction func addNewItemAddButton(_ sender: UIButton) {
+        if let currentCategory = selectedCategory {
+                       do {
+                           try self.realm.write {
+                               let newItem = Item()
+                               dateFormatters()
+                               
+                               newItem.title = titleTextFieldAdd.text!
+                               newItem.descriptionLable = descriptionTextFieldAdd.text!
+
+                               newItem.dateOfItemCreation = Date()
+                               if indexSegmentedControlAdd == 1 {
+                                   dateFormatters()
+                                   newItem.timeOfADay = timeOfADay
+                                   newItem.dateToBeDone = dateToBeDone
+                                   subcutegoryItemVar = "event"
+                                   newItem.subcutegoryItem = subcutegoryItemVar
+                                   newItem.dateToBeDoneSort = datePickerAdd.date
+                                   newItem.statusItem = "timeIsNotGone"
+                               }
+                               
+                               let dateFormatter = DateFormatter()
+                                   dateFormatter.dateStyle = DateFormatter.Style.short
+                                   dateFormatter.timeStyle = DateFormatter.Style.short
+                                   dateFormatter.dateFormat = "yyyy-MM-dd"
+                               newItem.dateOfCreationString = dateFormatter.string(from: Date())
+                               
+                               newItem.subcutegoryItem = subcutegoryItemVar
+
+                               GlobalKonstantSingleton.allItemsCategory?.items.append(newItem)
+                               currentCategory.items.append(newItem)
+//
+                           }
+                       } catch {
+                           print("Error saving")
+                       }
+                   }
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+//        self.dismiss(animated: true, completion: nil)
+        UIView.animate(withDuration: 0.4) {
+            self.addViewOutlet.alpha = 0
+        } completion: { status in
+
+            self.blurEffect.alpha = 0
+            self.addViewOutlet.alpha = 0
+            self.addViewOutlet.removeFromSuperview()
+           
+        }
+        
+        picker.delegate = self
+        self.tableView.reloadData()
+        loadItems()
+        
+       
     }
+    func dateFormatters() {
+        let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = DateFormatter.Style.short
+            dateFormatter.timeStyle = DateFormatter.Style.short
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateToBeDone =  dateFormatter.string(from: datePickerAdd.date)
+        
+        let dateFormatter2 = DateFormatter()
+            dateFormatter2.dateStyle = DateFormatter.Style.short
+            dateFormatter2.timeStyle = DateFormatter.Style.short
+            dateFormatter2.dateFormat = "HH:mm"
+            timeOfADay = dateFormatter2.string(from: datePickerAdd.date)
+    }
+    
+    
+    //работает
     @IBAction func cancelAddViewButton(_ sender: UIButton) {
         UIView.animate(withDuration: 0.4) {
             self.addViewOutlet.alpha = 0
         } completion: { status in
-//            self.blurEffect.effect = nil
-//            self.blurEffect.removeFromSuperview()
+
             self.blurEffect.alpha = 0
             self.addViewOutlet.alpha = 0
             self.addViewOutlet.removeFromSuperview()
