@@ -23,6 +23,7 @@ class Item: Object {
     
     @objc dynamic var statusItem : String = ""
     @objc dynamic var subcutegoryItem : String = ""
+    @objc dynamic var orCalendarOrTodo : String = "todo"
     
 
     

@@ -15,6 +15,10 @@ class ToDoTableViewCell: UITableViewCell {
     @IBOutlet weak var dataOfCreation: UILabel!
     
     @IBOutlet weak var timeOfADatLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var colorStatusView: UIView!
+    @IBOutlet weak var status: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

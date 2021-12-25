@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,11 +18,23 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lFk-Rn-oPd">
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="lFk-Rn-oPd">
                         <rect key="frame" x="16" y="26.5" width="288" height="12"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="needToDo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0u-5k-DVn">
-                                <rect key="frame" x="0.0" y="0.0" width="288" height="12"/>
+                                <rect key="frame" x="0.0" y="0.0" width="96" height="12"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="10"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mel-LS-9Yz">
+                                <rect key="frame" x="96" y="0.0" width="96" height="12"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="10"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STATUS" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lyu-fG-mOt">
+                                <rect key="frame" x="192" y="0.0" width="96" height="12"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -70,6 +83,11 @@
                             </label>
                         </subviews>
                     </stackView>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NXx-UN-Qu8">
+                        <rect key="frame" x="312" y="0.0" width="8" height="109"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="cJQ-OV-uqh" secondAttribute="trailing" id="46X-uA-Nqj"/>
@@ -89,8 +107,11 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="colorStatusView" destination="NXx-UN-Qu8" id="8d8-DP-OuP"/>
                 <outlet property="dataOfCreation" destination="5wR-Gg-aek" id="cqQ-vv-Zxs"/>
                 <outlet property="needToBeDoneLabel" destination="M0u-5k-DVn" id="dfe-j9-H7g"/>
+                <outlet property="status" destination="mel-LS-9Yz" id="ZHX-kJ-6rx"/>
+                <outlet property="statusLabel" destination="Lyu-fG-mOt" id="Tka-wh-Pxj"/>
                 <outlet property="subtitleLabel" destination="ooI-iK-8yD" id="oKL-7y-uEC"/>
                 <outlet property="timeOfADatLabel" destination="iBO-Gj-Idu" id="GTd-89-d4T"/>
                 <outlet property="titleLable" destination="A0Z-lb-etd" id="GQk-oq-tpR"/>
@@ -98,4 +119,9 @@
             <point key="canvasLocation" x="137.68115942028987" y="110.15625"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class NewToDoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -56,6 +57,8 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     var currentCategoryTransition = GlobalKonstantSingleton()
+    var subcategorySegmentedControlIndex = 0
+    var swipeActions: UISwipeActionsConfiguration?
     
     var screenEffect: UIVisualEffect?
     var indexSegmentedControlAdd = 0
@@ -64,6 +67,10 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     
     var indexSegmentedControlUpdate = 0
     var indexPathTrailingRow = 0
+    
+    let startOfDay: Date = Calendar.current.startOfDay(for: Date())
+    let components = DateComponents(hour: 23, minute: 59, second: 59)
+    
     
     
     //MARK: - VIEWDIDLOAD
@@ -101,9 +108,11 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     //MARK: - Loading ToDo func
     func loadItems() {
-        todoItems = selectedCategory?.items.filter("subcutegoryItem CONTAINS[cd] %@", subcutegoryItemVar).sorted(byKeyPath: sortingVar, ascending: true)
         
-        pickerDataArray = selectedCategory?.items.filter("subcutegoryItem CONTAINS[cd] %@", "event").value(forKey: "dateToBeDone") as! [String]
+        todoItems = selectedCategory?.items.filter("subcutegoryItem CONTAINS[cd] %@", subcutegoryItemVar).filter("orCalendarOrTodo CONTAINS[cd] %@", "todo").sorted(byKeyPath: sortingVar, ascending: true)
+        print(todoItems)
+        
+        pickerDataArray = selectedCategory?.items.filter("subcutegoryItem CONTAINS[cd] %@", "event").filter("orCalendarOrTodo CONTAINS[cd] %@", "todo").value(forKey: "dateToBeDone") as! [String]
         pickerDataSet = Set(pickerDataArray)
 //        picker.delegate = self
 //        tableView.reloadData()
@@ -122,7 +131,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         loadItems()
         abcde = pickerDataSet.sorted(by: <)[row]
-        todoItems = todoItems?.filter("dateToBeDone CONTAINS[cd] %@", abcde)
+        todoItems = todoItems?.filter("dateToBeDone CONTAINS[cd] %@", abcde).filter("orCalendarOrTodo CONTAINS[cd] %@", "todo")
         self.tableView.reloadData()
   
     }
@@ -134,6 +143,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
         switch subcategoryOutlet.selectedSegmentIndex
             {
             case 0:
+            subcategorySegmentedControlIndex = 0
             picker.alpha = 0
             subcategoryLabel.text = "Notes"
             subcutegoryItemVar = "note"
@@ -142,6 +152,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
             tableView.reloadData()
 
             case 1:
+            subcategorySegmentedControlIndex = 1
             picker.alpha = 1
             subcategoryLabel.text = "Events"
             subcutegoryItemVar = "event"
@@ -165,19 +176,55 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! ToDoTableViewCell
             if let item = todoItems?[indexPath.row] {
                 
+                let endOfDay = Calendar.current.date(byAdding: components, to: startOfDay)
                 if item.dateToBeDoneSort != nil {
-                    if item.dateToBeDoneSort! < Date() {
-                        
+                    if Calendar.current.isDateInToday(item.dateToBeDoneSort!) {
                         do {
                             try self.realm.write {
-                                item.statusItem = "isGone"
+                                item.orCalendarOrTodo = "todo"
                             }
                         } catch {
                             print("Error while encoding \(error)")
+                        }
+                    } else if item.dateToBeDoneSort! > Date() {
+                        do {
+                            try self.realm.write {
+                                item.orCalendarOrTodo = "todo"
+                                
                             }
+                        } catch {
+                            print("Error while encoding \(error)")
+                        }
+                    } else if item.dateToBeDoneSort! < Date() {
+                        do {
+                            try self.realm.write {
+                                item.orCalendarOrTodo = "calendar"
+                                
+                            }
+                        } catch {
+                            print("Error while encoding \(error)")
                         }
                     }
- 
+                }
+                
+//                print(Calendar.current.startOfDay(for: item.dateToBeDoneSort!))
+//                let startOfDay: Date = Calendar.current.startOfDay(for: Date())
+//                let components = DateComponents(hour: 23, minute: 59, second: 59)
+//                let endOfDay = Calendar.current.date(byAdding: components, to: startOfDay)
+//                print(endOfDay)
+                
+               
+                
+                if item.statusItem == "Not done" {
+                    cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+                } else if item.statusItem == "Done" {
+                    cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.7858344316, green: 1, blue: 0.6146927476, alpha: 1)
+                } else {
+                    cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
+                }
+                
+                cell.status.text = item.orCalendarOrTodo
+                cell.statusLabel.text = item.statusItem
                 cell.titleLable.text = item.title
                 cell.subtitleLabel.text = item.descriptionLable
                 cell.needToBeDoneLabel.text = item.dateToBeDone
@@ -194,11 +241,52 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     
     //MARK: - SWIPE CELL
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let contextItem = UIContextualAction(style: .normal, title: "Leading & .normal") { (contextualAction, view, boolValue) in
+        let doneAction = UIContextualAction(style: .normal, title: "Done") { (contextualAction, view, boolValue) in
+            
+            if let item = self.todoItems?[indexPath.row] {
+                do {
+                    try self.realm.write {
+                        item.statusItem = "Done"
+                    }
+                } catch {
+                    print("Error while encoding \(error)")
+                }
+            }
+            
+            
             boolValue(true) // pass true if you want the handler to allow the action
             print("Leading Action style .normal")
+            tableView.reloadData()
         }
-        let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
+        doneAction.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        
+        let notDoneAction = UIContextualAction(style: .normal, title: "Not done") { (contextualAction, view, boolValue) in
+            
+            if let item = self.todoItems?[indexPath.row] {
+                do {
+                    try self.realm.write {
+                        item.statusItem = "Not done"
+                    }
+                } catch {
+                    print("Error while encoding \(error)")
+                }
+            }
+            
+            
+            boolValue(true) // pass true if you want the handler to allow the action
+           
+            tableView.reloadData()
+        }
+        
+        doneAction.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        notDoneAction.backgroundColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
+        
+        if subcategorySegmentedControlIndex == 1 {
+            swipeActions = UISwipeActionsConfiguration(actions: [doneAction, notDoneAction])
+        } else {
+            swipeActions = UISwipeActionsConfiguration(actions: [])
+        }
+        
 
         return swipeActions
     }
@@ -245,6 +333,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                 if let item = self.todoItems?[indexPath.row] {
                     self.titleUpdateTextField.text = item.title
                     self.descriptionUpdateTextField.text = item.descriptionLable
+                    self.datePickerUpdate.date = item.dateToBeDoneSort ?? Date()
 //                    do {
 //                        try self.realm.write {
 ////                            item.title = self.titleUpdateTextField.text ?? ""
@@ -322,7 +411,10 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                                    subcutegoryItemVar = "event"
                                    newItem.subcutegoryItem = subcutegoryItemVar
                                    newItem.dateToBeDoneSort = datePickerAdd.date
-                                   newItem.statusItem = "timeIsNotGone"
+                                   if datePickerAdd.date < startOfDay {
+                                       newItem.orCalendarOrTodo = "calendar"
+                                   }
+                                   newItem.statusItem = ""
                                }
                                
                                let dateFormatter = DateFormatter()
@@ -392,15 +484,16 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         switch noteEventSCUpdate.selectedSegmentIndex
             {
             case 0:
-            datePickerAdd.isEnabled = false
+            datePickerUpdate.isEnabled = false
 
             case 1:
-            datePickerAdd.isEnabled = true
+            datePickerUpdate.isEnabled = true
             
             default:
                 break
             }
         indexSegmentedControlUpdate = noteEventSCUpdate.selectedSegmentIndex
+        
     }
     @IBAction func cancelUpdateButton(_ sender: UIButton) {
         UIView.animate(withDuration: 0.4) {
@@ -417,22 +510,49 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         if let item = self.todoItems?[indexPathTrailingRow] {
                     do {
                         try self.realm.write {
-                            
-                          
-
                             item.title = self.titleUpdateTextField.text ?? ""
                             item.descriptionLable = self.descriptionUpdateTextField.text ?? ""
-//                            realm.add(todoItems![indexPathTrailingRow], update: true)
-//                            self.realm.delete(item)
+                            
+                            
+                            item.dateOfItemCreation = Date()
+                            if indexSegmentedControlUpdate == 1 {
+                                dateFormattersUpdate()
+                                item.timeOfADay = timeOfADay
+                                item.dateToBeDone = dateToBeDone
+                                subcutegoryItemVar = "event"
+                                item.subcutegoryItem = subcutegoryItemVar
+                                item.dateToBeDoneSort = self.datePickerUpdate.date
+                                if datePickerUpdate.date < startOfDay {
+                                    item.orCalendarOrTodo = "calendar"
+                                }
+                                item.statusItem = ""
+                            }
+                            
+                            let dateFormatter = DateFormatter()
+                                dateFormatter.dateStyle = DateFormatter.Style.short
+                                dateFormatter.timeStyle = DateFormatter.Style.short
+                                dateFormatter.dateFormat = "yyyy-MM-dd"
+                            item.dateOfCreationString = dateFormatter.string(from: Date())
+                            
+                            item.subcutegoryItem = subcutegoryItemVar
+
+//                            GlobalKonstantSingleton.allItemsCategory?.items.append(newItem)
+//                            currentCategory.items.append(newItem)
+                            
                         }
                     } catch {
                         print("Error while encoding \(error)")
                     }
+            loadItems()
+            picker.delegate = self
+            tableView.reloadData()
         }
         
         
-       
-        tableView.reloadData()
+//        self.loadItems()
+//        self.abcde = self.pickerDataSet.sorted(by: <).last
+//        self.picker.delegate = self
+        
         
         UIView.animate(withDuration: 0.4) {
             self.viewUpdateOutlet.alpha = 0
@@ -443,7 +563,23 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             self.viewUpdateOutlet.removeFromSuperview()
 //        print(todoItems)
         }
+        func dateFormattersUpdate() {
+            let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = DateFormatter.Style.short
+                dateFormatter.timeStyle = DateFormatter.Style.short
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+            dateToBeDone =  dateFormatter.string(from: datePickerUpdate.date)
+            
+            let dateFormatter2 = DateFormatter()
+                dateFormatter2.dateStyle = DateFormatter.Style.short
+                dateFormatter2.timeStyle = DateFormatter.Style.short
+                dateFormatter2.dateFormat = "HH:mm"
+                timeOfADay = dateFormatter2.string(from: datePickerUpdate.date)
+        }
+        
+        
     }
+    
     
     
     

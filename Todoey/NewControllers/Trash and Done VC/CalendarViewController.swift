@@ -103,47 +103,60 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! ToDoTableViewCell
         if let item = todoItems?[indexPath.row] {
+            if item.statusItem == "" {
+                do {
+                    try self.realm.write {
+                        item.statusItem = "Unknown"
+                        
+                    }
+                } catch {
+                    print("Error while encoding \(error)")
+                }
+                
+            }
+            
+            
+//                if item.dateToBeDoneSort != nil {
+//                    if item.dateToBeDoneSort! < Date() {
+//
+//                        do {
+//                            try self.realm.write {
+//                                item.statusItem = "Unknown"
+//
+//                            }
+//                        } catch {
+//                            print("Error while encoding \(error)")
+//                            }
+//                        }
+//                    }
+            
+            
+            if item.statusItem == "Not done" {
+                cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+            } else if item.statusItem == "Done" {
+                cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.7858344316, green: 1, blue: 0.6146927476, alpha: 1)
+            } else {
+                cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
+            }
+            
+            cell.status.text = item.orCalendarOrTodo
+            cell.statusLabel.text = item.statusItem
             cell.titleLable.text = item.title
             cell.subtitleLabel.text = item.descriptionLable
             cell.needToBeDoneLabel.text = item.dateToBeDone
             cell.timeOfADatLabel.text = item.timeOfADay
+            cell.dataOfCreation.text = item.dateOfCreationString
             dates.insert(item.dateToBeDone)
-            print(item.timeOfADaySort)
+            
             
 
             cell.accessoryType = item.done == true ? .checkmark : .none
-            print("arbeitet")
+            
         } else {
             cell.textLabel?.text = "No Items Added"
         }
         return cell
     }
     
-//    func minimumDate(for calendar: FSCalendar) -> Date {
-//           return Date()
-//    } 
-    
-    
-    
-    
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handelr) in
-//            print("delete")
-////            if let item = self.todoItems?[indexPath.row] {
-//                do {
-//                    try self.realm.write {
-//                        self.realm.delete(item)
-//                    }
-//                } catch {
-//                    print("Error while encoding \(error)")
-//                }
-//            }
-//            self.tableView.deleteRows(at: [indexPath], with: .fade)
-//
-//            handelr(true)
-//        }
-//        let swipeaction = UISwipeActionsConfiguration(actions: [action])
-//        return swipeaction
-//    }
-    
+
 }
