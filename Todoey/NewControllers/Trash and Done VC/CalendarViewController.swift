@@ -81,7 +81,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
 //        let sortProperties = [SortDescriptor(keyPath: "dateToBeDoneSort", ascending: true), SortDescriptor(keyPath: "timeOfADaySort", ascending: true)]
 //        allShowsByDate = Realm().objects(MyObjectType).sorted(sortProperties)
         
-        todoItems = realm.objects(Item.self).sorted(byKeyPath: "dateToBeDoneSort", ascending: true)
+        todoItems = realm.objects(Item.self).filter("subcutegoryItem CONTAINS[cd] %@", "event").sorted(byKeyPath: "dateToBeDoneSort", ascending: true)
             
         }
 //            .filter("dateToBeDone CONTAINS[cd] %@", GlobalKonstantSingleton.currentDateStr!)
@@ -119,9 +119,9 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         return cell
     }
     
-    func minimumDate(for calendar: FSCalendar) -> Date {
-           return Date()
-    } 
+//    func minimumDate(for calendar: FSCalendar) -> Date {
+//           return Date()
+//    } 
     
     
     

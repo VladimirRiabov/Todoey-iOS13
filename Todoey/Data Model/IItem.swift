@@ -24,7 +24,7 @@ class Item: Object {
     @objc dynamic var statusItem : String = ""
     @objc dynamic var subcutegoryItem : String = ""
     
-    
+
     
     var parentCategory = LinkingObjects(fromType: Category.self, property: "items")
 }

@@ -30,6 +30,16 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var datePickerAdd: UIDatePicker!
     @IBOutlet weak var segmentedControllerAddOutlet: UISegmentedControl!
     
+    //MARK: - OUTLETS UPDATE ITEM
+    
+    @IBOutlet var viewUpdateOutlet: UIView!
+    @IBOutlet weak var editNoteEventLabel: UILabel!
+    @IBOutlet weak var titleUpdateTextField: UITextField!
+    @IBOutlet weak var descriptionUpdateTextField: UITextField!
+    @IBOutlet weak var noteEventSCUpdate: UISegmentedControl!
+    @IBOutlet weak var datePickerUpdate: UIDatePicker!
+    
+    
  
     
     //MARK: - VARS
@@ -51,6 +61,9 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     var indexSegmentedControlAdd = 0
     var timeOfADay = ""
     var dateToBeDone = ""
+    
+    var indexSegmentedControlUpdate = 0
+    var indexPathTrailingRow = 0
     
     
     //MARK: - VIEWDIDLOAD
@@ -180,41 +193,72 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         }
     
     //MARK: - SWIPE CELL
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let contextItem = UIContextualAction(style: .normal, title: "Leading & .normal") { (contextualAction, view, boolValue) in
+            boolValue(true) // pass true if you want the handler to allow the action
+            print("Leading Action style .normal")
+        }
+        let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
+
+        return swipeActions
+    }
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handelr) in
             print("delete")
             if let item = self.todoItems?[indexPath.row] {
-            do {
-                try self.realm.write {
-                    self.realm.delete(item)
-                }
-            } catch {
-                print("Error while encoding \(error)")
+                do {
+                    try self.realm.write {
+                        self.realm.delete(item)
+                    }
+                } catch {
+                    print("Error while encoding \(error)")
                 }
             }
-            
             self.tableView.deleteRows(at: [indexPath], with: .fade)
-            
-//            self.todoItems = self.todoItems!.filter("dateToBeDone CONTAINS[cd] %@", self.abcde)
-            
-            
-            
-            
-            
             handelr(true)
-            
-//            self.tableView.reloadData()
             self.loadItems()
             self.abcde = self.pickerDataSet.sorted(by: <).last
             self.picker.delegate = self
-//            self.todoItems = self.todoItems?.filter("dateToBeDone CONTAINS[cd] %@", self.abcde)
             self.tableView.reloadData()
-            
-            print(self.abcde)
         }
-        let editorAction = UIContextualAction(style: .normal, title: "edit") { action, view, handler in
-
-            handler (true)
+        let editorAction = UIContextualAction(style: .normal, title: "Edit") { action, view, handler in
+            
+            self.noteEventSCUpdate.selectedSegmentIndex = 0
+            
+            self.datePickerUpdate.isEnabled = false
+            //            titleTextFieldAdd.text = item.
+            //            descriptionTextFieldAdd.text = ""
+            self.view.addSubview(self.viewUpdateOutlet)
+            self.viewUpdateOutlet.center.x = self.view.center.x
+            self.viewUpdateOutlet.center.y = self.view.center.y - (self.view.frame.height / 4.0)
+            self.viewUpdateOutlet.alpha = 0
+            self.viewUpdateOutlet.transform = CGAffineTransform(translationX: 0.2, y: 0.2)
+            UIView.animate(withDuration: 0.4) {
+                self.viewUpdateOutlet.alpha = 1
+                self.viewUpdateOutlet.transform = CGAffineTransform.identity
+                self.blurEffect.alpha = 1
+                self.blurEffect.effect = self.screenEffect
+                
+                self.indexPathTrailingRow = indexPath.row
+                
+                if let item = self.todoItems?[indexPath.row] {
+                    self.titleUpdateTextField.text = item.title
+                    self.descriptionUpdateTextField.text = item.descriptionLable
+//                    do {
+//                        try self.realm.write {
+////                            item.title = self.titleUpdateTextField.text ?? ""
+////                            item.descriptionLable = self.descriptionUpdateTextField.text ?? ""
+//
+////                            self.realm.delete(item)
+//                        }
+//                    } catch {
+//                        print("Error while encoding \(error)")
+//                    }
+                }
+                
+                handler (true)
+            }
         }
         editorAction.backgroundColor = UIColor.systemBlue
         let swipeaction = UISwipeActionsConfiguration(actions: [deleteAction, editorAction])
@@ -259,6 +303,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     @IBAction func datePickerAddPressed(_ sender: UIDatePicker) {
         
     }
+    //работает
     @IBAction func addNewItemAddButton(_ sender: UIButton) {
         if let currentCategory = selectedCategory {
                        do {
@@ -341,6 +386,63 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
            
         }
 
+    }
+    //MARK: - UPDATE ITEM BLOCK
+    @IBAction func segmentedControllerUpdateIndexChanged(_ sender: UISegmentedControl) {
+        switch noteEventSCUpdate.selectedSegmentIndex
+            {
+            case 0:
+            datePickerAdd.isEnabled = false
+
+            case 1:
+            datePickerAdd.isEnabled = true
+            
+            default:
+                break
+            }
+        indexSegmentedControlUpdate = noteEventSCUpdate.selectedSegmentIndex
+    }
+    @IBAction func cancelUpdateButton(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.4) {
+            self.viewUpdateOutlet.alpha = 0
+        } completion: { status in
+
+            self.blurEffect.alpha = 0
+            self.viewUpdateOutlet.alpha = 0
+            self.viewUpdateOutlet.removeFromSuperview()
+           
+        }
+    }
+    @IBAction func updateButtonPressed(_ sender: UIButton) {
+        if let item = self.todoItems?[indexPathTrailingRow] {
+                    do {
+                        try self.realm.write {
+                            
+                          
+
+                            item.title = self.titleUpdateTextField.text ?? ""
+                            item.descriptionLable = self.descriptionUpdateTextField.text ?? ""
+//                            realm.add(todoItems![indexPathTrailingRow], update: true)
+//                            self.realm.delete(item)
+                        }
+                    } catch {
+                        print("Error while encoding \(error)")
+                    }
+        }
+        
+        
+       
+        tableView.reloadData()
+        
+        UIView.animate(withDuration: 0.4) {
+            self.viewUpdateOutlet.alpha = 0
+        } completion: { status in
+
+            self.blurEffect.alpha = 0
+            self.viewUpdateOutlet.alpha = 0
+            self.viewUpdateOutlet.removeFromSuperview()
+//        print(todoItems)
+        }
     }
     
     
