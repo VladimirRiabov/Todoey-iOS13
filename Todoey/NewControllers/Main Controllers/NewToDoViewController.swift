@@ -48,6 +48,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     var pickerDataSet: Set = Set<String>()
     var sortingVar = "dateOfItemCreation"
     var subcutegoryItemVar = "note"
+    var subcategoryItemOne = "note"
     var todoItems: Results<Item>?
     var abcde: String?
     let realm = try! Realm()
@@ -150,7 +151,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
             sortingVar = "dateOfItemCreation"
             loadItems()
             tableView.reloadData()
-
+            
             case 1:
             subcategorySegmentedControlIndex = 1
             picker.alpha = 1
@@ -374,20 +375,32 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         }
     }
     //работает
+    
+    
     @IBAction func segmentedControllAddIndexChanged(_ sender: UISegmentedControl) {
-        switch segmentedControllerAddOutlet.selectedSegmentIndex
-            {
-            case 0:
-            datePickerAdd.isEnabled = false
+        
+            switch segmentedControllerAddOutlet.selectedSegmentIndex
+                {
+                case 0:
+                datePickerAdd.isEnabled = false
+                subcategoryItemOne = "note"
+                
+                
 
-            case 1:
-            datePickerAdd.isEnabled = true
-            
-            default:
-                break
-            }
-        indexSegmentedControlAdd = segmentedControllerAddOutlet.selectedSegmentIndex
+                case 1:
+                datePickerAdd.isEnabled = true
+                subcategoryItemOne = "event"
+               
+               
+                
+                default:
+                    break
+                }
+            indexSegmentedControlAdd = segmentedControllerAddOutlet.selectedSegmentIndex
+            print(indexSegmentedControlAdd)
     }
+    
+   
     
     @IBAction func datePickerAddPressed(_ sender: UIDatePicker) {
         
@@ -404,18 +417,25 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                                newItem.descriptionLable = descriptionTextFieldAdd.text!
 
                                newItem.dateOfItemCreation = Date()
+                               
                                if indexSegmentedControlAdd == 1 {
                                    dateFormatters()
                                    newItem.timeOfADay = timeOfADay
                                    newItem.dateToBeDone = dateToBeDone
                                    subcutegoryItemVar = "event"
-                                   newItem.subcutegoryItem = subcutegoryItemVar
+                                   subcategoryItemOne = "event"
+                                   newItem.subcutegoryItem = subcategoryItemOne
                                    newItem.dateToBeDoneSort = datePickerAdd.date
+                                   print("[hui pizda")
                                    if datePickerAdd.date < startOfDay {
                                        newItem.orCalendarOrTodo = "calendar"
+                                       
                                    }
                                    newItem.statusItem = ""
+                                   
                                }
+                               print("this is index of segmented controll")
+                               print(indexSegmentedControlAdd)
                                
                                let dateFormatter = DateFormatter()
                                    dateFormatter.dateStyle = DateFormatter.Style.short
@@ -423,11 +443,14 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                                    dateFormatter.dateFormat = "yyyy-MM-dd"
                                newItem.dateOfCreationString = dateFormatter.string(from: Date())
                                
-                               newItem.subcutegoryItem = subcutegoryItemVar
+                               newItem.subcutegoryItem = subcategoryItemOne
 
                                GlobalKonstantSingleton.allItemsCategory?.items.append(newItem)
                                currentCategory.items.append(newItem)
-//
+                               
+                               indexSegmentedControlAdd = 0
+                               subcategoryItemOne = "note"
+//                               print(subcategoryItemOne)
                            }
                        } catch {
                            print("Error saving")
@@ -525,7 +548,11 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                                 if datePickerUpdate.date < startOfDay {
                                     item.orCalendarOrTodo = "calendar"
                                 }
-                                item.statusItem = ""
+//                                item.statusItem = ""
+                            }
+                            if indexSegmentedControlUpdate == 0 {
+                                subcutegoryItemVar = "note"
+                                item.subcutegoryItem = subcutegoryItemVar
                             }
                             
                             let dateFormatter = DateFormatter()

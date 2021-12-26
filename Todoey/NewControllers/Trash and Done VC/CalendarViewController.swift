@@ -103,6 +103,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! ToDoTableViewCell
         if let item = todoItems?[indexPath.row] {
+            dates.insert(item.dateToBeDone)
             if item.statusItem == "" {
                 do {
                     try self.realm.write {
@@ -138,7 +139,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
             } else {
                 cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
             }
-            
+            print(item.statusItem )
             cell.status.text = item.orCalendarOrTodo
             cell.statusLabel.text = item.statusItem
             cell.titleLable.text = item.title

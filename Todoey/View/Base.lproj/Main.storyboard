@@ -359,7 +359,7 @@
                         <outlet property="labelOfCategory" destination="tdm-MH-ejX" id="wB3-Y9-OVt"/>
                         <outlet property="noteEventSCUpdate" destination="7tO-8x-Obx" id="RaL-vB-RND"/>
                         <outlet property="picker" destination="Q3v-1P-pLO" id="31g-rN-wAU"/>
-                        <outlet property="segmentedControllerAddOutlet" destination="MNu-of-W8Y" id="EgS-Gm-lYx"/>
+                        <outlet property="segmentedControllerAddOutlet" destination="MNu-of-W8Y" id="EJ9-cv-lZX"/>
                         <outlet property="subcategoryLabel" destination="Qgh-Y1-yiT" id="nTi-El-ll7"/>
                         <outlet property="subcategoryOutlet" destination="xIL-ZC-Ehu" id="siY-fr-DfX"/>
                         <outlet property="tableView" destination="l2V-7F-UFI" id="jOx-qY-UD1"/>
@@ -429,7 +429,7 @@
                                 <segment title="Event"/>
                             </segments>
                             <connections>
-                                <action selector="segmentedControllAddIndexChanged:" destination="sy6-1K-45v" eventType="valueChanged" id="ORF-xa-HrG"/>
+                                <action selector="segmentedControllAddIndexChanged:" destination="sy6-1K-45v" eventType="valueChanged" id="3Ez-4t-mkR"/>
                             </connections>
                         </segmentedControl>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Creation of a new note" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nc2-he-1rI">
