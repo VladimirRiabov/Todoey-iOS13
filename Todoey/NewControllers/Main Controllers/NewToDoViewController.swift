@@ -476,6 +476,30 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
            
         }
         
+        switch subcategoryOutlet.selectedSegmentIndex
+            {
+            case 0:
+            subcategorySegmentedControlIndex = 0
+            picker.alpha = 0
+            subcategoryLabel.text = "Notes"
+            subcutegoryItemVar = "note"
+            sortingVar = "dateOfItemCreation"
+            loadItems()
+            tableView.reloadData()
+            
+            case 1:
+            subcategorySegmentedControlIndex = 1
+            picker.alpha = 1
+            subcategoryLabel.text = "Events"
+            subcutegoryItemVar = "event"
+            sortingVar = "dateToBeDoneSort"
+            loadItems()
+            tableView.reloadData()
+            
+            default:
+                break
+            }
+        
         picker.delegate = self
         self.tableView.reloadData()
         loadItems()
