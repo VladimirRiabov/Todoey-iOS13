@@ -131,8 +131,11 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         loadItems()
-        abcde = pickerDataSet.sorted(by: <)[row]
-        todoItems = todoItems?.filter("dateToBeDone CONTAINS[cd] %@", abcde).filter("orCalendarOrTodo CONTAINS[cd] %@", "todo")
+        if abcde != nil {
+            abcde = pickerDataSet.sorted(by: <)[row]
+            todoItems = todoItems?.filter("dateToBeDone CONTAINS[cd] %@", abcde).filter("orCalendarOrTodo CONTAINS[cd] %@", "todo")
+        }
+        
         self.tableView.reloadData()
   
     }

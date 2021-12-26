@@ -20,6 +20,9 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     let realm = try! Realm()
     var dates = Set<String>()
     
+    var DATESARRAY: Array = Array<String>()
+    var DATESSET: Set = Set<String>()
+    
     
   
     
@@ -27,12 +30,14 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         super.viewDidLoad()
 //        tableView.dataSource = self
 //        tableView.delegate = self
-
+        ffCalendar.delegate = self
         tableView.register(UINib(nibName: "ToDoTableViewCell", bundle: nil), forCellReuseIdentifier: "Reusable cell")
         tableView.rowHeight = 80.0
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
      loadItems()
         tableView.reloadData()
+        loadDatesCalendar()
+        dates = DATESSET
     }
     
 
@@ -65,6 +70,8 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         for dateStr in dates {
             if(dateFormatter.string(from: date) == dateStr)
             {
+                print("suuuuuuuuukiiiiiiiiiiiiiiiiiiiiiiiiiii")
+                print(dates)
                 return 1
             }
         }
@@ -103,12 +110,14 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! ToDoTableViewCell
         if let item = todoItems?[indexPath.row] {
-            dates.insert(item.dateToBeDone)
+            
+            
+            
             if item.statusItem == "" {
                 do {
                     try self.realm.write {
                         item.statusItem = "Unknown"
-                        
+                        dates.insert(item.dateToBeDone)
                     }
                 } catch {
                     print("Error while encoding \(error)")
@@ -131,7 +140,8 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
 //                        }
 //                    }
             
-            
+            dates.insert(item.dateToBeDone)
+            print(item.dateToBeDone)
             if item.statusItem == "Not done" {
                 cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
             } else if item.statusItem == "Done" {
@@ -139,7 +149,7 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
             } else {
                 cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
             }
-            print(item.statusItem )
+//            print(item.statusItem )
             cell.status.text = item.orCalendarOrTodo
             cell.statusLabel.text = item.statusItem
             cell.titleLable.text = item.title
@@ -157,6 +167,18 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
             cell.textLabel?.text = "No Items Added"
         }
         return cell
+    }
+    func loadDatesCalendar() {
+        
+        
+        
+        DATESARRAY = todoItems?.filter("subcutegoryItem CONTAINS[cd] %@", "event").value(forKey: "dateToBeDone") as! [String]
+        DATESSET = Set(DATESARRAY)
+        print(DATESSET)
+        
+//        picker.delegate = self
+//        tableView.reloadData()
+
     }
     
 
