@@ -450,7 +450,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                                
                                indexSegmentedControlAdd = 0
                                subcategoryItemOne = "note"
-//                               print(subcategoryItemOne)
+
                            }
                        } catch {
                            print("Error saving")
