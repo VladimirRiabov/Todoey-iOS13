@@ -335,6 +335,14 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                     self.titleUpdateTextField.text = item.title
                     self.descriptionUpdateTextField.text = item.descriptionLable
                     self.datePickerUpdate.date = item.dateToBeDoneSort ?? Date()
+                    if item.subcutegoryItem == "note" {
+                        self.indexSegmentedControlUpdate = 0
+                        self.noteEventSCUpdate.selectedSegmentIndex = 0
+                    } else {
+                        self.indexSegmentedControlUpdate = 1
+                        self.noteEventSCUpdate.selectedSegmentIndex = 1
+                        self.datePickerUpdate.isEnabled = true
+                    }
 //                    do {
 //                        try self.realm.write {
 ////                            item.title = self.titleUpdateTextField.text ?? ""
@@ -553,6 +561,10 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                             if indexSegmentedControlUpdate == 0 {
                                 subcutegoryItemVar = "note"
                                 item.subcutegoryItem = subcutegoryItemVar
+                                item.dateToBeDoneSort = nil
+                                item.dateToBeDone = ""
+                                item.timeOfADay = ""
+                                item.statusItem = ""
                             }
                             
                             let dateFormatter = DateFormatter()
@@ -570,12 +582,39 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                     } catch {
                         print("Error while encoding \(error)")
                     }
-            loadItems()
-            picker.delegate = self
-            tableView.reloadData()
+            
+            
         }
         
+        switch subcategoryOutlet.selectedSegmentIndex
+            {
+            case 0:
+            subcategorySegmentedControlIndex = 0
+            picker.alpha = 0
+            subcategoryLabel.text = "Notes"
+            subcutegoryItemVar = "note"
+            sortingVar = "dateOfItemCreation"
+            loadItems()
+            tableView.reloadData()
+            
+            case 1:
+            subcategorySegmentedControlIndex = 1
+            picker.alpha = 1
+            subcategoryLabel.text = "Events"
+            subcutegoryItemVar = "event"
+            sortingVar = "dateToBeDoneSort"
+            loadItems()
+            tableView.reloadData()
+            
+            default:
+                break
+            }
         
+        loadItems()
+        
+        
+        picker.delegate = self
+        tableView.reloadData()
 //        self.loadItems()
 //        self.abcde = self.pickerDataSet.sorted(by: <).last
 //        self.picker.delegate = self
@@ -588,6 +627,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             self.blurEffect.alpha = 0
             self.viewUpdateOutlet.alpha = 0
             self.viewUpdateOutlet.removeFromSuperview()
+
 //        print(todoItems)
         }
         func dateFormattersUpdate() {
