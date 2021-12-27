@@ -376,158 +376,8 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 
         performSegue(withIdentifier: "toItemCreator", sender: self)
     }
-    //работает
-    
-    
-    @IBAction func segmentedControllAddIndexChanged(_ sender: UISegmentedControl) {
-        
-            switch segmentedControllerAddOutlet.selectedSegmentIndex
-                {
-                case 0:
-                datePickerAdd.isEnabled = false
-                subcategoryItemOne = "note"
-                
-                
 
-                case 1:
-                datePickerAdd.isEnabled = true
-                subcategoryItemOne = "event"
-               
-               
-                
-                default:
-                    break
-                }
-            indexSegmentedControlAdd = segmentedControllerAddOutlet.selectedSegmentIndex
-            print(indexSegmentedControlAdd)
-    }
-    
    
-    
-    @IBAction func datePickerAddPressed(_ sender: UIDatePicker) {
-        
-    }
-    //работает
-    @IBAction func addNewItemAddButton(_ sender: UIButton) {
-        if let currentCategory = selectedCategory {
-                       do {
-                           try self.realm.write {
-                               let newItem = Item()
-                               dateFormatters()
-                               
-                               newItem.title = titleTextFieldAdd.text!
-                               newItem.descriptionLable = descriptionTextFieldAdd.text!
-
-                               newItem.dateOfItemCreation = Date()
-                               
-                               if indexSegmentedControlAdd == 1 {
-                                   dateFormatters()
-                                   newItem.timeOfADay = timeOfADay
-                                   newItem.dateToBeDone = dateToBeDone
-                                   subcutegoryItemVar = "event"
-                                   subcategoryItemOne = "event"
-                                   newItem.subcutegoryItem = subcategoryItemOne
-                                   newItem.dateToBeDoneSort = datePickerAdd.date
-                                   print("[hui pizda")
-                                   if datePickerAdd.date < startOfDay {
-                                       newItem.orCalendarOrTodo = "calendar"
-                                       
-                                   }
-                                   newItem.statusItem = ""
-                                   
-                               }
-                               print("this is index of segmented controll")
-                               print(indexSegmentedControlAdd)
-                               
-                               let dateFormatter = DateFormatter()
-                                   dateFormatter.dateStyle = DateFormatter.Style.short
-                                   dateFormatter.timeStyle = DateFormatter.Style.short
-                                   dateFormatter.dateFormat = "yyyy-MM-dd"
-                               newItem.dateOfCreationString = dateFormatter.string(from: Date())
-                               
-                               newItem.subcutegoryItem = subcategoryItemOne
-
-                               GlobalKonstantSingleton.allItemsCategory?.items.append(newItem)
-                               currentCategory.items.append(newItem)
-                               
-                               indexSegmentedControlAdd = 0
-                               subcategoryItemOne = "note"
-
-                           }
-                       } catch {
-                           print("Error saving")
-                       }
-                   }
-//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
-//        self.dismiss(animated: true, completion: nil)
-        UIView.animate(withDuration: 0.4) {
-            self.addViewOutlet.alpha = 0
-        } completion: { status in
-
-            self.blurEffect.alpha = 0
-            self.addViewOutlet.alpha = 0
-            self.addViewOutlet.removeFromSuperview()
-           
-        }
-        
-        switch subcategoryOutlet.selectedSegmentIndex
-            {
-            case 0:
-            subcategorySegmentedControlIndex = 0
-            picker.alpha = 0
-            subcategoryLabel.text = "Notes"
-            subcutegoryItemVar = "note"
-            sortingVar = "dateOfItemCreation"
-            loadItems()
-            tableView.reloadData()
-            
-            case 1:
-            subcategorySegmentedControlIndex = 1
-            picker.alpha = 1
-            subcategoryLabel.text = "Events"
-            subcutegoryItemVar = "event"
-            sortingVar = "dateToBeDoneSort"
-            loadItems()
-            tableView.reloadData()
-            
-            default:
-                break
-            }
-        
-        picker.delegate = self
-        self.tableView.reloadData()
-        loadItems()
-        
-       
-    }
-    func dateFormatters() {
-        let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = DateFormatter.Style.short
-            dateFormatter.timeStyle = DateFormatter.Style.short
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateToBeDone =  dateFormatter.string(from: datePickerAdd.date)
-        
-        let dateFormatter2 = DateFormatter()
-            dateFormatter2.dateStyle = DateFormatter.Style.short
-            dateFormatter2.timeStyle = DateFormatter.Style.short
-            dateFormatter2.dateFormat = "HH:mm"
-            timeOfADay = dateFormatter2.string(from: datePickerAdd.date)
-    }
-    
-    
-    //работает
-    @IBAction func cancelAddViewButton(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.4) {
-            self.addViewOutlet.alpha = 0
-        } completion: { status in
-
-            self.blurEffect.alpha = 0
-            self.addViewOutlet.alpha = 0
-            self.addViewOutlet.removeFromSuperview()
-           
-        }
-
-    }
     //MARK: - UPDATE ITEM BLOCK
     @IBAction func segmentedControllerUpdateIndexChanged(_ sender: UISegmentedControl) {
         switch noteEventSCUpdate.selectedSegmentIndex
@@ -694,15 +544,9 @@ extension NewToDoViewController {
             let destinationVC = segue.destination as! CreatorViewController
            
                 destinationVC.selectedCategory = selectedCategory
-//            } else if segue.identifier == "toTrashCategories" {
-//
-//                let destinationVC = segue.destination as! TrashViewController
-            
-        
-        
-//        let destinationVC = segue.destination as! NewToDoViewController
-//        if let indexPath = tableView.indexPathForSelectedRow {
-//            destinationVC.selectedCategory = categories?[indexPath.row]
+            } else if segue.identifier == "toItemCreatorUpdate" {
+                let destinationVC = segue.destination as! CreatorViewController
+
         }
     }
     

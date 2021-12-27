@@ -367,6 +367,7 @@
                         <outlet property="titleUpdateTextField" destination="6AD-o1-7ca" id="sHi-49-OKI"/>
                         <outlet property="viewUpdateOutlet" destination="NdG-83-J8v" id="fgk-hz-WkX"/>
                         <segue destination="tBd-ig-qqS" kind="show" identifier="toItemCreator" id="T52-nU-DXs"/>
+                        <segue destination="tBd-ig-qqS" kind="presentation" identifier="toItemCreatorUpdate" id="GOK-nc-eH3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uBu-wf-m6U" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -607,7 +608,7 @@
                         <outlet property="descriptionTextField" destination="ZE7-PC-HPb" id="Y89-4T-4ah"/>
                         <outlet property="mainTitle" destination="M2a-fc-FUh" id="Hkj-49-LAU"/>
                         <outlet property="noteEventSegmentedControl" destination="das-gS-1al" id="Kgd-8x-vUn"/>
-                        <outlet property="textField" destination="ct3-Y4-psb" id="B6c-lC-61Z"/>
+                        <outlet property="titleTextField" destination="ct3-Y4-psb" id="B6c-lC-61Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xfS-lY-w7P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -758,6 +759,9 @@
             <point key="canvasLocation" x="3037.68115942029" y="212.94642857142856"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="GOK-nc-eH3"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="calendar.badge.clock" catalog="system" width="128" height="108"/>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
