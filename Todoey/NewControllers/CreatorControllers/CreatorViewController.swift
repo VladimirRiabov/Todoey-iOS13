@@ -35,37 +35,26 @@ class CreatorViewController: UIViewController {
     var itemTitle = ""
     var itemDescription = ""
     var itemDateToBeDoneSort: Date?
-    var itemSubcategory = ""
+    var itemSubcategory = "note"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        datePicker.isEnabled = false
-        
-        
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        print(itemTitle)
-        
-        
+
+ 
     }
     override func viewWillAppear(_ animated: Bool) {
         titleTextField.text = itemTitle
         descriptionTextField.text = itemDescription
         datePicker.date = itemDateToBeDoneSort ?? Date()
-        
+        if itemSubcategory == "note" {
+            noteEventSegmentedControl.selectedSegmentIndex = 0
+            noteEventIndexSegmentedControl = 0
+            datePicker.isEnabled = false
+        } else {
+            noteEventSegmentedControl.selectedSegmentIndex = 1
+            noteEventIndexSegmentedControl = 1
+            datePicker.isEnabled = false
+        }
     }
     
     

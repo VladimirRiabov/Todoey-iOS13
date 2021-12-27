@@ -471,7 +471,7 @@ extension NewToDoViewController {
             destinationVC.itemTitle = ""
             destinationVC.itemDescription = ""
             destinationVC.itemDateToBeDoneSort = Date()
-            destinationVC.itemSubcategory = ""
+            destinationVC.itemSubcategory = "note"
             
             } else if segue.identifier == "toItemCreatorUpdate" {
                 let destinationVC = segue.destination as! CreatorViewController
