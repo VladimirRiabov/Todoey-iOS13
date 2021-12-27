@@ -372,21 +372,9 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     //MARK: - NEW TODO ADDVIEW ITEM BLOCK
     //работает
     @IBAction func toAddViewButtonPressed(_ sender: UIButton) {
-        segmentedControllerAddOutlet.selectedSegmentIndex = 0
-        datePickerAdd.isEnabled = false
-        titleTextFieldAdd.text = ""
-        descriptionTextFieldAdd.text = ""
-        self.view.addSubview(addViewOutlet)
-        self.addViewOutlet.center.x = self.view.center.x
-        self.addViewOutlet.center.y = self.view.center.y - (self.view.frame.height / 4.0)
-        addViewOutlet.alpha = 0
-        addViewOutlet.transform = CGAffineTransform(translationX: 0.2, y: 0.2)
-        UIView.animate(withDuration: 0.4) {
-            self.addViewOutlet.alpha = 1
-            self.addViewOutlet.transform = CGAffineTransform.identity
-            self.blurEffect.alpha = 1
-            self.blurEffect.effect = self.screenEffect
-        }
+  
+
+        performSegue(withIdentifier: "toItemCreator", sender: self)
     }
     //работает
     
@@ -699,7 +687,26 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 //}
 
 
-
+extension NewToDoViewController {
+  
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toItemCreator" {
+            let destinationVC = segue.destination as! CreatorViewController
+           
+                destinationVC.selectedCategory = selectedCategory
+//            } else if segue.identifier == "toTrashCategories" {
+//
+//                let destinationVC = segue.destination as! TrashViewController
+            
+        
+        
+//        let destinationVC = segue.destination as! NewToDoViewController
+//        if let indexPath = tableView.indexPathForSelectedRow {
+//            destinationVC.selectedCategory = categories?[indexPath.row]
+        }
+    }
+    
+}
 
 
 
