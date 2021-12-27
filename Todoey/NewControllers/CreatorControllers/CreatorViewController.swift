@@ -32,10 +32,39 @@ class CreatorViewController: UIViewController {
     let startOfDay: Date = Calendar.current.startOfDay(for: Date())
     let components = DateComponents(hour: 23, minute: 59, second: 59)
     
+    var itemTitle = ""
+    var itemDescription = ""
+    var itemDateToBeDoneSort: Date?
+    var itemSubcategory = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         datePicker.isEnabled = false
         
+        
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        print(itemTitle)
+        
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        titleTextField.text = itemTitle
+        descriptionTextField.text = itemDescription
+        datePicker.date = itemDateToBeDoneSort ?? Date()
         
     }
     

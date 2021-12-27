@@ -72,6 +72,11 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     let startOfDay: Date = Calendar.current.startOfDay(for: Date())
     let components = DateComponents(hour: 23, minute: 59, second: 59)
     
+    var itemTitle = ""
+    var itemDescription = ""
+    var itemDateToBeDoneSort: Date?
+    var itemSubcategory = ""
+    
     
     
     //MARK: - VIEWDIDLOAD
@@ -319,49 +324,17 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         }
         let editorAction = UIContextualAction(style: .normal, title: "Edit") { action, view, handler in
             
-            self.noteEventSCUpdate.selectedSegmentIndex = 0
             
-            self.datePickerUpdate.isEnabled = false
-            //            titleTextFieldAdd.text = item.
-            //            descriptionTextFieldAdd.text = ""
-            self.view.addSubview(self.viewUpdateOutlet)
-            self.viewUpdateOutlet.center.x = self.view.center.x
-            self.viewUpdateOutlet.center.y = self.view.center.y - (self.view.frame.height / 4.0)
-            self.viewUpdateOutlet.alpha = 0
-            self.viewUpdateOutlet.transform = CGAffineTransform(translationX: 0.2, y: 0.2)
-            UIView.animate(withDuration: 0.4) {
-                self.viewUpdateOutlet.alpha = 1
-                self.viewUpdateOutlet.transform = CGAffineTransform.identity
-                self.blurEffect.alpha = 1
-                self.blurEffect.effect = self.screenEffect
-                
-                self.indexPathTrailingRow = indexPath.row
-                
                 if let item = self.todoItems?[indexPath.row] {
-                    self.titleUpdateTextField.text = item.title
-                    self.descriptionUpdateTextField.text = item.descriptionLable
-                    self.datePickerUpdate.date = item.dateToBeDoneSort ?? Date()
-                    if item.subcutegoryItem == "note" {
-                        self.indexSegmentedControlUpdate = 0
-                        self.noteEventSCUpdate.selectedSegmentIndex = 0
-                    } else {
-                        self.indexSegmentedControlUpdate = 1
-                        self.noteEventSCUpdate.selectedSegmentIndex = 1
-                        self.datePickerUpdate.isEnabled = true
-                    }
-//                    do {
-//                        try self.realm.write {
-////                            item.title = self.titleUpdateTextField.text ?? ""
-////                            item.descriptionLable = self.descriptionUpdateTextField.text ?? ""
-//
-////                            self.realm.delete(item)
-//                        }
-//                    } catch {
-//                        print("Error while encoding \(error)")
-//                    }
-                }
-                
-                handler (true)
+                    self.itemTitle = item.title
+                    self.itemDescription = item.descriptionLable
+                    self.itemDateToBeDoneSort = item.dateToBeDoneSort ?? Date()
+                    self.itemSubcategory = item.subcutegoryItem
+                    
+                    handler (true)
+                    self.performSegue(withIdentifier: "toItemCreatorUpdate", sender: self)
+//                    self.performSegue(withIdentifier: "toItemCreatorUpdate", sender: self)
+                    print(self.itemTitle, self.itemDescription)
             }
         }
         editorAction.backgroundColor = UIColor.systemBlue
@@ -370,7 +343,6 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     }
     
     //MARK: - NEW TODO ADDVIEW ITEM BLOCK
-    //работает
     @IBAction func toAddViewButtonPressed(_ sender: UIButton) {
   
 
@@ -379,32 +351,8 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 
    
     //MARK: - UPDATE ITEM BLOCK
-    @IBAction func segmentedControllerUpdateIndexChanged(_ sender: UISegmentedControl) {
-        switch noteEventSCUpdate.selectedSegmentIndex
-            {
-            case 0:
-            datePickerUpdate.isEnabled = false
-
-            case 1:
-            datePickerUpdate.isEnabled = true
-            
-            default:
-                break
-            }
-        indexSegmentedControlUpdate = noteEventSCUpdate.selectedSegmentIndex
-        
-    }
-    @IBAction func cancelUpdateButton(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.4) {
-            self.viewUpdateOutlet.alpha = 0
-        } completion: { status in
-
-            self.blurEffect.alpha = 0
-            self.viewUpdateOutlet.alpha = 0
-            self.viewUpdateOutlet.removeFromSuperview()
-           
-        }
-    }
+    
+ 
     @IBAction func updateButtonPressed(_ sender: UIButton) {
         if let item = self.todoItems?[indexPathTrailingRow] {
                     do {
@@ -443,8 +391,6 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
                             
                             item.subcutegoryItem = subcutegoryItemVar
 
-//                            GlobalKonstantSingleton.allItemsCategory?.items.append(newItem)
-//                            currentCategory.items.append(newItem)
                             
                         }
                     } catch {
@@ -483,10 +429,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         
         picker.delegate = self
         tableView.reloadData()
-//        self.loadItems()
-//        self.abcde = self.pickerDataSet.sorted(by: <).last
-//        self.picker.delegate = self
-        
+
         
         UIView.animate(withDuration: 0.4) {
             self.viewUpdateOutlet.alpha = 0
@@ -496,7 +439,6 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             self.viewUpdateOutlet.alpha = 0
             self.viewUpdateOutlet.removeFromSuperview()
 
-//        print(todoItems)
         }
         func dateFormattersUpdate() {
             let dateFormatter = DateFormatter()
@@ -515,26 +457,8 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         
     }
     
-    
-    
-    
-    //MARK: - OLD ADD VIEW
-    
-//    @objc func showMiracle() {
-//        let slideVC = OverVIewToDo()
-//        slideVC.modalPresentationStyle = .custom
-//        slideVC.transitioningDelegate = self
-//        self.present(slideVC, animated: true, completion: nil)
-//    }
-//    @IBAction func onButton(_ sender: Any) {
-//        showMiracle()
-//    }
+
 }
-//extension NewToDoViewController: UIViewControllerTransitioningDelegate {
-//    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-//        PresentationController(presentedViewController: presented, presenting: presenting)
-//    }
-//}
 
 
 extension NewToDoViewController {
@@ -544,8 +468,19 @@ extension NewToDoViewController {
             let destinationVC = segue.destination as! CreatorViewController
            
                 destinationVC.selectedCategory = selectedCategory
+            destinationVC.itemTitle = ""
+            destinationVC.itemDescription = ""
+            destinationVC.itemDateToBeDoneSort = Date()
+            destinationVC.itemSubcategory = ""
+            
             } else if segue.identifier == "toItemCreatorUpdate" {
                 let destinationVC = segue.destination as! CreatorViewController
+                destinationVC.itemTitle = itemTitle
+                destinationVC.itemDescription = itemDescription
+                destinationVC.itemDateToBeDoneSort = itemDateToBeDoneSort ?? Date()
+                destinationVC.itemSubcategory = itemSubcategory
+            
+                print("sequae edit is performed")
 
         }
     }
