@@ -21,11 +21,33 @@ class CreatorViewController: UIViewController {
     
     var selectedCategory : Category?
     
+    var subcategoryItemOne = "note"
+    var noteEventIndexSegmentedControl = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        datePicker.isEnabled = false
         
         
     }
+  
+        
+    @IBAction func noteEventIndexChanged(_ sender: UISegmentedControl) {
+        switch noteEventSegmentedControl.selectedSegmentIndex
+            {
+            case 0:
+            datePicker.isEnabled = false
+            subcategoryItemOne = "note"
+            case 1:
+            datePicker.isEnabled = true
+            subcategoryItemOne = "event"
+            default:
+                break
+            }
+        noteEventIndexSegmentedControl = noteEventSegmentedControl.selectedSegmentIndex
+        print(noteEventIndexSegmentedControl)
+    }
+    
     
     @IBAction func cancelButtonPressed(_ sender: UIButton) {
     }
