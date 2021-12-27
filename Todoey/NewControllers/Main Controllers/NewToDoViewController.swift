@@ -77,6 +77,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     //MARK: - VIEWDIDLOAD
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         GlobalKonstantSingleton.selectedClassCategory = selectedCategory
         
         labelOfCategory.text = selectedCategory?.name
@@ -131,8 +132,10 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         loadItems()
+        
+        abcde = pickerDataSet.sorted(by: <)[row]
+        
         if abcde != nil {
-            abcde = pickerDataSet.sorted(by: <)[row]
             todoItems = todoItems?.filter("dateToBeDone CONTAINS[cd] %@", abcde).filter("orCalendarOrTodo CONTAINS[cd] %@", "todo")
         }
         
