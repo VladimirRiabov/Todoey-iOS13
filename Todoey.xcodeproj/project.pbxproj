@@ -27,6 +27,10 @@
 		A4A1DBAA27677FDF006210F9 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A1DBA927677FDF006210F9 /* CalendarViewController.swift */; };
 		A4CE752F2779F60F0090698C /* CreatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CE752E2779F60F0090698C /* CreatorViewController.swift */; };
 		A4CE7532277B0F9F0090698C /* SwipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CE7531277B0F9F0090698C /* SwipeViewController.swift */; };
+		A4CE7539277B25FE0090698C /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CE7538277B25FE0090698C /* NotesViewController.swift */; };
+		A4CE753B277B26130090698C /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CE753A277B26130090698C /* EventsViewController.swift */; };
+		A4CE753D277B36FE0090698C /* ChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CE753C277B36FE0090698C /* ChoiceViewController.swift */; };
+		A4CE7540277B3A350090698C /* TableSourceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CE753F277B3A350090698C /* TableSourceController.swift */; };
 		A4EB578B276569CF007830B4 /* GlobalKonstantSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EB578A276569CF007830B4 /* GlobalKonstantSingleton.swift */; };
 		A4EB578E27661986007830B4 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A4EB578D27661986007830B4 /* IQKeyboardManagerSwift */; };
 		EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2BE4F9239524DB00FB933B /* AppDelegate.swift */; };
@@ -58,6 +62,10 @@
 		A4A1DBA927677FDF006210F9 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		A4CE752E2779F60F0090698C /* CreatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorViewController.swift; sourceTree = "<group>"; };
 		A4CE7531277B0F9F0090698C /* SwipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeViewController.swift; sourceTree = "<group>"; };
+		A4CE7538277B25FE0090698C /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
+		A4CE753A277B26130090698C /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
+		A4CE753C277B36FE0090698C /* ChoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceViewController.swift; sourceTree = "<group>"; };
+		A4CE753F277B3A350090698C /* TableSourceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSourceController.swift; sourceTree = "<group>"; };
 		A4EB578A276569CF007830B4 /* GlobalKonstantSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKonstantSingleton.swift; sourceTree = "<group>"; };
 		BABB6BE166C4C74C2673845C /* Pods-Todoey.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todoey.release.xcconfig"; path = "Target Support Files/Pods-Todoey/Pods-Todoey.release.xcconfig"; sourceTree = "<group>"; };
 		EB2BE4F6239524DB00FB933B /* Todoey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todoey.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,7 +110,8 @@
 		A464B77227636FB0004DEFCC /* NewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				A4CE7530277B0F7C0090698C /* SwipeController */,
+				A4CE7535277B25C80090698C /* ContentControllers */,
+				A4CE753E277B3A0A0090698C /* FunctionalControllers */,
 				A4CE752D2779F5CA0090698C /* CreatorControllers */,
 				A4A1DBA827677FBF006210F9 /* Trash and Done VC */,
 				A4A1DBA4276776D4006210F9 /* Main Controllers */,
@@ -203,6 +212,25 @@
 				A4CE7531277B0F9F0090698C /* SwipeViewController.swift */,
 			);
 			path = SwipeController;
+			sourceTree = "<group>";
+		};
+		A4CE7535277B25C80090698C /* ContentControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A4CE7538277B25FE0090698C /* NotesViewController.swift */,
+				A4CE753A277B26130090698C /* EventsViewController.swift */,
+				A4CE753C277B36FE0090698C /* ChoiceViewController.swift */,
+			);
+			path = ContentControllers;
+			sourceTree = "<group>";
+		};
+		A4CE753E277B3A0A0090698C /* FunctionalControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A4CE7530277B0F7C0090698C /* SwipeController */,
+				A4CE753F277B3A350090698C /* TableSourceController.swift */,
+			);
+			path = FunctionalControllers;
 			sourceTree = "<group>";
 		};
 		EB2BE4ED239524DB00FB933B = {
@@ -374,13 +402,17 @@
 				EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */,
 				A4943FE02752D883001A047B /* Category.swift in Sources */,
 				A4CE752F2779F60F0090698C /* CreatorViewController.swift in Sources */,
+				A4CE753B277B26130090698C /* EventsViewController.swift in Sources */,
 				A4CE7532277B0F9F0090698C /* SwipeViewController.swift in Sources */,
 				A464B777276375D5004DEFCC /* CategoryTableViewCell.swift in Sources */,
 				A464B77A27639ECE004DEFCC /* NewToDoViewController.swift in Sources */,
 				A464B78827640980004DEFCC /* OverlayView.swift in Sources */,
+				A4CE7539277B25FE0090698C /* NotesViewController.swift in Sources */,
+				A4CE7540277B3A350090698C /* TableSourceController.swift in Sources */,
 				A464B77F2763A0BB004DEFCC /* ToDoTableViewCell.swift in Sources */,
 				A4EB578B276569CF007830B4 /* GlobalKonstantSingleton.swift in Sources */,
 				A464B786276406D2004DEFCC /* PresentationController.swift in Sources */,
+				A4CE753D277B36FE0090698C /* ChoiceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 import ChameleonFramework
 
-class NewToDoViewController: SwipeViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class NewToDoViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     
     
@@ -345,36 +345,105 @@ class NewToDoViewController: SwipeViewController, UITableViewDataSource, UITable
 //}
 //
 //
-//extension NewToDoViewController {
+   
 //
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "toItemCreator" {
-//            let destinationVC = segue.destination as! CreatorViewController
-//
-//            destinationVC.selectedCategory = selectedCategory
-//            destinationVC.itemTitle = ""
-//            destinationVC.itemDescription = ""
-//            destinationVC.itemDateToBeDoneSort = Date()
-//            destinationVC.itemSubcategory = "note"
-//            destinationVC.creatorMode = "add"
-//
-//        } else if segue.identifier == "toItemCreatorUpdate" {
-//            let destinationVC = segue.destination as! CreatorViewController
-//            destinationVC.selectedCategory = selectedCategory
-//            destinationVC.itemTitle = itemTitle
-//            destinationVC.itemDescription = itemDescription
-//            destinationVC.itemDateToBeDoneSort = itemDateToBeDoneSort ?? Date()
-//            destinationVC.itemSubcategory = itemSubcategory
-//            destinationVC.item = itemToCreator
-//            destinationVC.creatorMode = "update"
-//
-//            print("sequae edit is performed")
-//
-//        }
-//    }
-//
+}
+
+extension NewToDoViewController {
+
+override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "toItemCreator" {
+        let destinationVC = segue.destination as! CreatorViewController
+
+        destinationVC.selectedCategory = selectedCategory
+        destinationVC.itemTitle = ""
+        destinationVC.itemDescription = ""
+        destinationVC.itemDateToBeDoneSort = Date()
+        destinationVC.itemSubcategory = "note"
+        destinationVC.creatorMode = "add"
+
+    } else if segue.identifier == "toItemCreatorUpdate" {
+        let destinationVC = segue.destination as! CreatorViewController
+        destinationVC.selectedCategory = selectedCategory
+        destinationVC.itemTitle = itemTitle
+        destinationVC.itemDescription = itemDescription
+        destinationVC.itemDateToBeDoneSort = itemDateToBeDoneSort ?? Date()
+        destinationVC.itemSubcategory = itemSubcategory
+        destinationVC.item = itemToCreator
+        destinationVC.creatorMode = "update"
+
+        print("sequae edit is performed")
+
+    }
+}
 }
 
 
 
 
+
+
+//let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! ToDoTableViewCell
+//if let item = todoItems?[indexPath.row] {
+//
+//    let endOfDay = Calendar.current.date(byAdding: components, to: startOfDay)
+//    if item.dateToBeDoneSort != nil {
+//        if Calendar.current.isDateInToday(item.dateToBeDoneSort!) {
+//            do {
+//                try self.realm.write {
+//                    item.orCalendarOrTodo = "todo"
+//                }
+//            } catch {
+//                print("Error while encoding \(error)")
+//            }
+//        } else if item.dateToBeDoneSort! > Date() {
+//            do {
+//                try self.realm.write {
+//                    item.orCalendarOrTodo = "todo"
+//
+//                }
+//            } catch {
+//                print("Error while encoding \(error)")
+//            }
+//        } else if item.dateToBeDoneSort! < Date() {
+//            do {
+//                try self.realm.write {
+//                    item.orCalendarOrTodo = "calendar"
+//
+//                }
+//            } catch {
+//                print("Error while encoding \(error)")
+//            }
+//        }
+//    }
+//
+//    //                print(Calendar.current.startOfDay(for: item.dateToBeDoneSort!))
+//    //                let startOfDay: Date = Calendar.current.startOfDay(for: Date())
+//    //                let components = DateComponents(hour: 23, minute: 59, second: 59)
+//    //                let endOfDay = Calendar.current.date(byAdding: components, to: startOfDay)
+//    //                print(endOfDay)
+//
+//
+//
+//    if item.statusItem == "Not done" {
+//        cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+//    } else if item.statusItem == "Done" {
+//        cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.7858344316, green: 1, blue: 0.6146927476, alpha: 1)
+//    } else {
+//        cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
+//    }
+//
+//    cell.status.text = item.orCalendarOrTodo
+//    cell.statusLabel.text = item.statusItem
+//    cell.titleLable.text = item.title
+//    cell.subtitleLabel.text = item.descriptionLable
+//    cell.needToBeDoneLabel.text = item.dateToBeDone
+//    cell.timeOfADatLabel.text = item.timeOfADay
+//    cell.dataOfCreation.text = item.dateOfCreationString
+//
+//    cell.accessoryType = item.done == true ? .checkmark : .none
+//
+//} else {
+//    cell.textLabel?.text = "No Items Added"
+//}
+//return cell

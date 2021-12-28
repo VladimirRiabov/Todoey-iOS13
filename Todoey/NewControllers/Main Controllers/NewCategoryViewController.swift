@@ -139,11 +139,11 @@ extension NewCategoryViewController: UIViewControllerTransitioningDelegate {
 //MARK: - TableViewDelegateMethods
 extension NewCategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "toTheItems", sender: self)
+        performSegue(withIdentifier: "toChoice", sender: self)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toTheItems" {
-            let destinationVC = segue.destination as! NewToDoViewController
+        if segue.identifier == "toChoice" {
+            let destinationVC = segue.destination as! ChoiceViewController
             if let indexPath = tableView.indexPathForSelectedRow {
                 destinationVC.selectedCategory = categories?[indexPath.row]
 //            } else if segue.identifier == "toTrashCategories" {
