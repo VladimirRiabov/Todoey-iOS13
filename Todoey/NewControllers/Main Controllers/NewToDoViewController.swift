@@ -41,7 +41,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var datePickerUpdate: UIDatePicker!
     
     
- 
+    
     
     //MARK: - VARS
     var pickerDataArray: Array = Array<String>()
@@ -77,6 +77,8 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     var itemDateToBeDoneSort: Date?
     var itemSubcategory = ""
     
+    var itemToCreator: Item?
+    
     
     
     //MARK: - VIEWDIDLOAD
@@ -96,13 +98,8 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
         
-        addViewOutlet.layer.cornerRadius = addViewOutlet.frame.height / 15
-        if let effect = blurEffect.effect {
-            screenEffect = effect
-        } else {
-            screenEffect = UIVisualEffect()
-        }
-//        blurEffect.effect = nil
+        
+        
         
     }
     
@@ -121,9 +118,9 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
         
         pickerDataArray = selectedCategory?.items.filter("subcutegoryItem CONTAINS[cd] %@", "event").filter("orCalendarOrTodo CONTAINS[cd] %@", "todo").value(forKey: "dateToBeDone") as! [String]
         pickerDataSet = Set(pickerDataArray)
-//        picker.delegate = self
-//        tableView.reloadData()
-
+        //        picker.delegate = self
+        //        tableView.reloadData()
+        
     }
     //MARK: - WEEL FILTER
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -145,7 +142,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         self.tableView.reloadData()
-  
+        
     }
     
     
@@ -153,8 +150,8 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
     //MARK: - SEGMENTED CONTROLLER NOTE/EVENT
     @IBAction func subcategorySegmentedControlIndexChanged(_ sender: UISegmentedControl) {
         switch subcategoryOutlet.selectedSegmentIndex
-            {
-            case 0:
+        {
+        case 0:
             subcategorySegmentedControlIndex = 0
             picker.alpha = 0
             subcategoryLabel.text = "Notes"
@@ -163,7 +160,7 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
             loadItems()
             tableView.reloadData()
             
-            case 1:
+        case 1:
             subcategorySegmentedControlIndex = 1
             picker.alpha = 1
             subcategoryLabel.text = "Events"
@@ -172,90 +169,91 @@ class NewToDoViewController: UIViewController, UITableViewDataSource, UITableVie
             loadItems()
             tableView.reloadData()
             
-            default:
-                break
-            }
+        default:
+            break
+        }
         print(subcategoryOutlet.selectedSegmentIndex)
     }
     
-
-//MARK: - DataSourceMethods
-func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return todoItems?.count ?? 1
-}
-
-func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! ToDoTableViewCell
-            if let item = todoItems?[indexPath.row] {
-                
-                let endOfDay = Calendar.current.date(byAdding: components, to: startOfDay)
-                if item.dateToBeDoneSort != nil {
-                    if Calendar.current.isDateInToday(item.dateToBeDoneSort!) {
-                        do {
-                            try self.realm.write {
-                                item.orCalendarOrTodo = "todo"
-                            }
-                        } catch {
-                            print("Error while encoding \(error)")
+    
+    //MARK: - DataSourceMethods
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return todoItems?.count ?? 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Reusable cell", for: indexPath) as! ToDoTableViewCell
+        if let item = todoItems?[indexPath.row] {
+            
+            let endOfDay = Calendar.current.date(byAdding: components, to: startOfDay)
+            if item.dateToBeDoneSort != nil {
+                if Calendar.current.isDateInToday(item.dateToBeDoneSort!) {
+                    do {
+                        try self.realm.write {
+                            item.orCalendarOrTodo = "todo"
                         }
-                    } else if item.dateToBeDoneSort! > Date() {
-                        do {
-                            try self.realm.write {
-                                item.orCalendarOrTodo = "todo"
-                                
-                            }
-                        } catch {
-                            print("Error while encoding \(error)")
+                    } catch {
+                        print("Error while encoding \(error)")
+                    }
+                } else if item.dateToBeDoneSort! > Date() {
+                    do {
+                        try self.realm.write {
+                            item.orCalendarOrTodo = "todo"
+                            
                         }
-                    } else if item.dateToBeDoneSort! < Date() {
-                        do {
-                            try self.realm.write {
-                                item.orCalendarOrTodo = "calendar"
-                                
-                            }
-                        } catch {
-                            print("Error while encoding \(error)")
+                    } catch {
+                        print("Error while encoding \(error)")
+                    }
+                } else if item.dateToBeDoneSort! < Date() {
+                    do {
+                        try self.realm.write {
+                            item.orCalendarOrTodo = "calendar"
+                            
                         }
+                    } catch {
+                        print("Error while encoding \(error)")
                     }
                 }
-                
-//                print(Calendar.current.startOfDay(for: item.dateToBeDoneSort!))
-//                let startOfDay: Date = Calendar.current.startOfDay(for: Date())
-//                let components = DateComponents(hour: 23, minute: 59, second: 59)
-//                let endOfDay = Calendar.current.date(byAdding: components, to: startOfDay)
-//                print(endOfDay)
-                
-               
-                
-                if item.statusItem == "Not done" {
-                    cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
-                } else if item.statusItem == "Done" {
-                    cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.7858344316, green: 1, blue: 0.6146927476, alpha: 1)
-                } else {
-                    cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
-                }
-                
-                cell.status.text = item.orCalendarOrTodo
-                cell.statusLabel.text = item.statusItem
-                cell.titleLable.text = item.title
-                cell.subtitleLabel.text = item.descriptionLable
-                cell.needToBeDoneLabel.text = item.dateToBeDone
-                cell.timeOfADatLabel.text = item.timeOfADay
-                cell.dataOfCreation.text = item.dateOfCreationString
-  
-                cell.accessoryType = item.done == true ? .checkmark : .none
-                
-            } else {
-                cell.textLabel?.text = "No Items Added"
             }
-            return cell
+            
+            //                print(Calendar.current.startOfDay(for: item.dateToBeDoneSort!))
+            //                let startOfDay: Date = Calendar.current.startOfDay(for: Date())
+            //                let components = DateComponents(hour: 23, minute: 59, second: 59)
+            //                let endOfDay = Calendar.current.date(byAdding: components, to: startOfDay)
+            //                print(endOfDay)
+            
+            
+            
+            if item.statusItem == "Not done" {
+                cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+            } else if item.statusItem == "Done" {
+                cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.7858344316, green: 1, blue: 0.6146927476, alpha: 1)
+            } else {
+                cell.colorStatusView.backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
+            }
+            
+            cell.status.text = item.orCalendarOrTodo
+            cell.statusLabel.text = item.statusItem
+            cell.titleLable.text = item.title
+            cell.subtitleLabel.text = item.descriptionLable
+            cell.needToBeDoneLabel.text = item.dateToBeDone
+            cell.timeOfADatLabel.text = item.timeOfADay
+            cell.dataOfCreation.text = item.dateOfCreationString
+            
+            cell.accessoryType = item.done == true ? .checkmark : .none
+            
+        } else {
+            cell.textLabel?.text = "No Items Added"
         }
+        return cell
+    }
     
     //MARK: - SWIPE CELL
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let doneAction = UIContextualAction(style: .normal, title: "Done") { (contextualAction, view, boolValue) in
             
             if let item = self.todoItems?[indexPath.row] {
+                
                 do {
                     try self.realm.write {
                         item.statusItem = "Done"
@@ -286,7 +284,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
             
             
             boolValue(true) // pass true if you want the handler to allow the action
-           
+            
             tableView.reloadData()
         }
         
@@ -298,8 +296,6 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         } else {
             swipeActions = UISwipeActionsConfiguration(actions: [])
         }
-        
-
         return swipeActions
     }
     
@@ -324,17 +320,16 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         }
         let editorAction = UIContextualAction(style: .normal, title: "Edit") { action, view, handler in
             
-            
-                if let item = self.todoItems?[indexPath.row] {
-                    self.itemTitle = item.title
-                    self.itemDescription = item.descriptionLable
-                    self.itemDateToBeDoneSort = item.dateToBeDoneSort ?? Date()
-                    self.itemSubcategory = item.subcutegoryItem
-                    
-                    handler (true)
-                    self.performSegue(withIdentifier: "toItemCreatorUpdate", sender: self)
-//                    self.performSegue(withIdentifier: "toItemCreatorUpdate", sender: self)
-                    print(self.itemTitle, self.itemDescription)
+            if let item = self.todoItems?[indexPath.row] {
+                self.itemToCreator = item
+                self.itemTitle = item.title
+                self.itemDescription = item.descriptionLable
+                self.itemDateToBeDoneSort = item.dateToBeDoneSort ?? Date()
+                self.itemSubcategory = item.subcutegoryItem
+                handler (true)
+                self.performSegue(withIdentifier: "toItemCreatorUpdate", sender: self)
+                //                    self.performSegue(withIdentifier: "toItemCreatorUpdate", sender: self)
+                print(self.itemTitle, self.itemDescription)
             }
         }
         editorAction.backgroundColor = UIColor.systemBlue
@@ -344,144 +339,37 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     
     //MARK: - NEW TODO ADDVIEW ITEM BLOCK
     @IBAction func toAddViewButtonPressed(_ sender: UIButton) {
-  
-
         performSegue(withIdentifier: "toItemCreator", sender: self)
     }
-
-   
-    //MARK: - UPDATE ITEM BLOCK
     
- 
-    @IBAction func updateButtonPressed(_ sender: UIButton) {
-        if let item = self.todoItems?[indexPathTrailingRow] {
-                    do {
-                        try self.realm.write {
-                            item.title = self.titleUpdateTextField.text ?? ""
-                            item.descriptionLable = self.descriptionUpdateTextField.text ?? ""
-                            
-                            
-                            item.dateOfItemCreation = Date()
-                            if indexSegmentedControlUpdate == 1 {
-                                dateFormattersUpdate()
-                                item.timeOfADay = timeOfADay
-                                item.dateToBeDone = dateToBeDone
-                                subcutegoryItemVar = "event"
-                                item.subcutegoryItem = subcutegoryItemVar
-                                item.dateToBeDoneSort = self.datePickerUpdate.date
-                                if datePickerUpdate.date < startOfDay {
-                                    item.orCalendarOrTodo = "calendar"
-                                }
-//                                item.statusItem = ""
-                            }
-                            if indexSegmentedControlUpdate == 0 {
-                                subcutegoryItemVar = "note"
-                                item.subcutegoryItem = subcutegoryItemVar
-                                item.dateToBeDoneSort = nil
-                                item.dateToBeDone = ""
-                                item.timeOfADay = ""
-                                item.statusItem = ""
-                            }
-                            
-                            let dateFormatter = DateFormatter()
-                                dateFormatter.dateStyle = DateFormatter.Style.short
-                                dateFormatter.timeStyle = DateFormatter.Style.short
-                                dateFormatter.dateFormat = "yyyy-MM-dd"
-                            item.dateOfCreationString = dateFormatter.string(from: Date())
-                            
-                            item.subcutegoryItem = subcutegoryItemVar
-
-                            
-                        }
-                    } catch {
-                        print("Error while encoding \(error)")
-                    }
-            
-            
-        }
-        
-        switch subcategoryOutlet.selectedSegmentIndex
-            {
-            case 0:
-            subcategorySegmentedControlIndex = 0
-            picker.alpha = 0
-            subcategoryLabel.text = "Notes"
-            subcutegoryItemVar = "note"
-            sortingVar = "dateOfItemCreation"
-            loadItems()
-            tableView.reloadData()
-            
-            case 1:
-            subcategorySegmentedControlIndex = 1
-            picker.alpha = 1
-            subcategoryLabel.text = "Events"
-            subcutegoryItemVar = "event"
-            sortingVar = "dateToBeDoneSort"
-            loadItems()
-            tableView.reloadData()
-            
-            default:
-                break
-            }
-        
-        loadItems()
-        
-        
-        picker.delegate = self
-        tableView.reloadData()
-
-        
-        UIView.animate(withDuration: 0.4) {
-            self.viewUpdateOutlet.alpha = 0
-        } completion: { status in
-
-            self.blurEffect.alpha = 0
-            self.viewUpdateOutlet.alpha = 0
-            self.viewUpdateOutlet.removeFromSuperview()
-
-        }
-        func dateFormattersUpdate() {
-            let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = DateFormatter.Style.short
-                dateFormatter.timeStyle = DateFormatter.Style.short
-                dateFormatter.dateFormat = "yyyy-MM-dd"
-            dateToBeDone =  dateFormatter.string(from: datePickerUpdate.date)
-            
-            let dateFormatter2 = DateFormatter()
-                dateFormatter2.dateStyle = DateFormatter.Style.short
-                dateFormatter2.timeStyle = DateFormatter.Style.short
-                dateFormatter2.dateFormat = "HH:mm"
-                timeOfADay = dateFormatter2.string(from: datePickerUpdate.date)
-        }
-        
-        
-    }
-    
-
 }
 
 
 extension NewToDoViewController {
-  
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toItemCreator" {
             let destinationVC = segue.destination as! CreatorViewController
-           
-                destinationVC.selectedCategory = selectedCategory
+            
+            destinationVC.selectedCategory = selectedCategory
             destinationVC.itemTitle = ""
             destinationVC.itemDescription = ""
             destinationVC.itemDateToBeDoneSort = Date()
             destinationVC.itemSubcategory = "note"
+            destinationVC.creatorMode = "add"
             
-            } else if segue.identifier == "toItemCreatorUpdate" {
-                let destinationVC = segue.destination as! CreatorViewController
-                destinationVC.itemTitle = itemTitle
-                destinationVC.itemDescription = itemDescription
-                destinationVC.itemDateToBeDoneSort = itemDateToBeDoneSort ?? Date()
-                destinationVC.itemSubcategory = itemSubcategory
+        } else if segue.identifier == "toItemCreatorUpdate" {
+            let destinationVC = segue.destination as! CreatorViewController
+            destinationVC.selectedCategory = selectedCategory
+            destinationVC.itemTitle = itemTitle
+            destinationVC.itemDescription = itemDescription
+            destinationVC.itemDateToBeDoneSort = itemDateToBeDoneSort ?? Date()
+            destinationVC.itemSubcategory = itemSubcategory
+            destinationVC.item = itemToCreator
+            destinationVC.creatorMode = "update"
             
-                print("sequae edit is performed")
-
+            print("sequae edit is performed")
+            
         }
     }
     

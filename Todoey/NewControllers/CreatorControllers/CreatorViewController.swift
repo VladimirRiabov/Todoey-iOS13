@@ -37,11 +37,15 @@ class CreatorViewController: UIViewController {
     var itemDateToBeDoneSort: Date?
     var itemSubcategory = "note"
     
+    var creatorMode = ""
+    var item: Item!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
- 
+        print(creatorMode)
     }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         titleTextField.text = itemTitle
         descriptionTextField.text = itemDescription
@@ -83,40 +87,53 @@ class CreatorViewController: UIViewController {
         if let currentCategory = selectedCategory {
             do {
                 try self.realm.write {
-                    let newItem = Item()
+                    if creatorMode == "add" {
+                        item = Item()
+                    }
+
                     
                     dateFormatters()
-                    newItem.dateOfItemCreation = Date()
-                    newItem.dateOfCreationString = dateOfCreationStr
+                    item.dateOfItemCreation = Date()
+                    item.dateOfCreationString = dateOfCreationStr
                     
-                    newItem.title = titleTextField.text!
-                    newItem.descriptionLable = descriptionTextField.text!
+                    item.title = titleTextField.text!
+                    item.descriptionLable = descriptionTextField.text!
                     
+                    
+                    if noteEventIndexSegmentedControl == 0 {
+                        subcategoryItemOne = "note"
+                        item.subcutegoryItem = subcategoryItemOne
+                        item.dateToBeDoneSort = nil
+                        item.dateToBeDone = ""
+                        item.timeOfADay = ""
+                        item.statusItem = ""
+                    }
                     if noteEventIndexSegmentedControl == 1 {
                         dateFormatters()
-                        newItem.timeOfADay = timeOfADay
-                        newItem.dateToBeDone = dateToBeDone
+                        item.timeOfADay = timeOfADay
+                        item.dateToBeDone = dateToBeDone
                         subcategoryItemOne = "event"
-                        newItem.subcutegoryItem = subcategoryItemOne
-                        newItem.dateToBeDoneSort = datePicker.date
-                        print("[hui pizda")
+                        item.subcutegoryItem = subcategoryItemOne
+                        item.dateToBeDoneSort = datePicker.date
                         if datePicker.date < startOfDay {
-                            newItem.orCalendarOrTodo = "calendar"
+                            item.orCalendarOrTodo = "calendar"
                         }
                     }
-                    newItem.statusItem = ""
-                    newItem.subcutegoryItem = subcategoryItemOne
                     
-                    GlobalKonstantSingleton.allItemsCategory?.items.append(newItem)
-                    currentCategory.items.append(newItem)
+                    item.statusItem = ""
+                    item.subcutegoryItem = subcategoryItemOne
                     
+                    if creatorMode == "add" {
+                        GlobalKonstantSingleton.allItemsCategory?.items.append(item)
+                        currentCategory.items.append(item)
+                    }
                 }
             } catch {
                 print("Error saving")
             }
         }
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
         dismiss(animated: true, completion: nil)
-        
     }
     
 }
